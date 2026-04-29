@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ماسك بايودانس بالكولاجين | ترطيب عميق وإشراقة فورية</title>
-  <meta name="description" content="صفحة هبوط عربية احترافية لمنتج Biodance Bio-Collagen Real Deep Mask مع عروض COD للجزائر، معرض صور، قبل/بعد، فوائد، طلب سريع، واستفسار مباشر.">
-  <meta property="og:title" content="Biodance Bio-Collagen Real Deep Mask الجزائر">
-  <meta property="og:description" content="ترطيب عميق، مظهر مسام أنعم، بشرة أكثر إشراقاً وملمس أكثر امتلاءً مع طلب سريع والدفع عند الاستلام.">
-  <meta property="og:type" content="website">
+  <meta name="description" content="صفحة هبوط عربية احترافية لمنتج Biodance Bio-Collagen Real Deep Mask مع عروض COD للجزائر">
+  
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1444522217477477');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1444522217477477&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <!-- EmailJS -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="text/javascript">
@@ -17,6 +33,7 @@
       });
     })();
   </script>
+
   <style>
     :root{
       --bg:#fffaf8;
@@ -162,6 +179,16 @@
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease, transform .5s ease}
     .reveal.show{opacity:1;transform:none}
     footer{padding:26px 0 100px;color:var(--muted);font-size:14px}
+    .thankyou-page {
+      text-align: center;
+      padding: 60px 20px;
+      background: #fff;
+      border-radius: var(--radius);
+      margin: 40px auto;
+      max-width: 800px;
+    }
+    .thankyou-page h2 { color: var(--success); }
+    .hidden { display: none; }
     @media (max-width: 980px){
       .hero-wrap,.before-after-layout,.order-layout,.contact-layout,.features,.offers,.marketing,.testimonials{grid-template-columns:1fr 1fr}
       .how{grid-template-columns:1fr}
@@ -294,6 +321,7 @@
     </div>
   </section>
 
+  <!-- Page de commande normale -->
   <section class="section" id="order" style="padding-top:0">
     <div class="container order-layout">
       <div class="card form-card reveal show">
@@ -325,6 +353,16 @@
       </aside>
     </div>
   </section>
+
+  <!-- Page de remerciement (cachée par défaut) -->
+  <div id="thankyouPage" class="container hidden">
+    <div class="thankyou-page card">
+      <h2>🎉 شكراً جزيلاً على طلبك! 🎉</h2>
+      <p>تم استلام طلبك بنجاح. سنتصل بك في أقرب وقت لتأكيد التفاصيل والإجابة على استفساراتك.</p>
+      <p>يمكنك متابعة صفحتنا على <strong>Instagram</strong> أو <strong>Facebook</strong> للحصول على العروض الحصرية.</p>
+      <button class="btn btn-primary" onclick="location.reload()">العودة إلى الصفحة الرئيسية</button>
+    </div>
+  </div>
 
   <footer>
     <div class="container"></div>
@@ -379,10 +417,10 @@
       contactChannels: { whatsapp: 'واتساب: 213540732771+', phone: 'اتصال: 0540732771' },
       infoFormTitle: 'عندك سؤال قبل الطلب؟',
       infoFormText: 'أرسلي استفسارك عن طريقة الاستخدام، مدة التوصيل، أو أي تفاصيل إضافية عن المنتج وسنرد عليك بسرعة.',
-      images: ['product1.jpg', 'product2.jpg', 'product3.jpg', 'product4.jpg', 'product5.jpg'] // 5 images dans /images/
+      images: ['product1.jpg', 'product2.jpg', 'product3.jpg', 'product4.jpg', 'product5.jpg']
     };
 
-    // Helper functions
+    // Helpers
     const $ = s => document.querySelector(s);
     const $$ = s => [...document.querySelectorAll(s)];
     function money(v){ return `${v.toLocaleString('fr-FR')} دج`; }
@@ -405,7 +443,7 @@
       `;
     }
 
-    // Carousel pour les images produits (5 images)
+    // Carousel produits (5 images)
     function setupProductCarousel(){
       const items = CONFIG.images.map((img, i) => ({
         image: `images/${img}`,
@@ -578,12 +616,13 @@
       }));
     }
 
-    // EmailJS : envoi formulaire commande
+    // Envoi du formulaire de commande avec EmailJS + redirection vers page de remerciement
     function bindOrderEmail(){
       const form = $('#orderForm');
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // Validation
+        
+        // Validation des champs
         const fields = ['#fullName','#phone','#wilaya','#commune','#address'];
         let ok = true;
         fields.forEach(sel => {
@@ -599,7 +638,34 @@
         if(!ok) return;
 
         const offer = selectedOffer();
+        const totalPrice = offer.price * selectedQty;
+
+        // Construction du message complet
+        const orderDetails = `
+🛍️ NOUVELLE COMMANDE 🛍️
+
+👤 Nom complet : ${$('#fullName').value}
+📞 Téléphone : ${$('#phone').value}
+📍 Wilaya : ${$('#wilaya').value}
+🏘️ Commune : ${$('#commune').value}
+🏠 Adresse : ${$('#address').value}
+🚚 Livraison : ${$('#deliveryType').value}
+
+📦 Produit : ${CONFIG.productName}
+🎁 Offre : ${offer.title}
+🔢 Quantité : ${selectedQty}
+💰 Prix total : ${money(totalPrice)}
+🚛 Frais de livraison : 400-800 DA (estimé)
+💵 Total estimé : ${money(totalPrice + 400)} à ${money(totalPrice + 800)}`;
+
         const templateParams = {
+          to_email: 'charafeddinegoussanem@gmail.com',
+          from_name: $('#fullName').value,
+          from_phone: $('#phone').value,
+          message: orderDetails,
+          subject: `Nouvelle commande - ${$('#fullName').value}`,
+          reply_to: $('#phone').value,
+          // Champs individuels (si votre template les utilise)
           fullName: $('#fullName').value,
           phone: $('#phone').value,
           wilaya: $('#wilaya').value,
@@ -608,38 +674,58 @@
           deliveryType: $('#deliveryType').value,
           offerTitle: offer.title,
           quantity: selectedQty,
-          totalPrice: money(offer.price * selectedQty),
-          product: CONFIG.productName,
-          to_email: 'charafeddinegoussanem@gmail.com'
+          totalPrice: money(totalPrice),
+          product: CONFIG.productName
         };
 
         try {
           await emailjs.send('service_q7wx8gn', 'template_xkpm4qc', templateParams);
-          $('#orderSuccess').style.display = 'block';
-          form.reset();
-          // remettre les quantités par défaut
-          selectedQty = 1;
-          selectedOfferId = CONFIG.offers.find(o => o.selected)?.id || CONFIG.offers[0].id;
-          renderOffers();
-          updateSummary();
+          
+          // Déclencher l'événement de conversion Facebook Pixel
+          fbq('track', 'Purchase', {
+            value: totalPrice,
+            currency: 'DZD',
+            content_name: offer.title,
+            content_type: 'product',
+            quantity: selectedQty
+          });
+          
+          // Masquer la section commande et afficher la page de remerciement
+          $('#order').classList.add('hidden');
+          $('#thankyouPage').classList.remove('hidden');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch(err) {
           console.error(err);
-          alert('حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى.');
+          alert('❌ حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى.');
         }
       });
     }
 
-    // EmailJS : formulaire de contact
+    // Formulaire de contact
     function bindContactEmail(){
       const form = $('#infoForm');
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const clientName = form.querySelector('[name="name"]').value;
+        const clientContact = form.querySelector('[name="contact"]').value;
+        const clientMessage = form.querySelector('[name="message"]').value;
+        
+        const messageContent = `
+📧 Demande d'information 📧
+
+Nom : ${clientName}
+Contact : ${clientContact}
+Message :
+${clientMessage}`;
+        
         const templateParams = {
-          name: form.querySelector('[name="name"]').value,
-          contact: form.querySelector('[name="contact"]').value,
-          message: form.querySelector('[name="message"]').value,
-          to_email: 'charafeddinegoussanem@gmail.com'
+          to_email: 'charafeddinegoussanem@gmail.com',
+          from_name: clientName,
+          reply_to: clientContact,
+          message: messageContent,
+          subject: `Demande d'info - ${clientName}`
         };
+        
         try {
           await emailjs.send('service_q7wx8gn', 'template_xkpm4qc', templateParams);
           $('#infoSuccess').style.display = 'block';
@@ -647,7 +733,7 @@
           setTimeout(() => $('#infoSuccess').style.display = 'none', 5000);
         } catch(err) {
           console.error(err);
-          alert('حدث خطأ، يرجى المحاولة لاحقاً.');
+          alert('Erreur : ' + err.text);
         }
       });
     }
