@@ -6,7 +6,6 @@
   <title>ماسك بايودانس بالكولاجين | ترطيب عميق وإشراقة فورية</title>
   <meta name="description" content="ماسك Biodance Bio-Collagen Real Deep Mask - ترطيب، إشراقة، عروض حصرية مع الدفع عند الاستلام في الجزائر.">
 
-  <!-- Meta Pixel Code -->
   <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -22,9 +21,7 @@
   <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1444522217477477&ev=PageView&noscript=1"
   /></noscript>
-  <!-- End Meta Pixel Code -->
 
-  <!-- EmailJS -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function() {
@@ -184,7 +181,6 @@
     }
     .reveal { opacity: 0; transform: translateY(18px); transition: 0.5s; }
     .reveal.show { opacity: 1; transform: none; }
-    .hidden { display: none; }
     footer { padding: 26px 0 100px; color: var(--muted); text-align: center; }
     .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .step { padding: 20px; }
@@ -207,10 +203,7 @@
       font-weight: bold; color: var(--primary-dark);
     }
     .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .proof-card {
-      overflow: hidden;
-      padding: 12px;
-    }
+    .proof-card { overflow: hidden; padding: 12px; }
     .proof-card img {
       width: 100%;
       aspect-ratio: 1 / 1.15;
@@ -320,20 +313,7 @@
   <div class="container">
     <h2 class="section-title reveal">آراء وتجارب الزبائن</h2>
     <p class="section-text reveal">صور من التفاعل الحقيقي على فيسبوك بعد الطلب والاستخدام.</p>
-    <div class="grid proof-grid">
-      <article class="card proof-card reveal">
-        <img src="images/social-proof-1.jpg" alt="Facebook social proof 1" loading="lazy">
-        <div class="proof-label">تجربة زبونة 1</div>
-      </article>
-      <article class="card proof-card reveal">
-        <img src="images/social-proof-2.jpg" alt="Facebook social proof 2" loading="lazy">
-        <div class="proof-label">تجربة زبونة 2</div>
-      </article>
-      <article class="card proof-card reveal">
-        <img src="images/social-proof-3.jpg" alt="Facebook social proof 3" loading="lazy">
-        <div class="proof-label">تجربة زبونة 3</div>
-      </article>
-    </div>
+    <div class="grid proof-grid" id="socialProofGrid"></div>
   </div>
 </section>
 
@@ -397,9 +377,9 @@
     productName: 'Biodance Bio-Collagen Real Deep Mask',
     trustBadges: ['منتج أصلي', 'الدفع عند الاستلام', 'توصيل إلى 58 ولاية', 'مناسب للبشرة الحساسة'],
     offers: [
-      { id: 'offer1', title: '2 ماسك بـ 2200 دج', price: 2200, compareAt: 2400, badge: 'اقتصادي' },
-      { id: 'offer2', title: '4 ماسك بـ 3500 دج', price: 3500, compareAt: 4400, badge: 'الأكثر مبيعاً', save: 'وفري 900 دج', selected: true },
-      { id: 'offer3', title: '8 ماسك بـ 5900 دج', price: 5900, compareAt: 8800, badge: 'أفضل قيمة', save: 'وفري 2900 دج', selected: false }
+      { id: 'offer1', title: '2 ماسك بـ 2200 دج', price: 2200, compareAt: 2400, badge: 'اقتصادي', save: 'وفري 200 دج', selected: false },
+      { id: 'offer2', title: '4 ماسك بـ 3500 دج', price: 3500, compareAt: 3800, badge: 'الأكثر مبيعاً', save: 'وفري 300 دج', selected: true },
+      { id: 'offer3', title: '8 ماسك بـ 5900 دج', price: 5900, compareAt: 7600, badge: 'أفضل قيمة', save: 'وفري 1700 دج', selected: false }
     ],
     benefits: [
       { icon: '', title: 'ترطيب عميق', text: 'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.' },
@@ -409,11 +389,12 @@
       { icon: '', title: 'تحضير قبل المكياج', text: 'يساعد على ترطيب البشرة للحصول على مكياج ألطف.' }
     ],
     beforeAfterSlides: [
-      { beforeImage: 'images/before1.jpg', afterImage: 'images/after1.jpg', caption: '' },
-      { beforeImage: 'images/before2.jpg', afterImage: 'images/after2.jpg', caption: '' },
-      { beforeImage: 'images/before3.jpg', afterImage: 'images/after3.jpg', caption: '' }
+      { beforeImage: './before1.jpg', afterImage: './after1.jpg', caption: '' },
+      { beforeImage: './before2.jpg', afterImage: './after2.jpg', caption: '' },
+      { beforeImage: './before3.jpg', afterImage: './after3.jpg', caption: '' }
     ],
     images: ['product1.jpg', 'product2.jpg', 'product3.jpg', 'product4.jpg', 'product5.jpg'],
+    socialProofImages: ['social-proof-1.jpg', 'social-proof-2.jpg', 'social-proof-3.jpg'],
     contactChannels: { whatsapp: 'واتساب: 213540732771+', phone: 'اتصال: 0540732771' },
     infoFormTitle: 'عندك سؤال قبل الطلب؟',
     infoFormText: 'أرسلي استفسارك وسنرد عليك بسرعة.'
@@ -435,7 +416,7 @@
   }
 
   function setupProductCarousel() {
-    const items = CONFIG.images.map((img, i) => ({ image: `images/${img}`, caption: `صورة المنتج ${i+1}` }));
+    const items = CONFIG.images.map((img, i) => ({ image: `./${img}`, caption: `صورة المنتج ${i+1}` }));
     const slidesEl = $('#productSlides');
     const dotsEl = $('#productDots');
     const thumbsEl = $('#productThumbs');
@@ -553,12 +534,21 @@
     };
   }
 
+  function renderSocialProof() {
+    const grid = $('#socialProofGrid');
+    grid.innerHTML = CONFIG.socialProofImages.map((img, i) => `
+      <article class="card proof-card reveal">
+        <img src="./${img}" alt="Facebook social proof ${i+1}" loading="lazy">
+        <div class="proof-label">تجربة زبونة ${i+1}</div>
+      </article>
+    `).join('');
+  }
+
   function bindOrderEmail() {
     const orderForm = $('#orderForm');
     orderForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (orderSending) return;
-
       const fields = ['#fullName', '#phone', '#wilaya', '#commune'];
       let ok = true;
       fields.forEach(sel => {
@@ -590,13 +580,7 @@ Total: ${money(total)} + frais (350-800 DA)`;
           message: details,
           subject: `Commande ${$('#fullName').value}`
         });
-        fbq('track', 'InitiateCheckout', {
-          value: total,
-          currency: 'DZD',
-          content_name: offer.title,
-          num_items: selectedQty
-        });
-
+        fbq('track', 'InitiateCheckout', { value: total, currency: 'DZD', content_name: offer.title, num_items: selectedQty });
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
         const ref = 'BD-' + Array.from({length: 6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
         const orderParams = `ref=${ref}&offer=${encodeURIComponent(offer.title)}&value=${total}&qty=${selectedQty}`;
@@ -646,11 +630,7 @@ Total: ${money(total)} + frais (350-800 DA)`;
         e.target.classList.add('show');
         if(!viewContentFired && e.target.closest('#offers')) {
           const offer = CONFIG.offers.find(o => o.id === selectedOfferId);
-          fbq('track', 'ViewContent', {
-            value: offer?.price,
-            currency: 'DZD',
-            content_name: CONFIG.productName
-          });
+          fbq('track', 'ViewContent', { value: offer?.price, currency: 'DZD', content_name: CONFIG.productName });
           viewContentFired = true;
         }
       }
@@ -662,6 +642,7 @@ Total: ${money(total)} + frais (350-800 DA)`;
   renderBenefits();
   renderOffers();
   renderFAQ();
+  renderSocialProof();
   setupProductCarousel();
   setupBeforeAfterCarousel();
   bindOrderEmail();
