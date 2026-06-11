@@ -55,6 +55,10 @@
   </script>
 
   <script>
+    /* FIX PAGE BLANCHE: active les animations reveal uniquement si JS tourne */
+    document.documentElement.classList.add('js');
+  </script>
+  <script>
     /* PERF: le stub fbq est créé immédiatement (les appels fbq() partout dans la
        page restent valides et sont mis en file), mais le script fbevents.js
        (~100 Ko) n'est téléchargé qu'à window.load — après l'affichage.
@@ -112,6 +116,8 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    /* FIX RESPONSIVE: aucun élément ne peut créer de défilement horizontal */
+    html, body { overflow-x: clip; }
     body {
       font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
       background: linear-gradient(180deg, #fffdfc 0%, #fff7f6 100%);
@@ -233,6 +239,7 @@
     input, select, textarea {
       width: 100%; padding: 14px; border-radius: 14px; border: 1px solid var(--line);
       background: #fff; outline: none;
+      font-size: 16px; /* FIX iOS: < 16px déclenche un zoom automatique au focus */
     }
     input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(213,109,139,0.2); }
     input[aria-invalid="true"] { border-color: #c53f60; }
@@ -240,10 +247,14 @@
     .error.visible { display: block; }
     .success-box { display: none; margin-top: 14px; padding: 14px; background: #e0f5e8; color: #146c49; border-radius: 16px; }
     .error-box { display: none; margin-top: 14px; padding: 14px; background: #fde8ee; color: #b03a5b; border-radius: 16px; }
-    /* FIX #4: honeypot invisible pour les humains, rempli par les bots */
+    /* FIX #4: honeypot invisible pour les humains, rempli par les bots.
+       FIX RESPONSIVE: pattern visually-hidden SANS left:-9999px — en RTL,
+       un décalage à gauche créait 10 000px de défilement horizontal. */
     .hp-field {
-      position: absolute !important; left: -9999px !important;
-      width: 1px; height: 1px; overflow: hidden; opacity: 0;
+      position: absolute !important;
+      width: 1px !important; height: 1px !important;
+      overflow: hidden !important; clip-path: inset(50%) !important;
+      white-space: nowrap !important; opacity: 0;
     }
     /* FIX #10: récapitulatif de commande */
     .order-summary {
@@ -262,12 +273,15 @@
       display: grid; place-items: center; font-size: 28px; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       z-index: 79;
     }
-    .reveal { opacity: 0; transform: translateY(18px); transition: 0.5s; }
-    .reveal.show { opacity: 1; transform: none; }
+    /* FIX PAGE BLANCHE: l'animation reveal ne s'active QUE si html.js est
+       présent (posé par JS). Sans JS, tout est visible — plus jamais de
+       page blanche pour Lighthouse ni pour une cliente dont le JS échoue. */
+    html.js .reveal { opacity: 0; transform: translateY(18px); transition: 0.5s; }
+    html.js .reveal.show { opacity: 1; transform: none; }
     /* FIX (a11y): respecter prefers-reduced-motion */
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .reveal { opacity: 1; transform: none; transition: none; }
+      html.js .reveal { opacity: 1; transform: none; transition: none; }
       .slides { transition: none; }
       .btn:hover { transform: none; }
     }
@@ -316,6 +330,22 @@
       .carousel-main { min-height: 300px; }
       .features { grid-template-columns: 1fr; }
       .offers { grid-template-columns: 1fr; }
+      /* FIX RESPONSIVE: champs sur 1 colonne (139px par champ avant = illisible) */
+      .form-grid { grid-template-columns: 1fr; }
+      /* FIX RESPONSIVE: zones tactiles ≥ 44px (norme iOS/Android) */
+      .qty-btn { width: 44px; height: 44px; }
+      .nav-btn { width: 44px; height: 44px; }
+      .dot { width: 12px; height: 12px; padding: 6px; background-clip: content-box; }
+      .thumb img { height: 56px; }
+      /* FIX RESPONSIVE: respiration sur petit écran */
+      .section { padding: 36px 0; }
+      .card { padding: 16px; }
+      .topbar-wrap { justify-content: center; text-align: center; }
+      h1 { font-size: clamp(26px, 7.5vw, 34px); }
+      .sub-offer { font-size: 20px; }
+      /* iOS: zone sûre sous la barre flottante (encoche/barre home) */
+      .floating-bar { bottom: calc(10px + env(safe-area-inset-bottom)); }
+      footer { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
     }
   </style>
 </head>
