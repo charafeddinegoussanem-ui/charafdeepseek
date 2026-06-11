@@ -20,13 +20,12 @@
   <meta name="description" content="ماسك Biodance Bio-Collagen Real Deep Mask - ترطيب، إشراقة، عروض حصرية مع الدفع عند الاستلام في الجزائر.">
 
   <!-- FIX (SEO): canonical + Open Graph + favicon -->
-  <!-- ⚠️ Remplacez https://VOTRE-DOMAINE.com par votre vrai domaine -->
-  <link rel="canonical" href="https://VOTRE-DOMAINE.com/">
+  <link rel="canonical" href="https://skinyorabiodencedz.vercel.app/">
   <meta property="og:type" content="product">
   <meta property="og:title" content="ماسك بايودانس بالكولاجين | الدفع عند الاستلام">
   <meta property="og:description" content="ترطيب عميق وإشراقة فورية. توصيل إلى 58 ولاية والدفع عند الاستلام.">
-  <meta property="og:image" content="https://VOTRE-DOMAINE.com/product1.jpg">
-  <meta property="og:url" content="https://VOTRE-DOMAINE.com/">
+  <meta property="og:image" content="https://skinyorabiodencedz.vercel.app/product1.jpg">
+  <meta property="og:url" content="https://skinyorabiodencedz.vercel.app/">
   <meta property="og:locale" content="ar_DZ">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23d56d8b'/%3E%3Ctext x='50' y='66' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EB%3C/text%3E%3C/svg%3E">
 
@@ -37,7 +36,7 @@
     "@type": "Product",
     "name": "Biodance Bio-Collagen Real Deep Mask",
     "description": "ماسك هيدروجيل بالكولاجين - ترطيب عميق وإشراقة فورية",
-    "image": "https://VOTRE-DOMAINE.com/product1.jpg",
+    "image": "https://skinyorabiodencedz.vercel.app/product1.jpg",
     "offers": {
       "@type": "AggregateOffer",
       "priceCurrency": "DZD",
@@ -870,7 +869,7 @@ Total: ${money(total)} + frais (350-800 DA)`;
       // Content-Type text/plain = "simple request" → pas de préflight CORS,
       // ce qui est obligatoire avec Apps Script (il ne gère pas OPTIONS).
       let sheetOk = false;
-      const sheetConfigured = CONFIG.sheet.endpoint && CONFIG.sheet.endpoint.startsWith(''https://script.google.com/'');
+      const sheetConfigured = CONFIG.sheet.endpoint && CONFIG.sheet.endpoint.startsWith('https://script.google.com/');
       if (sheetConfigured) {
         try {
           const res = await fetch(CONFIG.sheet.endpoint, {
