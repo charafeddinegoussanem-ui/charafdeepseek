@@ -9,7 +9,7 @@
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://connect.facebook.net;
-    connect-src 'self' https://api.emailjs.com https://www.facebook.com;
+    connect-src 'self' https://api.emailjs.com https://www.facebook.com https://script.google.com https://script.googleusercontent.com;
     img-src 'self' data: https://www.facebook.com;
     style-src 'self' 'unsafe-inline';
     frame-src https://www.facebook.com;
@@ -21,7 +21,7 @@
 
   <!-- FIX (SEO): canonical + Open Graph + favicon -->
   <!-- ⚠️ Remplacez https://VOTRE-DOMAINE.com par votre vrai domaine -->
-  <link rel="canonical" href="https://skinyorabiodencedz.vercel.app//">
+  <link rel="canonical" href="https://VOTRE-DOMAINE.com/">
   <meta property="og:type" content="product">
   <meta property="og:title" content="ماسك بايودانس بالكولاجين | الدفع عند الاستلام">
   <meta property="og:description" content="ترطيب عميق وإشراقة فورية. توصيل إلى 58 ولاية والدفع عند الاستلام.">
@@ -532,6 +532,13 @@
     infoFormTitle: 'عندك سؤال قبل الطلب؟',
     infoFormText: 'أرسلي استفسارك وسنرد عليك بسرعة.',
     emailjs: { serviceId: 'service_q7wx8gn', templateId: 'template_xkpm4qc' },
+    // ── GOOGLE SHEET (canal principal des commandes) ──
+    // ⚠️ Collez ici l'URL de déploiement Apps Script (finit par /exec)
+    // et le MÊME secret que dans google-apps-script.gs
+    sheet: {
+      endpoint: 'COLLEZ_ICI_VOTRE_URL_APPS_SCRIPT/exec',
+      secret: 'CHANGEZ-MOI-phrase-secrete-2026'
+    },
     minFormTimeMs: 3000,      // FIX #4: temps minimum avant envoi (anti-bot)
     submitCooldownMs: 60000   // FIX #4: délai minimum entre deux envois
   };
@@ -834,10 +841,6 @@
         return;
       }
       if (!antiSpamCheck(orderForm, errorBox)) return;
-      if (!window.emailjs) {
-        showError(errorBox, 'تعذر الإرسال حالياً. يرجى التواصل معنا مباشرة عبر واتساب: 0540732771');
-        return;
-      }
 
       const offer = getOffer();
       const total = offer.price * selectedQty;
@@ -863,21 +866,64 @@ Total: ${money(total)} + frais (350-800 DA)`;
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'جارٍ الإرسال...';
 
-      try {
-        // FIX #2: to_email RETIRÉ — le destinataire doit être configuré dans le template EmailJS
-        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-          from_name: $('#fullName').value.trim(),
-          message: details,
-          subject: `Commande ${ref} - ${$('#fullName').value.trim()}`
-        });
+      // ── CANAL 1 (PRINCIPAL) : Google Sheet ──
+      // Content-Type text/plain = "simple request" → pas de préflight CORS,
+      // ce qui est obligatoire avec Apps Script (il ne gère pas OPTIONS).
+      let sheetOk = false;
+      const sheetConfigured = CONFIG.sheet.endpoint && CONFIG.sheet.endpoint.startsWith('https://script.google.com/macros/s/AKfycbwfc0BoOTOcKENoaEWR4IwwmsnbhCTL_7IfjvRO1naFXpIhy5wYvZsdReh1K1SbgD1w/exec');
+      if (sheetConfigured) {
+        try {
+          const res = await fetch(CONFIG.sheet.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              secret: CONFIG.sheet.secret,
+              ref,
+              name: $('#fullName').value.trim(),
+              phone,
+              wilaya: $('#wilaya').value.trim(),
+              commune: $('#commune').value.trim(),
+              delivery: $('#deliveryType').value,
+              offer: offer.title,
+              qty: selectedQty,
+              units: offer.units * selectedQty,
+              total
+            })
+          });
+          const result = await res.json();
+          sheetOk = result && result.ok === true;
+        } catch (err) {
+          console.error('Sheet send failed:', err);
+        }
+      }
 
+      // ── CANAL 2 (NOTIFICATION) : EmailJS ──
+      // Best-effort : si l'email échoue mais que le Sheet a la commande,
+      // on ne bloque PAS la cliente (la commande n'est pas perdue).
+      let emailOk = false;
+      if (window.emailjs) {
+        try {
+          // FIX #2: to_email RETIRÉ — destinataire configuré dans le template EmailJS
+          await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+            from_name: $('#fullName').value.trim(),
+            message: details,
+            subject: `Commande ${ref} - ${$('#fullName').value.trim()}`
+          });
+          emailOk = true;
+        } catch (err) {
+          console.error('Email send failed:', err);
+        }
+      }
+
+      // Succès si AU MOINS UN canal a reçu la commande
+      if (sheetOk || emailOk) {
         markSubmitted();
 
-        // FIX #6: copie locale de la commande (filet de sécurité si l'email se perd)
+        // FIX #6: copie locale de la commande (3e filet de sécurité)
         try {
           const orders = JSON.parse(localStorage.getItem('bd_orders') || '[]');
           orders.push({ ref, ts: new Date().toISOString(), name: $('#fullName').value.trim(),
-                        phone, offer: offer.id, qty: selectedQty, total });
+                        phone, offer: offer.id, qty: selectedQty, total, sheetOk, emailOk });
           localStorage.setItem('bd_orders', JSON.stringify(orders.slice(-20)));
         } catch (e) {}
 
@@ -891,18 +937,14 @@ Total: ${money(total)} + frais (350-800 DA)`;
            - fbq('track', 'Purchase', {value, currency:'DZD'}, {eventID: ref})
              en réutilisant le MÊME ref comme eventID pour la déduplication.
            - Ne JAMAIS injecter les paramètres d'URL via innerHTML dans merci.html
-             (utiliser textContent) — sinon XSS.
-           - Idéalement, envoyer Purchase via l'API Conversions côté serveur :
-             les paramètres d'URL sont falsifiables. */
-      } catch (err) {
-        // FIX #11: erreur inline en arabe avec issue de secours, plus d'alert()
+             (utiliser textContent) — sinon XSS. */
+      } else {
+        // FIX #11: les deux canaux ont échoué → erreur inline avec issue de secours
         showError(errorBox, 'حدث خطأ أثناء إرسال الطلب. حاولي مرة أخرى أو اطلبي مباشرة عبر واتساب: 0540732771');
-        console.error('Order send failed:', err);
-      } finally {
-        orderSending = false;
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
       }
+      orderSending = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
     });
   }
 
