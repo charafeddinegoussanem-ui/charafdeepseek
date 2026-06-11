@@ -870,7 +870,7 @@ Total: ${money(total)} + frais (350-800 DA)`;
       // Content-Type text/plain = "simple request" → pas de préflight CORS,
       // ce qui est obligatoire avec Apps Script (il ne gère pas OPTIONS).
       let sheetOk = false;
-      const sheetConfigured = CONFIG.sheet.endpoint && CONFIG.sheet.endpoint.startsWith('https://script.google.com/macros/s/AKfycbwfc0BoOTOcKENoaEWR4IwwmsnbhCTL_7IfjvRO1naFXpIhy5wYvZsdReh1K1SbgD1w/exec');
+      const sheetConfigured = CONFIG.sheet.endpoint && CONFIG.sheet.endpoint.startsWith(''https://script.google.com/'');
       if (sheetConfigured) {
         try {
           const res = await fetch(CONFIG.sheet.endpoint, {
