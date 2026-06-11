@@ -16,6 +16,13 @@
     base-uri 'self';
     form-action 'self';">
 
+  <!-- PERF: préconnexions aux domaines tiers (gagne 100-300ms par domaine) -->
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- PERF: préchargement de l'image LCP (le carrousel l'injecte en JS, donc
+       sans ce preload le navigateur la découvre trop tard) -->
+  <link rel="preload" as="image" href="./product1.webp" fetchpriority="high">
+
   <title>ماسك بايودانس بالكولاجين | ترطيب عميق وإشراقة فورية</title>
   <meta name="description" content="ماسك Biodance Bio-Collagen Real Deep Mask - ترطيب، إشراقة، عروض حصرية مع الدفع عند الاستلام في الجزائر.">
 
@@ -24,7 +31,7 @@
   <meta property="og:type" content="product">
   <meta property="og:title" content="ماسك بايودانس بالكولاجين | الدفع عند الاستلام">
   <meta property="og:description" content="ترطيب عميق وإشراقة فورية. توصيل إلى 58 ولاية والدفع عند الاستلام.">
-  <meta property="og:image" content="https://skinyorabiodencedz.vercel.app/product1.jpg">
+  <meta property="og:image" content="https://skinyorabiodencedz.vercel.app/product1.webp">
   <meta property="og:url" content="https://skinyorabiodencedz.vercel.app/">
   <meta property="og:locale" content="ar_DZ">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23d56d8b'/%3E%3Ctext x='50' y='66' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EB%3C/text%3E%3C/svg%3E">
@@ -36,7 +43,7 @@
     "@type": "Product",
     "name": "Biodance Bio-Collagen Real Deep Mask",
     "description": "ماسك هيدروجيل بالكولاجين - ترطيب عميق وإشراقة فورية",
-    "image": "https://skinyorabiodencedz.vercel.app/product1.jpg",
+    "image": "https://skinyorabiodencedz.vercel.app/product1.webp",
     "offers": {
       "@type": "AggregateOffer",
       "priceCurrency": "DZD",
@@ -48,16 +55,23 @@
   </script>
 
   <script>
+    /* PERF: le stub fbq est créé immédiatement (les appels fbq() partout dans la
+       page restent valides et sont mis en file), mais le script fbevents.js
+       (~100 Ko) n'est téléchargé qu'à window.load — après l'affichage.
+       Le PageView est bien compté, juste 1-2s plus tard. */
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
       if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
+      n.queue=[]}(window, document);
     fbq('init', '1444522217477477');
     fbq('track', 'PageView');
+    window.addEventListener('load', function() {
+      var t = document.createElement('script');
+      t.async = true;
+      t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      document.head.appendChild(t);
+    });
   </script>
   <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1444522217477477&ev=PageView&noscript=1" alt=""
@@ -66,12 +80,14 @@
   <!-- FIX #5: version épinglée + crossorigin.
        ⚠️ Générez le hash SRI sur https://www.srihash.org/ avec cette URL exacte,
        puis ajoutez l'attribut integrity="sha384-..." ci-dessous. -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"
+  <!-- PERF: defer = ne bloque plus le rendu (EmailJS ne sert qu'à la soumission) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"
           crossorigin="anonymous"></script>
   <script>
-    (function() {
+    /* PERF: init après DOMContentLoaded (les scripts defer sont exécutés juste avant) */
+    document.addEventListener('DOMContentLoaded', function() {
       if (window.emailjs) emailjs.init({ publicKey: "wI4lyiYiXT4aP6jfk" });
-    })();
+    });
     /* FIX #2 — IMPORTANT (à faire dans le dashboard EmailJS, pas dans le code) :
        1. Template settings → "To email" : mettez votre adresse EN DUR dans le template.
           Le paramètre to_email a été RETIRÉ du code ci-dessous.
@@ -210,11 +226,6 @@
     .save { color: var(--success); font-weight: 700; }
     .qty-wrap { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
     .qty-btn { width: 36px; height: 36px; border-radius: 12px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
-    .before-after-layout { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; }
-    .ba-labels { position: absolute; top: 14px; inset-inline: 14px; display: flex; justify-content: space-between; pointer-events: none; z-index: 1; }
-    .ba-label { background: rgba(0,0,0,0.7); color: #fff; border-radius: 999px; padding: 6px 12px; font-size: 13px; }
-    .ba-split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
-    .ba-split img { height: 380px; object-fit: cover; border-radius: 20px; width: 100%; }
     .order-layout, .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .field { display: grid; gap: 6px; }
@@ -302,7 +313,6 @@
       .features { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 720px) {
-      .ba-split img { height: 220px; }
       .carousel-main { min-height: 300px; }
       .features { grid-template-columns: 1fr; }
       .offers { grid-template-columns: 1fr; }
@@ -343,24 +353,6 @@
   </div>
 </header>
 
-<!-- ⚠️ AVERTISSEMENT POLITIQUE META (non corrigeable par code) :
-     Les images avant/après et les captures d'écran de commentaires Facebook avec
-     de vraies personnes peuvent faire signaler votre compte publicitaire Meta.
-     Envisagez de les remplacer par des gros plans du produit/texture et des
-     témoignages texte anonymisés avant de scaler vos campagnes. -->
-<section class="section" style="padding-top:0; padding-bottom:0;">
-  <div class="container before-after-layout">
-    <div class="card carousel ba-main reveal show" id="beforeAfterCarousel">
-      <div class="carousel-main" style="background:transparent">
-        <button class="nav-btn prev" type="button" aria-label="السابق">›</button>
-        <button class="nav-btn next" type="button" aria-label="التالي">‹</button>
-        <div class="slides" id="baSlides"></div>
-      </div>
-      <div class="dots" id="baDots" role="tablist" aria-label="صور قبل وبعد"></div>
-    </div>
-  </div>
-</section>
-
 <section class="section">
   <div class="container">
     <h2 class="section-title reveal">لماذا تحبه الكثير من البنات؟</h2>
@@ -395,6 +387,8 @@
   </div>
 </section>
 
+<!-- Note Meta : si les captures contiennent de vrais noms/photos de profil,
+     floutez-les avant de scaler les campagnes publicitaires. -->
 <section class="section" id="social-proof" style="padding-top:0">
   <div class="container">
     <h2 class="section-title reveal">آراء وتجارب الزبائن</h2>
@@ -509,9 +503,9 @@
     productName: 'Biodance Bio-Collagen Real Deep Mask',
     trustBadges: ['منتج أصلي', 'الدفع عند الاستلام', 'توصيل إلى 58 ولاية', 'مناسب للبشرة الحساسة'],
     offers: [
-      { id: 'offer1', title: '2 ماسك بـ 1900 دج', units: 2, price: 1900, compareAt: 2400, badge: 'اقتصادي', save: 'وفري 200 دج', selected: false },
-      { id: 'offer2', title: '4 ماسك بـ 2900 دج', units: 4, price: 2900, compareAt: 4800, badge: 'الأكثر مبيعاً', save: 'وفري 1300 دج', selected: true },
-      { id: 'offer3', title: '8 ماسك بـ 5000 دج', units: 8, price: 5000, compareAt: 8800, badge: 'أفضل قيمة', save: 'وفري 3700 دج', selected: false }
+      { id: 'offer1', title: '2 ماسك بـ 1900 دج', units: 2, price: 1900, compareAt: 2400, badge: 'اقتصادي', save: 'وفري 500 دج', selected: false },
+      { id: 'offer2', title: '4 ماسك بـ 2900 دج', units: 4, price: 2900, compareAt: 4800, badge: 'الأكثر مبيعاً', save: 'وفري 1900 دج', selected: true },
+      { id: 'offer3', title: '8 ماسك بـ 5000 دج', units: 8, price: 5000, compareAt: 8800, badge: 'أفضل قيمة', save: 'وفري 3800 دج', selected: false }
     ],
     benefits: [
       { icon: '💧', title: 'ترطيب عميق', text: 'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.' },
@@ -520,13 +514,8 @@
       { icon: '🌸', title: 'لطيف على البشرة', text: 'تركيبة مناسبة حتى للبشرة الحساسة.' },
       { icon: '💄', title: 'تحضير قبل المكياج', text: 'يساعد على ترطيب البشرة للحصول على مكياج ألطف.' }
     ],
-    beforeAfterSlides: [
-      { beforeImage: './before1.jpg', afterImage: './after1.jpg', caption: '' },
-      { beforeImage: './before2.jpg', afterImage: './after2.jpg', caption: '' },
-      { beforeImage: './before3.jpg', afterImage: './after3.jpg', caption: '' }
-    ],
-    images: ['product1.jpg', 'product2.jpg', 'product3.jpg', 'product4.jpg', 'product5.jpg'],
-    socialProofImages: ['social-proof-1.jpg', 'social-proof-2.jpg', 'social-proof-3.jpg'],
+    images: ['product1.webp', 'product2.webp', 'product3.webp', 'product4.webp', 'product5.webp'],
+    socialProofImages: ['social-proof-1.webp', 'social-proof-2.webp', 'social-proof-3.webp'],
     contactChannels: { whatsapp: 'واتساب: 213540732771+', phone: 'اتصال: 0540732771' },
     infoFormTitle: 'عندك سؤال قبل الطلب؟',
     infoFormText: 'أرسلي استفسارك وسنرد عليك بسرعة.',
@@ -644,21 +633,6 @@
         <button class="thumb ${i===0?'active':''}" data-i="${i}" type="button" aria-label="عرض ${escapeHTML(item.caption)}">
           <img src="${escapeHTML(item.image)}" alt="" loading="lazy" width="120" height="88">
         </button>`
-    });
-  }
-
-  function setupBeforeAfterCarousel() {
-    createCarousel({
-      rootSel: '#beforeAfterCarousel', slidesSel: '#baSlides', dotsSel: '#baDots',
-      items: CONFIG.beforeAfterSlides,
-      renderSlide: (item) => `
-        <div class="slide">
-          <div class="ba-labels"><span class="ba-label">قبل</span><span class="ba-label">بعد</span></div>
-          <div class="ba-split">
-            <img src="${escapeHTML(item.beforeImage)}" alt="البشرة قبل الاستخدام" loading="lazy" width="400" height="380">
-            <img src="${escapeHTML(item.afterImage)}" alt="البشرة بعد الاستخدام" loading="lazy" width="400" height="380">
-          </div>
-        </div>`
     });
   }
 
@@ -1017,7 +991,6 @@ Total: ${money(total)} + frais (350-800 DA)`;
   renderFAQ();
   renderSocialProof();
   setupProductCarousel();
-  setupBeforeAfterCarousel();
   bindOrderEmail();
   bindContactEmail();
   bindScroll();
