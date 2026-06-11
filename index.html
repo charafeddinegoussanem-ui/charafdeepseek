@@ -3,8 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- FIX #5: CSP — restreint les sources de scripts/connexions. 'unsafe-inline' reste nécessaire
+       pour le pixel et le script principal. Pour une CSP stricte, servir via header HTTP avec nonce. -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://connect.facebook.net;
+    connect-src 'self' https://api.emailjs.com https://www.facebook.com;
+    img-src 'self' data: https://www.facebook.com;
+    style-src 'self' 'unsafe-inline';
+    frame-src https://www.facebook.com;
+    base-uri 'self';
+    form-action 'self';">
+
   <title>ماسك بايودانس بالكولاجين | ترطيب عميق وإشراقة فورية</title>
   <meta name="description" content="ماسك Biodance Bio-Collagen Real Deep Mask - ترطيب، إشراقة، عروض حصرية مع الدفع عند الاستلام في الجزائر.">
+
+  <!-- FIX (SEO): canonical + Open Graph + favicon -->
+  <!-- ⚠️ Remplacez https://VOTRE-DOMAINE.com par votre vrai domaine -->
+  <link rel="canonical" href="https://skinyorabiodencedz.vercel.app//">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="ماسك بايودانس بالكولاجين | الدفع عند الاستلام">
+  <meta property="og:description" content="ترطيب عميق وإشراقة فورية. توصيل إلى 58 ولاية والدفع عند الاستلام.">
+  <meta property="og:image" content="https://VOTRE-DOMAINE.com/product1.jpg">
+  <meta property="og:url" content="https://VOTRE-DOMAINE.com/">
+  <meta property="og:locale" content="ar_DZ">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23d56d8b'/%3E%3Ctext x='50' y='66' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EB%3C/text%3E%3C/svg%3E">
+
+  <!-- FIX (SEO): données structurées Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Biodance Bio-Collagen Real Deep Mask",
+    "description": "ماسك هيدروجيل بالكولاجين - ترطيب عميق وإشراقة فورية",
+    "image": "https://VOTRE-DOMAINE.com/product1.jpg",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "DZD",
+      "lowPrice": "2200",
+      "highPrice": "5900",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
 
   <script>
     !function(f,b,e,v,n,t,s)
@@ -19,14 +61,24 @@
     fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1444522217477477&ev=PageView&noscript=1"
+    src="https://www.facebook.com/tr?id=1444522217477477&ev=PageView&noscript=1" alt=""
   /></noscript>
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- FIX #5: version épinglée + crossorigin.
+       ⚠️ Générez le hash SRI sur https://www.srihash.org/ avec cette URL exacte,
+       puis ajoutez l'attribut integrity="sha384-..." ci-dessous. -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"
+          crossorigin="anonymous"></script>
   <script>
     (function() {
-      emailjs.init({ publicKey: "wI4lyiYiXT4aP6jfk" });
+      if (window.emailjs) emailjs.init({ publicKey: "wI4lyiYiXT4aP6jfk" });
     })();
+    /* FIX #2 — IMPORTANT (à faire dans le dashboard EmailJS, pas dans le code) :
+       1. Template settings → "To email" : mettez votre adresse EN DUR dans le template.
+          Le paramètre to_email a été RETIRÉ du code ci-dessous.
+       2. Account → Security → activez "Allow only from these domains" avec votre domaine.
+       3. Activez l'option reCAPTCHA d'EmailJS si possible.
+       Sans ces 3 étapes, n'importe qui peut vider votre quota d'emails. */
   </script>
 
   <style>
@@ -54,6 +106,12 @@
     img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
     button, input, select, textarea { font: inherit; }
+    /* FIX (a11y): focus visible au clavier */
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--primary-dark);
+      outline-offset: 2px;
+    }
     .container { width: min(calc(100% - 28px), var(--max)); margin-inline: auto; }
     .section { padding: 56px 0; }
     .section-title { font-size: clamp(26px, 4vw, 42px); margin-bottom: 12px; }
@@ -109,13 +167,14 @@
       font-weight: 700; transition: 0.2s;
     }
     .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; }
     .btn-secondary { background: #fff; color: var(--text); border: 1px solid var(--line); }
     .carousel { position: relative; overflow: hidden; }
     .carousel-main { position: relative; border-radius: 30px; overflow: hidden; background: #fff; min-height: 440px; }
     .slides { display: flex; transition: transform 0.35s ease; }
     .slide { min-width: 100%; position: relative; display: flex; align-items: center; justify-content: center; padding: 18px; }
-    .slide img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; aspect-ratio: 4 / 5; }
     .slide .caption {
       position: absolute; bottom: 18px; left: 18px; background: rgba(0,0,0,0.6); color: #fff;
       padding: 8px 14px; border-radius: 14px; font-size: 14px;
@@ -128,7 +187,7 @@
     .nav-btn.prev { right: 12px; }
     .nav-btn.next { left: 12px; }
     .dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #e4c9d1; border: none; cursor: pointer; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #e4c9d1; border: none; cursor: pointer; padding: 0; }
     .dot.active { background: var(--primary); }
     .thumbs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 12px; }
     .thumb { border: 2px solid transparent; border-radius: 16px; overflow: hidden; cursor: pointer; background: #fff; padding: 4px; }
@@ -153,10 +212,10 @@
     .qty-wrap { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
     .qty-btn { width: 36px; height: 36px; border-radius: 12px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
     .before-after-layout { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; }
-    .ba-labels { position: absolute; top: 14px; inset-inline: 14px; display: flex; justify-content: space-between; pointer-events: none; }
+    .ba-labels { position: absolute; top: 14px; inset-inline: 14px; display: flex; justify-content: space-between; pointer-events: none; z-index: 1; }
     .ba-label { background: rgba(0,0,0,0.7); color: #fff; border-radius: 999px; padding: 6px 12px; font-size: 13px; }
-    .ba-split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .ba-split img { height: 380px; object-fit: cover; border-radius: 20px; }
+    .ba-split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+    .ba-split img { height: 380px; object-fit: cover; border-radius: 20px; width: 100%; }
     .order-layout, .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .field { display: grid; gap: 6px; }
@@ -166,8 +225,22 @@
       background: #fff; outline: none;
     }
     input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(213,109,139,0.2); }
+    input[aria-invalid="true"] { border-color: #c53f60; }
     .error { font-size: 12px; color: #c53f60; display: none; }
+    .error.visible { display: block; }
     .success-box { display: none; margin-top: 14px; padding: 14px; background: #e0f5e8; color: #146c49; border-radius: 16px; }
+    .error-box { display: none; margin-top: 14px; padding: 14px; background: #fde8ee; color: #b03a5b; border-radius: 16px; }
+    /* FIX #4: honeypot invisible pour les humains, rempli par les bots */
+    .hp-field {
+      position: absolute !important; left: -9999px !important;
+      width: 1px; height: 1px; overflow: hidden; opacity: 0;
+    }
+    /* FIX #10: récapitulatif de commande */
+    .order-summary {
+      background: #fff0f4; border: 1px solid #f0c4d4; border-radius: 14px;
+      padding: 14px 18px; margin: 14px 0; font-size: 15px;
+    }
+    .order-summary strong { color: var(--primary-dark); }
     .floating-bar {
       position: fixed; bottom: 14px; right: 14px; left: 14px;
       display: flex; gap: 10px; z-index: 80;
@@ -181,7 +254,15 @@
     }
     .reveal { opacity: 0; transform: translateY(18px); transition: 0.5s; }
     .reveal.show { opacity: 1; transform: none; }
-    footer { padding: 26px 0 100px; color: var(--muted); text-align: center; }
+    /* FIX (a11y): respecter prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .slides { transition: none; }
+      .btn:hover { transform: none; }
+    }
+    footer { padding: 26px 0 100px; color: var(--muted); text-align: center; font-size: 14px; }
+    footer .privacy { margin-top: 8px; font-size: 12px; max-width: 640px; margin-inline: auto; }
     .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .step { padding: 20px; }
     .step-no {
@@ -244,33 +325,39 @@
   <div class="container hero-wrap">
     <div class="hero-copy reveal show">
       <span class="eyebrow">منتج فعال مستوحى من تجربة K-Beauty</span>
-      <h1>احصلي على البشرة الكورية الزجاجية مع ماسك كولاجين Biodence</h1>
+      <!-- FIX (typo): Biodence → Biodance -->
+      <h1>احصلي على البشرة الكورية الزجاجية مع ماسك كولاجين Biodance</h1>
       <div class="sub-offer">العرض: 2 ماسك فقط بـ 2200 دج</div>
       <div class="badges" id="trustBadges"></div>
     </div>
     <div class="hero-side reveal show">
       <div class="card carousel" id="productCarousel">
         <div class="carousel-main">
-          <button class="nav-btn prev" type="button">›</button>
-          <button class="nav-btn next" type="button">‹</button>
+          <button class="nav-btn prev" type="button" aria-label="الصورة السابقة">›</button>
+          <button class="nav-btn next" type="button" aria-label="الصورة التالية">‹</button>
           <div class="slides" id="productSlides"></div>
         </div>
-        <div class="dots" id="productDots"></div>
+        <div class="dots" id="productDots" role="tablist" aria-label="صور المنتج"></div>
         <div class="thumbs" id="productThumbs"></div>
       </div>
     </div>
   </div>
 </header>
 
+<!-- ⚠️ AVERTISSEMENT POLITIQUE META (non corrigeable par code) :
+     Les images avant/après et les captures d'écran de commentaires Facebook avec
+     de vraies personnes peuvent faire signaler votre compte publicitaire Meta.
+     Envisagez de les remplacer par des gros plans du produit/texture et des
+     témoignages texte anonymisés avant de scaler vos campagnes. -->
 <section class="section" style="padding-top:0; padding-bottom:0;">
   <div class="container before-after-layout">
     <div class="card carousel ba-main reveal show" id="beforeAfterCarousel">
       <div class="carousel-main" style="background:transparent">
-        <button class="nav-btn prev" type="button">›</button>
-        <button class="nav-btn next" type="button">‹</button>
+        <button class="nav-btn prev" type="button" aria-label="السابق">›</button>
+        <button class="nav-btn next" type="button" aria-label="التالي">‹</button>
         <div class="slides" id="baSlides"></div>
       </div>
-      <div class="dots" id="baDots"></div>
+      <div class="dots" id="baDots" role="tablist" aria-label="صور قبل وبعد"></div>
     </div>
   </div>
 </section>
@@ -326,13 +413,19 @@
     </div>
     <div class="card form-card reveal">
       <form id="infoForm">
-        <div class="form-grid">
-          <div class="field"><label>الاسم</label><input name="name" required placeholder="اكتبي اسمك"></div>
-          <div class="field"><label>الهاتف أو البريد</label><input name="contact" required placeholder="0550xxxxxx"></div>
-          <div class="field full"><label>رسالتك</label><textarea name="message" rows="5" required placeholder="سؤالك..."></textarea></div>
+        <!-- FIX #4: honeypot -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="info_website">Website</label>
+          <input type="text" id="info_website" name="website" tabindex="-1" autocomplete="off">
         </div>
-        <button class="btn btn-secondary" style="width:100%" type="submit">أرسل استفسارك</button>
-        <div class="success-box" id="infoSuccess">تم إرساله بنجاح.</div>
+        <div class="form-grid">
+          <div class="field"><label for="infoName">الاسم</label><input id="infoName" name="name" required placeholder="اكتبي اسمك" autocomplete="name"></div>
+          <div class="field"><label for="infoContact">الهاتف أو البريد</label><input id="infoContact" name="contact" required placeholder="0550xxxxxx" autocomplete="tel"></div>
+          <div class="field full"><label for="infoMessage">رسالتك</label><textarea id="infoMessage" name="message" rows="5" required placeholder="سؤالك..."></textarea></div>
+        </div>
+        <button class="btn btn-secondary" style="width:100%" type="submit" id="infoSubmit">أرسل استفسارك</button>
+        <div class="success-box" id="infoSuccess" role="status" aria-live="polite">تم إرساله بنجاح.</div>
+        <div class="error-box" id="infoError" role="alert" aria-live="assertive">حدث خطأ أثناء الإرسال. حاولي مرة أخرى أو تواصلي معنا عبر واتساب.</div>
       </form>
     </div>
   </div>
@@ -350,43 +443,83 @@
         </div>
       </div>
       <form id="orderForm" novalidate>
-        <div class="form-grid">
-          <div class="field"><label>الاسم الكامل</label><input id="fullName" name="fullName" required><small class="error">مطلوب</small></div>
-          <div class="field"><label>رقم الهاتف</label><input id="phone" name="phone" required><small class="error">مطلوب</small></div>
-          <div class="field"><label>الولاية</label><input id="wilaya" name="wilaya" required><small class="error">مطلوب</small></div>
-          <div class="field"><label>البلدية</label><input id="commune" name="commune" required><small class="error">مطلوب</small></div>
-          <div class="field"><label>نوع التوصيل (350-800 دج)</label><select id="deliveryType"><option>التوصيل إلى المنزل</option><option>التوصيل إلى المكتب</option></select></div>
-          <div class="field"><label>العرض المختار</label><select id="offerSelect"></select></div>
+        <!-- FIX #4: honeypot -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="order_website">Website</label>
+          <input type="text" id="order_website" name="website" tabindex="-1" autocomplete="off">
         </div>
-        <button class="btn btn-primary" style="width:100%" type="submit">تأكيد الطلب</button>
+        <div class="form-grid">
+          <div class="field">
+            <label for="fullName">الاسم الكامل</label>
+            <input id="fullName" name="fullName" required autocomplete="name">
+            <small class="error" role="alert">الاسم الكامل مطلوب</small>
+          </div>
+          <div class="field">
+            <!-- FIX #3: type=tel + validation du format algérien en JS -->
+            <label for="phone">رقم الهاتف</label>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" required
+                   placeholder="0550123456" autocomplete="tel" maxlength="14">
+            <small class="error" role="alert">أدخلي رقم هاتف جزائري صحيح (مثال: 0550123456)</small>
+          </div>
+          <div class="field">
+            <label for="wilaya">الولاية</label>
+            <input id="wilaya" name="wilaya" required autocomplete="address-level1">
+            <small class="error" role="alert">الولاية مطلوبة</small>
+          </div>
+          <div class="field">
+            <label for="commune">البلدية</label>
+            <input id="commune" name="commune" required autocomplete="address-level2">
+            <small class="error" role="alert">البلدية مطلوبة</small>
+          </div>
+          <div class="field">
+            <label for="deliveryType">نوع التوصيل (350-800 دج)</label>
+            <select id="deliveryType"><option>التوصيل إلى المنزل</option><option>التوصيل إلى المكتب</option></select>
+          </div>
+          <div class="field">
+            <label for="offerSelect">العرض المختار</label>
+            <select id="offerSelect"></select>
+          </div>
+        </div>
+        <!-- FIX #10: récapitulatif visible avant confirmation -->
+        <div class="order-summary" id="orderSummary" aria-live="polite"></div>
+        <button class="btn btn-primary" style="width:100%" type="submit" id="orderSubmit">تأكيد الطلب</button>
+        <div class="error-box" id="orderError" role="alert" aria-live="assertive"></div>
       </form>
     </div>
   </div>
 </section>
 
-<footer><div class="container">© 2025 - Biodance Algérie</div></footer>
+<footer>
+  <div class="container">
+    © 2025 - Biodance Algérie
+    <!-- FIX (légal): mention de confidentialité / pixel -->
+    <p class="privacy">نستخدم بياناتكم (الاسم، الهاتف، العنوان) فقط لمعالجة طلبكم وتوصيله، ولا نشاركها مع أي طرف آخر باستثناء شركة التوصيل. يستخدم هذا الموقع Facebook Pixel لأغراض إحصائية وإعلانية.</p>
+  </div>
+</footer>
 
 <div class="floating-bar">
   <button class="btn btn-secondary" data-scroll="#contact">استفسار سريع</button>
   <button class="btn btn-primary" data-scroll="#order">اطلبي الآن</button>
 </div>
-<a class="wa-float" href="https://wa.me/213540732771" aria-label="WhatsApp">✆</a>
+<a class="wa-float" href="https://wa.me/213540732771" aria-label="تواصلي معنا عبر واتساب" target="_blank" rel="noopener">✆</a>
 
 <script>
+  'use strict';
+
   const CONFIG = {
     productName: 'Biodance Bio-Collagen Real Deep Mask',
     trustBadges: ['منتج أصلي', 'الدفع عند الاستلام', 'توصيل إلى 58 ولاية', 'مناسب للبشرة الحساسة'],
     offers: [
-      { id: 'offer1', title: '2 ماسك بـ 2200 دج', price: 2200, compareAt: 2400, badge: 'اقتصادي', save: 'وفري 200 دج', selected: false },
-      { id: 'offer2', title: '4 ماسك بـ 3500 دج', price: 3500, compareAt: 4800, badge: 'الأكثر مبيعاً', save: 'وفري 1300 دج', selected: true },
-      { id: 'offer3', title: '8 ماسك بـ 5900 دج', price: 5900, compareAt: 8800, badge: 'أفضل قيمة', save: 'وفري 3700 دج', selected: false }
+      { id: 'offer1', title: '2 ماسك بـ 2200 دج', units: 2, price: 2200, compareAt: 2400, badge: 'اقتصادي', save: 'وفري 200 دج', selected: false },
+      { id: 'offer2', title: '4 ماسك بـ 3500 دج', units: 4, price: 3500, compareAt: 4800, badge: 'الأكثر مبيعاً', save: 'وفري 1300 دج', selected: true },
+      { id: 'offer3', title: '8 ماسك بـ 5900 دج', units: 8, price: 5900, compareAt: 8800, badge: 'أفضل قيمة', save: 'وفري 3700 دج', selected: false }
     ],
     benefits: [
-      { icon: '', title: 'ترطيب عميق', text: 'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.' },
-      { icon: '', title: 'إشراقة طبيعية', text: 'يمنح البشرة مظهراً أكثر نضارة وإشراقاً.' },
-      { icon: '', title: 'ملمس ناعم', text: 'يساعد البشرة على أن تبدو أكثر نعومة.' },
-      { icon: '', title: 'لطيف على البشرة', text: 'تركيبة مناسبة حتى للبشرة الحساسة.' },
-      { icon: '', title: 'تحضير قبل المكياج', text: 'يساعد على ترطيب البشرة للحصول على مكياج ألطف.' }
+      { icon: '💧', title: 'ترطيب عميق', text: 'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.' },
+      { icon: '✨', title: 'إشراقة طبيعية', text: 'يمنح البشرة مظهراً أكثر نضارة وإشراقاً.' },
+      { icon: '🪶', title: 'ملمس ناعم', text: 'يساعد البشرة على أن تبدو أكثر نعومة.' },
+      { icon: '🌸', title: 'لطيف على البشرة', text: 'تركيبة مناسبة حتى للبشرة الحساسة.' },
+      { icon: '💄', title: 'تحضير قبل المكياج', text: 'يساعد على ترطيب البشرة للحصول على مكياج ألطف.' }
     ],
     beforeAfterSlides: [
       { beforeImage: './before1.jpg', afterImage: './after1.jpg', caption: '' },
@@ -397,118 +530,212 @@
     socialProofImages: ['social-proof-1.jpg', 'social-proof-2.jpg', 'social-proof-3.jpg'],
     contactChannels: { whatsapp: 'واتساب: 213540732771+', phone: 'اتصال: 0540732771' },
     infoFormTitle: 'عندك سؤال قبل الطلب؟',
-    infoFormText: 'أرسلي استفسارك وسنرد عليك بسرعة.'
+    infoFormText: 'أرسلي استفسارك وسنرد عليك بسرعة.',
+    emailjs: { serviceId: 'service_q7wx8gn', templateId: 'template_xkpm4qc' },
+    minFormTimeMs: 3000,      // FIX #4: temps minimum avant envoi (anti-bot)
+    submitCooldownMs: 60000   // FIX #4: délai minimum entre deux envois
   };
+
+  // FIX #8: échappement HTML pour toute valeur dynamique injectée dans le DOM
+  const escapeHTML = (str) => String(str ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+
+  // FIX #12: placeholder SVG si une image manque (évite l'icône cassée)
+  const IMG_FALLBACK = "data:image/svg+xml," + encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' width='400' height='500'><rect width='100%' height='100%' fill='%23fde5de'/><text x='50%' y='50%' text-anchor='middle' fill='%23b84f6f' font-size='20' font-family='Arial'>Biodance</text></svg>"
+  );
+  function applyImgFallback(scope) {
+    (scope || document).querySelectorAll('img').forEach(img => {
+      if (!img.dataset.fbBound) {
+        img.dataset.fbBound = '1';
+        img.addEventListener('error', () => { img.src = IMG_FALLBACK; }, { once: true });
+      }
+    });
+  }
 
   let selectedOfferId = CONFIG.offers.find(o => o.selected)?.id || CONFIG.offers[0].id;
   let selectedQty = 1;
-  let orderSending = false;
+  const pageLoadTime = Date.now();
 
   const $ = s => document.querySelector(s);
   const $$ = s => [...document.querySelectorAll(s)];
   const money = v => `${v.toLocaleString('fr-FR')} دج`;
+  const getOffer = () => CONFIG.offers.find(o => o.id === selectedOfferId) || CONFIG.offers[0];
+
+  // FIX #3: validation du numéro algérien (mobile 05/06/07 ou fixe 0X, accepte +213)
+  function normalizePhone(raw) {
+    let p = String(raw).replace(/[\s.\-()]/g, '');
+    p = p.replace(/^\+?213/, '0');
+    return p;
+  }
+  function isValidAlgerianPhone(raw) {
+    const p = normalizePhone(raw);
+    return /^0[567]\d{8}$/.test(p) || /^0[1-4]\d{7}$/.test(p);
+  }
+
+  // fbq peut être bloqué par un adblocker — ne jamais laisser planter le flux de commande
+  function track(event, params, eventId) {
+    try {
+      if (typeof fbq === 'function') {
+        eventId ? fbq('track', event, params, { eventID: eventId }) : fbq('track', event, params);
+      }
+    } catch (e) { /* silencieux */ }
+  }
 
   function renderBasic() {
-    $('#trustBadges').innerHTML = CONFIG.trustBadges.map(b => `<span class="badge">${b}</span>`).join('');
+    $('#trustBadges').innerHTML = CONFIG.trustBadges.map(b => `<span class="badge">${escapeHTML(b)}</span>`).join('');
     $('#infoFormTitle').textContent = CONFIG.infoFormTitle;
     $('#infoFormText').textContent = CONFIG.infoFormText;
-    $('#contactPills').innerHTML = `<span class="pill">${CONFIG.contactChannels.whatsapp}</span><span class="pill">${CONFIG.contactChannels.phone}</span>`;
+    $('#contactPills').innerHTML =
+      `<span class="pill">${escapeHTML(CONFIG.contactChannels.whatsapp)}</span>` +
+      `<span class="pill">${escapeHTML(CONFIG.contactChannels.phone)}</span>`;
+  }
+
+  // FIX (DRY #16): fabrique de carrousel commune aux deux carrousels
+  function createCarousel({ rootSel, slidesSel, dotsSel, thumbsSel, items, renderSlide, renderThumb }) {
+    const root = $(rootSel);
+    const slidesEl = $(slidesSel);
+    const dotsEl = $(dotsSel);
+    const thumbsEl = thumbsSel ? $(thumbsSel) : null;
+    let index = 0;
+
+    slidesEl.innerHTML = items.map(renderSlide).join('');
+    dotsEl.innerHTML = items.map((_, i) =>
+      `<button class="dot ${i===0?'active':''}" data-i="${i}" type="button" aria-label="انتقال إلى الشريحة ${i+1}"></button>`).join('');
+    if (thumbsEl && renderThumb) thumbsEl.innerHTML = items.map(renderThumb).join('');
+
+    const update = (i) => {
+      index = (i + items.length) % items.length;
+      // RTL: translateX positif fonctionne car le flux est inversé
+      slidesEl.style.transform = `translateX(${index * 100}%)`;
+      [...dotsEl.children].forEach((d, di) => d.classList.toggle('active', di === index));
+      if (thumbsEl) [...thumbsEl.children].forEach((t, ti) => t.classList.toggle('active', ti === index));
+    };
+    root.querySelector('.prev').addEventListener('click', () => update(index - 1));
+    root.querySelector('.next').addEventListener('click', () => update(index + 1));
+    dotsEl.addEventListener('click', e => { if (e.target.matches('.dot')) update(+e.target.dataset.i); });
+    if (thumbsEl) thumbsEl.addEventListener('click', e => {
+      const btn = e.target.closest('.thumb'); if (btn) update(+btn.dataset.i);
+    });
+    update(0);
+    applyImgFallback(root);
   }
 
   function setupProductCarousel() {
     const items = CONFIG.images.map((img, i) => ({ image: `./${img}`, caption: `صورة المنتج ${i+1}` }));
-    const slidesEl = $('#productSlides');
-    const dotsEl = $('#productDots');
-    const thumbsEl = $('#productThumbs');
-    let index = 0;
-    slidesEl.innerHTML = items.map(item => `<div class="slide"><img src="${item.image}" alt="${item.caption}" loading="lazy"><div class="caption">${item.caption}</div></div>`).join('');
-    dotsEl.innerHTML = items.map((_, i) => `<button class="dot ${i===0?'active':''}" data-i="${i}"></button>`).join('');
-    thumbsEl.innerHTML = items.map((item, i) => `<button class="thumb ${i===0?'active':''}" data-i="${i}"><img src="${item.image}" alt="thumb"></button>`).join('');
-    const update = (i) => {
-      index = (i + items.length) % items.length;
-      slidesEl.style.transform = `translateX(${index * 100}%)`;
-      $$('#productDots .dot').forEach((d, di) => d.classList.toggle('active', di === index));
-      $$('#productThumbs .thumb').forEach((t, ti) => t.classList.toggle('active', ti === index));
-    };
-    $('#productCarousel .prev').onclick = () => update(index-1);
-    $('#productCarousel .next').onclick = () => update(index+1);
-    dotsEl.onclick = e => { if(e.target.matches('.dot')) update(+e.target.dataset.i); };
-    thumbsEl.onclick = e => { const btn = e.target.closest('.thumb'); if(btn) update(+btn.dataset.i); };
-    update(0);
+    createCarousel({
+      rootSel: '#productCarousel', slidesSel: '#productSlides', dotsSel: '#productDots', thumbsSel: '#productThumbs',
+      items,
+      // FIX #12: première image eager + fetchpriority high (LCP), les autres lazy
+      renderSlide: (item, i) => `
+        <div class="slide">
+          <img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.caption)}"
+               ${i === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} width="400" height="500">
+          <div class="caption">${escapeHTML(item.caption)}</div>
+        </div>`,
+      renderThumb: (item, i) => `
+        <button class="thumb ${i===0?'active':''}" data-i="${i}" type="button" aria-label="عرض ${escapeHTML(item.caption)}">
+          <img src="${escapeHTML(item.image)}" alt="" loading="lazy" width="120" height="88">
+        </button>`
+    });
   }
 
   function setupBeforeAfterCarousel() {
-    const items = CONFIG.beforeAfterSlides;
-    const slidesEl = $('#baSlides');
-    const dotsEl = $('#baDots');
-    let index = 0;
-    slidesEl.innerHTML = items.map(item => `
-      <div class="slide">
-        <div class="ba-labels"><span class="ba-label">قبل</span><span class="ba-label">بعد</span></div>
-        <div class="ba-split">
-          <img src="${item.beforeImage}" alt="قبل" loading="lazy">
-          <img src="${item.afterImage}" alt="بعد" loading="lazy">
-        </div>
-      </div>`).join('');
-    dotsEl.innerHTML = items.map((_, i) => `<button class="dot ${i===0?'active':''}" data-i="${i}"></button>`).join('');
-    const update = (i) => {
-      index = (i + items.length) % items.length;
-      slidesEl.style.transform = `translateX(${index * 100}%)`;
-      $$('#baDots .dot').forEach((d, di) => d.classList.toggle('active', di === index));
-    };
-    $('#beforeAfterCarousel .prev').onclick = () => update(index-1);
-    $('#beforeAfterCarousel .next').onclick = () => update(index+1);
-    dotsEl.onclick = e => { if(e.target.matches('.dot')) update(+e.target.dataset.i); };
-    update(0);
+    createCarousel({
+      rootSel: '#beforeAfterCarousel', slidesSel: '#baSlides', dotsSel: '#baDots',
+      items: CONFIG.beforeAfterSlides,
+      renderSlide: (item) => `
+        <div class="slide">
+          <div class="ba-labels"><span class="ba-label">قبل</span><span class="ba-label">بعد</span></div>
+          <div class="ba-split">
+            <img src="${escapeHTML(item.beforeImage)}" alt="البشرة قبل الاستخدام" loading="lazy" width="400" height="380">
+            <img src="${escapeHTML(item.afterImage)}" alt="البشرة بعد الاستخدام" loading="lazy" width="400" height="380">
+          </div>
+        </div>`
+    });
   }
 
   function renderBenefits() {
-    $('#benefitsGrid').innerHTML = CONFIG.benefits.map(b => `<article class="card feature-card reveal"><div class="icon">${b.icon}</div><h3>${b.title}</h3><p>${b.text}</p></article>`).join('');
+    $('#benefitsGrid').innerHTML = CONFIG.benefits.map(b =>
+      `<article class="card feature-card reveal"><div class="icon">${escapeHTML(b.icon)}</div><h3>${escapeHTML(b.title)}</h3><p>${escapeHTML(b.text)}</p></article>`).join('');
+  }
+
+  // FIX #10: récapitulatif toujours synchronisé
+  function renderOrderSummary() {
+    const offer = getOffer();
+    const total = offer.price * selectedQty;
+    const totalUnits = offer.units * selectedQty;
+    $('#orderSummary').innerHTML = `
+      <strong>ملخص الطلب:</strong>
+      ${escapeHTML(offer.title)}
+      ${selectedQty > 1 ? ` × ${selectedQty} (المجموع: ${totalUnits} ماسك)` : ''}
+      — <strong>${money(total)}</strong> + رسوم التوصيل (350-800 دج)`;
   }
 
   function renderOffers() {
     const grid = $('#offersGrid');
     const select = $('#offerSelect');
     grid.innerHTML = CONFIG.offers.map(o => `
-      <article class="card offer-card ${o.id===selectedOfferId ? 'active' : ''}" data-id="${o.id}">
-        <span class="offer-badge">${o.badge}</span>
-        <h3>${o.title}</h3>
+      <article class="card offer-card ${o.id===selectedOfferId ? 'active' : ''}" data-id="${o.id}"
+               role="button" tabindex="0" aria-pressed="${o.id===selectedOfferId}">
+        <span class="offer-badge">${escapeHTML(o.badge)}</span>
+        <h3>${escapeHTML(o.title)}</h3>
         <div class="price">${money(o.price)}</div>
         <div class="compare">بدل ${money(o.compareAt)}</div>
-        <div class="save">${o.save}</div>
+        <div class="save">${escapeHTML(o.save)}</div>
         <div class="qty-wrap">
-          <button class="qty-btn minus">-</button>
-          <span class="qty-num">${o.id===selectedOfferId ? selectedQty : 1}</span>
-          <button class="qty-btn plus">+</button>
+          <button class="qty-btn minus" type="button" aria-label="إنقاص الكمية">-</button>
+          <span class="qty-num" aria-live="polite">${o.id===selectedOfferId ? selectedQty : 1}</span>
+          <button class="qty-btn plus" type="button" aria-label="زيادة الكمية">+</button>
         </div>
       </article>`).join('');
-    select.innerHTML = CONFIG.offers.map(o => `<option value="${o.id}" ${o.id===selectedOfferId ? 'selected' : ''}>${o.title}</option>`).join('');
-    const oldGrid = document.getElementById('offersGrid');
-    const newGrid = oldGrid.cloneNode(true);
-    oldGrid.replaceWith(newGrid);
-    const updatedGrid = document.getElementById('offersGrid');
-    updatedGrid.onclick = (e) => {
+    select.innerHTML = CONFIG.offers.map(o =>
+      `<option value="${o.id}" ${o.id===selectedOfferId ? 'selected' : ''}>${escapeHTML(o.title)}</option>`).join('');
+    renderOrderSummary();
+  }
+
+  // FIX #9: listener lié UNE SEULE FOIS (délégation), plus de cloneNode
+  function bindOffersGrid() {
+    $('#offersGrid').addEventListener('click', (e) => {
       const card = e.target.closest('.offer-card');
+      if (!card) return;
       const plusBtn = e.target.closest('.plus');
       const minusBtn = e.target.closest('.minus');
-      if(card) {
-        if(plusBtn || minusBtn) {
-          if(card.dataset.id === selectedOfferId) {
-            if(plusBtn) selectedQty++;
-            if(minusBtn) selectedQty = Math.max(1, selectedQty-1);
-          } else {
-            selectedOfferId = card.dataset.id;
-            selectedQty = 1;
-          }
-        } else {
+      const clickedId = card.dataset.id;
+
+      // FIX #10: cliquer +/- sur une carte non sélectionnée la sélectionne PUIS applique le clic
+      if (clickedId !== selectedOfferId) {
+        selectedOfferId = clickedId;
+        selectedQty = 1;
+        const sel = getOffer();
+        track('AddToCart', { value: sel.price, currency: 'DZD', content_name: sel.title });
+      }
+      if (plusBtn) selectedQty = Math.min(10, selectedQty + 1);
+      if (minusBtn) selectedQty = Math.max(1, selectedQty - 1);
+      renderOffers();
+    });
+    // a11y: sélection au clavier
+    $('#offersGrid').addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.offer-card')) {
+        e.preventDefault();
+        const card = e.target.closest('.offer-card');
+        if (card.dataset.id !== selectedOfferId) {
           selectedOfferId = card.dataset.id;
           selectedQty = 1;
-          const sel = CONFIG.offers.find(o => o.id === selectedOfferId);
-          if(sel) fbq('track', 'AddToCart', { value: sel.price, currency: 'DZD', content_name: sel.title });
+          renderOffers();
         }
-        renderOffers();
       }
-    };
+    });
+  }
+
+  // FIX #1 (CRITIQUE): le menu déroulant du formulaire met à jour l'offre sélectionnée
+  function bindOfferSelect() {
+    $('#offerSelect').addEventListener('change', (e) => {
+      selectedOfferId = e.target.value;
+      selectedQty = 1;
+      renderOffers();
+    });
   }
 
   function renderFAQ() {
@@ -520,127 +747,232 @@
     ];
     $('#faqList').innerHTML = faq.map((f, i) => `
       <div class="faq-item ${i===0?'active':''}">
-        <button class="faq-q"><span>${f.q}</span><span>${i===0?'−':'+'}</span></button>
-        <div class="faq-a">${f.a}</div>
-      </div>
-    `).join('');
-    $('#faqList').onclick = e => {
+        <button class="faq-q" type="button" aria-expanded="${i===0}">
+          <span>${escapeHTML(f.q)}</span><span aria-hidden="true">${i===0?'−':'+'}</span>
+        </button>
+        <div class="faq-a">${escapeHTML(f.a)}</div>
+      </div>`).join('');
+    $('#faqList').addEventListener('click', e => {
       const btn = e.target.closest('.faq-q');
-      if(btn) {
+      if (btn) {
         const item = btn.closest('.faq-item');
-        item.classList.toggle('active');
-        btn.lastElementChild.textContent = item.classList.contains('active') ? '−' : '+';
+        const open = item.classList.toggle('active');
+        btn.setAttribute('aria-expanded', open);
+        btn.lastElementChild.textContent = open ? '−' : '+';
       }
-    };
+    });
   }
 
   function renderSocialProof() {
     const grid = $('#socialProofGrid');
     grid.innerHTML = CONFIG.socialProofImages.map((img, i) => `
       <article class="card proof-card reveal">
-        <img src="./${img}" alt="Facebook social proof ${i+1}" loading="lazy">
+        <img src="./${escapeHTML(img)}" alt="تجربة زبونة على فيسبوك ${i+1}" loading="lazy" width="400" height="460">
         <div class="proof-label">تجربة زبونة ${i+1}</div>
-      </article>
-    `).join('');
+      </article>`).join('');
+    applyImgFallback(grid);
   }
 
+  // ── Anti-spam partagé (FIX #4) ──────────────────────────────────────────
+  function antiSpamCheck(form, errorBox) {
+    // 1. Honeypot rempli → bot
+    const hp = form.querySelector('[name="website"]');
+    if (hp && hp.value.trim() !== '') return false; // échec silencieux pour le bot
+    // 2. Envoi trop rapide après chargement
+    if (Date.now() - pageLoadTime < CONFIG.minFormTimeMs) {
+      showError(errorBox, 'يرجى الانتظار لحظة قبل الإرسال.');
+      return false;
+    }
+    // 3. Cooldown entre envois
+    try {
+      const last = +localStorage.getItem('bd_last_submit') || 0;
+      if (Date.now() - last < CONFIG.submitCooldownMs) {
+        showError(errorBox, 'تم إرسال طلب قبل قليل. يرجى الانتظار دقيقة قبل المحاولة مجدداً.');
+        return false;
+      }
+    } catch (e) { /* localStorage indisponible → on laisse passer */ }
+    return true;
+  }
+  function markSubmitted() {
+    try { localStorage.setItem('bd_last_submit', String(Date.now())); } catch (e) {}
+  }
+  function showError(box, msg) {
+    box.textContent = msg;
+    box.style.display = 'block';
+    setTimeout(() => { box.style.display = 'none'; }, 6000);
+  }
+
+  // ── Formulaire de commande ──────────────────────────────────────────────
   function bindOrderEmail() {
     const orderForm = $('#orderForm');
+    const submitBtn = $('#orderSubmit');
+    const errorBox = $('#orderError');
+    let orderSending = false;
+
     orderForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (orderSending) return;
-      const fields = ['#fullName', '#phone', '#wilaya', '#commune'];
+      errorBox.style.display = 'none';
+
+      // Validation (FIX #3 + #11: messages inline en arabe)
       let ok = true;
-      fields.forEach(sel => {
+      const validate = (sel, test) => {
         const input = $(sel);
         const err = input.parentElement.querySelector('.error');
-        if(!input.value.trim()) { err.style.display = 'block'; ok = false; }
-        else err.style.display = 'none';
-      });
-      if(!ok) return;
+        const valid = test(input.value);
+        err.classList.toggle('visible', !valid);
+        input.setAttribute('aria-invalid', String(!valid));
+        if (!valid) ok = false;
+        return valid;
+      };
+      validate('#fullName', v => v.trim().length >= 3);
+      validate('#phone', v => isValidAlgerianPhone(v));
+      validate('#wilaya', v => v.trim().length >= 2);
+      validate('#commune', v => v.trim().length >= 2);
+      if (!ok) {
+        orderForm.querySelector('[aria-invalid="true"]')?.focus();
+        return;
+      }
+      if (!antiSpamCheck(orderForm, errorBox)) return;
+      if (!window.emailjs) {
+        showError(errorBox, 'تعذر الإرسال حالياً. يرجى التواصل معنا مباشرة عبر واتساب: 0540732771');
+        return;
+      }
 
-      const offer = CONFIG.offers.find(o => o.id === selectedOfferId);
+      const offer = getOffer();
       const total = offer.price * selectedQty;
+      const phone = normalizePhone($('#phone').value);
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+      const ref = 'BD-' + Date.now().toString(36).toUpperCase().slice(-4) + '-' +
+        Array.from({length: 4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+
       const details = `
-Nouvelle commande
-Nom: ${$('#fullName').value}
-Tél: ${$('#phone').value}
-Wilaya: ${$('#wilaya').value}
-Commune: ${$('#commune').value}
+Nouvelle commande [${ref}]
+Nom: ${$('#fullName').value.trim()}
+Tél: ${phone}
+Wilaya: ${$('#wilaya').value.trim()}
+Commune: ${$('#commune').value.trim()}
 Livraison: ${$('#deliveryType').value}
 Offre: ${offer.title}
-Quantité: ${selectedQty}
+Quantité: ${selectedQty} (${offer.units * selectedQty} masques)
 Total: ${money(total)} + frais (350-800 DA)`;
 
       orderSending = true;
+      // FIX #11: feedback visuel pendant l'envoi
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'جارٍ الإرسال...';
+
       try {
-        await emailjs.send('service_q7wx8gn', 'template_xkpm4qc', {
-          to_email: 'charafeddinegoussanem@gmail.com',
-          from_name: $('#fullName').value,
+        // FIX #2: to_email RETIRÉ — le destinataire doit être configuré dans le template EmailJS
+        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+          from_name: $('#fullName').value.trim(),
           message: details,
-          subject: `Commande ${$('#fullName').value}`
+          subject: `Commande ${ref} - ${$('#fullName').value.trim()}`
         });
-        fbq('track', 'InitiateCheckout', { value: total, currency: 'DZD', content_name: offer.title, num_items: selectedQty });
-        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-        const ref = 'BD-' + Array.from({length: 6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-        const orderParams = `ref=${ref}&offer=${encodeURIComponent(offer.title)}&value=${total}&qty=${selectedQty}`;
+
+        markSubmitted();
+
+        // FIX #6: copie locale de la commande (filet de sécurité si l'email se perd)
+        try {
+          const orders = JSON.parse(localStorage.getItem('bd_orders') || '[]');
+          orders.push({ ref, ts: new Date().toISOString(), name: $('#fullName').value.trim(),
+                        phone, offer: offer.id, qty: selectedQty, total });
+          localStorage.setItem('bd_orders', JSON.stringify(orders.slice(-20)));
+        } catch (e) {}
+
+        // FIX #6: eventID = ref pour la déduplication pixel (browser + Conversions API)
+        track('InitiateCheckout',
+          { value: total, currency: 'DZD', content_name: offer.title, num_items: selectedQty }, ref);
+
+        const orderParams = `ref=${encodeURIComponent(ref)}&offer=${encodeURIComponent(offer.title)}&value=${total}&qty=${selectedQty}`;
         window.location.href = 'merci.html?' + orderParams;
-      } catch(err) {
-        alert('Erreur, réessayez');
-        console.error(err);
+        /* ⚠️ FIX #6 (à faire dans merci.html) :
+           - fbq('track', 'Purchase', {value, currency:'DZD'}, {eventID: ref})
+             en réutilisant le MÊME ref comme eventID pour la déduplication.
+           - Ne JAMAIS injecter les paramètres d'URL via innerHTML dans merci.html
+             (utiliser textContent) — sinon XSS.
+           - Idéalement, envoyer Purchase via l'API Conversions côté serveur :
+             les paramètres d'URL sont falsifiables. */
+      } catch (err) {
+        // FIX #11: erreur inline en arabe avec issue de secours, plus d'alert()
+        showError(errorBox, 'حدث خطأ أثناء إرسال الطلب. حاولي مرة أخرى أو اطلبي مباشرة عبر واتساب: 0540732771');
+        console.error('Order send failed:', err);
       } finally {
         orderSending = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
     });
   }
 
+  // ── Formulaire d'information ────────────────────────────────────────────
   function bindContactEmail() {
-    $('#infoForm').addEventListener('submit', async (e) => {
+    const form = $('#infoForm');
+    const submitBtn = $('#infoSubmit');
+    const errorBox = $('#infoError');
+    let sending = false;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = $('#infoForm [name="name"]').value;
-      const contact = $('#infoForm [name="contact"]').value;
-      const msg = $('#infoForm [name="message"]').value;
+      if (sending) return;
+      errorBox.style.display = 'none';
+      if (!antiSpamCheck(form, errorBox)) return;
+      if (!window.emailjs) {
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      const name = $('#infoName').value.trim();
+      const contact = $('#infoContact').value.trim();
+      const msg = $('#infoMessage').value.trim();
+      if (!name || !contact || !msg) return; // validation native via required
+
+      sending = true;
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'جارٍ الإرسال...';
       try {
-        await emailjs.send('service_q7wx8gn', 'template_xkpm4qc', {
-          to_email: 'charafeddinegoussanem@gmail.com',
+        // FIX #2: to_email retiré ici aussi
+        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
           from_name: name,
           message: `Demande info de ${name} (${contact}): ${msg}`,
           subject: `Info ${name}`
         });
+        markSubmitted();
         $('#infoSuccess').style.display = 'block';
-        $('#infoForm').reset();
+        form.reset();
         setTimeout(() => $('#infoSuccess').style.display = 'none', 4000);
-      } catch(err) {
-        alert('Erreur');
+      } catch (err) {
+        errorBox.style.display = 'block';
+        console.error('Info send failed:', err);
+      } finally {
+        sending = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
     });
   }
 
   function bindScroll() {
     $$('[data-scroll]').forEach(btn => btn.addEventListener('click', () => {
-      const target = document.querySelector(btn.dataset.scroll);
-      target?.scrollIntoView({ behavior: 'smooth' });
+      document.querySelector(btn.dataset.scroll)?.scrollIntoView({ behavior: 'smooth' });
     }));
   }
 
   function revealOnScroll() {
-    let viewContentFired = false;
     const io = new IntersectionObserver(entries => entries.forEach(e => {
-      if(e.isIntersecting) {
-        e.target.classList.add('show');
-        if(!viewContentFired && e.target.closest('#offers')) {
-          const offer = CONFIG.offers.find(o => o.id === selectedOfferId);
-          fbq('track', 'ViewContent', { value: offer?.price, currency: 'DZD', content_name: CONFIG.productName });
-          viewContentFired = true;
-        }
-      }
+      if (e.isIntersecting) e.target.classList.add('show');
     }), { threshold: 0.1 });
     $$('.reveal').forEach(el => io.observe(el));
   }
 
+  // ── Init ────────────────────────────────────────────────────────────────
   renderBasic();
   renderBenefits();
   renderOffers();
+  bindOffersGrid();
+  bindOfferSelect();
   renderFAQ();
   renderSocialProof();
   setupProductCarousel();
@@ -649,6 +981,13 @@ Total: ${money(total)} + frais (350-800 DA)`;
   bindContactEmail();
   bindScroll();
   revealOnScroll();
+  applyImgFallback(document);
+
+  // FIX #6: ViewContent au chargement (attendu par Meta), plus au scroll
+  track('ViewContent', {
+    value: getOffer().price, currency: 'DZD',
+    content_name: CONFIG.productName, content_type: 'product'
+  });
 </script>
 </body>
 </html>
