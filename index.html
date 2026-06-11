@@ -495,7 +495,7 @@
             <small class="error" role="alert">البلدية مطلوبة</small>
           </div>
           <div class="field">
-            <label for="deliveryType">نوع التوصيل (350-800 دج)</label>
+            <label for="deliveryType">نوع التوصيل (450-800 دج)</label>
             <select id="deliveryType"><option>التوصيل إلى المنزل</option><option>التوصيل إلى المكتب</option></select>
           </div>
           <div class="field">
@@ -680,7 +680,7 @@
       <strong>ملخص الطلب:</strong>
       ${escapeHTML(offer.title)}
       ${selectedQty > 1 ? ` × ${selectedQty} (المجموع: ${totalUnits} ماسك)` : ''}
-      — <strong>${money(total)}</strong> + رسوم التوصيل (350-800 دج)`;
+      — <strong>${money(total)}</strong> + رسوم التوصيل (450-800 دج)`;
   }
 
   function renderOffers() {
@@ -861,7 +861,7 @@ Commune: ${$('#commune').value.trim()}
 Livraison: ${$('#deliveryType').value}
 Offre: ${offer.title}
 Quantité: ${selectedQty} (${offer.units * selectedQty} masques)
-Total: ${money(total)} + frais (350-800 DA)`;
+Total: ${money(total)} + frais (450-800 DA)`;
 
       orderSending = true;
       // FIX #11: feedback visuel pendant l'envoi
