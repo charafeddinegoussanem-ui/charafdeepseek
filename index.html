@@ -590,12 +590,15 @@
 
   // ====== image auto-detection (sequential probing) ======
   function imageExists(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(true);im.onerror=()=>res(false);im.src=src;});}
+  const EXTS=['jpg','jpeg','png','webp','JPG','JPEG','PNG','WEBP'];
+  async function findOne(dir,prefix,i,preferExt){
+    const list=preferExt?[preferExt,...EXTS.filter(e=>e!==preferExt)]:EXTS;
+    for(const e of list){const u=`${dir}${prefix}${i}.${e}`;if(await imageExists(u))return u;}
+    return null;
+  }
   async function detect(cfg){
     const urls=[];
-    for(let i=1;i<=cfg.max;i++){
-      const u=`${cfg.dir}${cfg.prefix}${i}.${cfg.ext}`;
-      if(await imageExists(u))urls.push(u); else break;
-    }
+    for(let i=1;i<=cfg.max;i++){const u=await findOne(cfg.dir,cfg.prefix,i,cfg.ext);if(u)urls.push(u);else break;}
     return urls;
   }
   async function detectProducts(){
@@ -606,10 +609,10 @@
   async function detectBeforeAfter(){
     const items=[]; const max=CONFIG.paths.beforeAfter.max;
     for(let i=1;i<=max;i++){
-      const b=`before${i}.jpg`, a=`after${i}.jpg`;                 // vos fichiers actuels (paires)
-      if(await imageExists(b)&&await imageExists(a)){items.push({type:'pair',before:b,after:a});continue;}
-      const s=`before-after-${i}.jpg`;
-      if(await imageExists(s)){items.push({type:'single',src:s});continue;}
+      const b=await findOne('','before',i,'jpg'), a=await findOne('','after',i,'jpg');
+      if(b&&a){items.push({type:'pair',before:b,after:a});continue;}
+      const s=await findOne('','before-after-',i,'jpg');
+      if(s){items.push({type:'single',src:s});continue;}
       break;
     }
     return items;
