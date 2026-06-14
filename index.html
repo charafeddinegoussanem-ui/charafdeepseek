@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="images/products/1.png" fetchpriority="high">
+  <link rel="preload" as="image" href="product1.jpg" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <title>ماسك بايودانس بالكولاجين | ترطيب عميق وإشراقة فورية</title>
@@ -28,7 +28,7 @@
   <meta property="og:type" content="product">
   <meta property="og:title" content="ماسك بايودانس بالكولاجين | الدفع عند الاستلام">
   <meta property="og:description" content="ترطيب عميق وإشراقة فورية. توصيل إلى 58 ولاية والدفع عند الاستلام.">
-  <meta property="og:image" content="https://skinyorabiodencedz.vercel.app/images/products/1.png">
+  <meta property="og:image" content="https://skinyorabiodencedz.vercel.app/product1.jpg">
   <meta property="og:url" content="https://skinyorabiodencedz.vercel.app/">
   <meta property="og:locale" content="ar_DZ">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e24a8b'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='white' font-family='Arial'%3Eb%3C/text%3E%3C/svg%3E">
@@ -38,7 +38,7 @@
     "@context":"https://schema.org","@type":"Product",
     "name":"Biodance Bio-Collagen Real Deep Mask",
     "description":"ماسك هيدروجيل بالكولاجين - ترطيب عميق وإشراقة فورية",
-    "image":"https://skinyorabiodencedz.vercel.app/images/products/1.png",
+    "image":"https://skinyorabiodencedz.vercel.app/product1.jpg",
     "brand":{"@type":"Brand","name":"Biodance"},
     "offers":{"@type":"AggregateOffer","priceCurrency":"DZD","lowPrice":"2500","highPrice":"6500","availability":"https://schema.org/InStock"}
   }
@@ -99,6 +99,12 @@
     .quicknav::-webkit-scrollbar{display:none}
     .quicknav button{flex:0 0 auto;background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-weight:600;font-size:13.5px;padding:8px 16px;border-radius:var(--pill);cursor:pointer}
     .quicknav button:hover{background:var(--primary-soft);color:var(--primary-dark)}
+    /* easy nav: sections clear the sticky header when jumped to */
+    [id]{scroll-margin-top:128px}
+    /* galerie pleine largeur */
+    .gallery-stack{display:grid;gap:22px;max-width:620px;margin-inline:auto}
+    .gallery-stack figure{margin:0;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;cursor:zoom-in}
+    .gallery-stack img{width:100%;height:auto;display:block}
 
     .breadcrumb{color:var(--muted);font-size:13px;padding:10px 0 0} .breadcrumb span{color:var(--primary-dark)}
 
@@ -283,20 +289,22 @@
     <div class="logo lat">bio<b>dance</b></div>
     <button class="top-cta" data-scroll="#order">اطلبي الآن</button>
   </div>
+  <div class="container">
+    <nav class="quicknav" aria-label="روابط سريعة">
+      <button data-scroll="#buy">العروض</button>
+      <button data-scroll="#before-after">قبل وبعد</button>
+      <button data-scroll="#gallery">المعرض</button>
+      <button data-scroll="#reviews">آراء فيسبوك</button>
+      <button data-scroll="#order">اطلبي الآن</button>
+    </nav>
+  </div>
 </header>
 
 <div class="container">
-  <nav class="quicknav" aria-label="روابط سريعة">
-    <button data-scroll="#offers">العروض</button>
-    <button data-scroll="#before-after">قبل وبعد</button>
-    <button data-scroll="#lifestyle">المعرض</button>
-    <button data-scroll="#reviews">آراء فيسبوك</button>
-    <button data-scroll="#order">اطلبي الآن</button>
-  </nav>
   <div class="breadcrumb">الرئيسية / <span>ماسك الكولاجين العميق</span></div>
 </div>
 
-<section class="container product">
+<section class="container product" id="buy">
   <div class="gallery reveal show">
     <div class="pg" id="pg">
       <div class="pg-main" id="pgMain" tabindex="0" aria-label="معرض صور المنتج" role="region">
@@ -431,11 +439,11 @@
   </div>
 </section>
 
-<section class="section band divider-top" id="lifestyle">
+<section class="section band divider-top" id="gallery">
   <div class="container">
-    <h2 class="section-title reveal">تجربة الاستخدام</h2>
-    <p class="section-text reveal">لحظات من روتين العناية مع الماسك.</p>
-    <div id="lifeBlocks"></div>
+    <h2 class="section-title reveal">معرض الصور</h2>
+    <p class="section-text reveal">صور وتفاصيل المنتج. اضغطي على أي صورة للتكبير.</p>
+    <div class="gallery-stack" id="galleryGrid"></div>
   </div>
 </section>
 
@@ -543,20 +551,12 @@
       {icon:'🪶',title:'ملمس ناعم',text:'يساعد البشرة على أن تبدو أكثر نعومة.'},
       {icon:'🌸',title:'لطيف على البشرة',text:'تركيبة مناسبة حتى للبشرة الحساسة.'}
     ],
-    // Texte storytelling lifestyle (modifiable). Associé aux images lifestyle-1..N.
-    lifestyle:[
-      {title:'ترطيب وإشراقة',text:'ترطيب فوري يمنح البشرة نضارة ولمعاناً صحياً من أول استعمال.'},
-      {title:'عناية عميقة بالكولاجين',text:'كولاجين منخفض الجزيئات يصل إلى عمق البشرة لشدّ ومرونة ملحوظة.'},
-      {title:'تأثير الإصلاح الليلي',text:'استخدميه كماسك ليلي واستيقظي ببشرة نديّة ومتجدّدة.'},
-      {title:'تحسّن ملحوظ للبشرة',text:'مسام أصغر وملمس أنعم مع الاستخدام المنتظم.'},
-      {title:'عناية كورية فاخرة',text:'تجربة K-Beauty راقية في منزلك مع الدفع عند الاستلام.'}
-    ],
-    // Dossiers d'images (à la racine du dépôt, à côté de index.html)
+    // Fichiers à la RACINE du dépôt (comme votre site actuel). Auto-détection séquentielle.
     paths:{
-      products:  {dir:'images/products/',        prefix:'',              ext:'png', max:60, legacy:{dir:'',prefix:'product',ext:'jpg',max:12}},
-      beforeAfter:{dir:'images/before-after/',    prefix:'before-after-',ext:'jpg', max:20},
-      reviews:   {dir:'images/facebook-reviews/', prefix:'review-',       ext:'jpg', max:60},
-      lifestyle: {dir:'images/lifestyle/',         prefix:'lifestyle-',    ext:'jpg', max:30}
+      products:  {dir:'',prefix:'product',ext:'jpg',max:40},
+      beforeAfter:{max:20},
+      reviews:   {dir:'',prefix:'social-proof-',ext:'jpg',max:40,alt:{dir:'',prefix:'review-',ext:'jpg',max:40}},
+      gallery:   {dir:'',prefix:'edit-',ext:'png',max:40}
     },
     contactChannels:{whatsapp:'واتساب: 213540732771+',phone:'اتصال: 0540732771'},
     infoFormTitle:'عندك سؤال قبل الطلب؟', infoFormText:'أرسلي استفسارك وسنرد عليك بسرعة.',
@@ -604,15 +604,20 @@
     return urls;
   }
   async function detectBeforeAfter(){
-    const items=[]; const {dir,prefix,ext,max}=CONFIG.paths.beforeAfter;
+    const items=[]; const max=CONFIG.paths.beforeAfter.max;
     for(let i=1;i<=max;i++){
-      const b=`${dir}${prefix}${i}-before.${ext}`, a=`${dir}${prefix}${i}-after.${ext}`;
+      const b=`before${i}.jpg`, a=`after${i}.jpg`;                 // vos fichiers actuels (paires)
       if(await imageExists(b)&&await imageExists(a)){items.push({type:'pair',before:b,after:a});continue;}
-      const s=`${dir}${prefix}${i}.${ext}`;
+      const s=`before-after-${i}.jpg`;
       if(await imageExists(s)){items.push({type:'single',src:s});continue;}
       break;
     }
     return items;
+  }
+  async function detectReviews(){
+    let u=await detect(CONFIG.paths.reviews);
+    if(!u.length && CONFIG.paths.reviews.alt) u=await detect(CONFIG.paths.reviews.alt);
+    return u;
   }
 
   // ====== lightbox ======
@@ -710,19 +715,12 @@
     applyImgFallback(wrap);
   }
 
-  // ====== lifestyle storytelling (alternating) ======
-  function buildLifestyle(urls){
-    const host=$('#lifeBlocks'); const sec=$('#lifestyle');
+  // ====== galerie (images éditées, pleine largeur) ======
+  function buildGallery(urls){
+    const host=$('#galleryGrid'); const sec=$('#gallery');
     if(!urls.length){sec.style.display='none';return;}
-    host.innerHTML=urls.map((u,i)=>{
-      const story=CONFIG.lifestyle[i]||CONFIG.lifestyle[i%CONFIG.lifestyle.length]||{title:'',text:''};
-      return `<div class="life-block${i%2?' alt':''} reveal">
-        <div class="life-media"><img src="${escapeHTML(u)}" alt="${escapeHTML(story.title||('صورة '+(i+1)))}" loading="lazy" decoding="async"></div>
-        <div class="life-copy"><h3>${escapeHTML(story.title)}</h3><p>${escapeHTML(story.text)}</p></div>
-      </div>`;
-    }).join('');
-    // click image -> lightbox
-    host.addEventListener('click',e=>{const img=e.target.closest('.life-media img');if(img)openLightbox(urls,urls.indexOf(img.src));});
+    host.innerHTML=urls.map((u,i)=>`<figure class="reveal"><img src="${escapeHTML(u)}" alt="صورة المنتج ${i+1}" loading="lazy" decoding="async"></figure>`).join('');
+    host.addEventListener('click',e=>{const img=e.target.closest('img');if(img)openLightbox(urls,urls.indexOf(img.src));});
     applyImgFallback(host);
   }
 
@@ -845,8 +843,8 @@
   (async function initMedia(){
     buildProductGallery(await detectProducts()); syncHero();
     buildBeforeAfter(await detectBeforeAfter());
-    buildLifestyle(await detect(CONFIG.paths.lifestyle));
-    buildReviews(await detect(CONFIG.paths.reviews));
+    buildGallery(await detect(CONFIG.paths.gallery));
+    buildReviews(await detectReviews());
     applyImgFallback(document);
     observeReveals();
   })();
