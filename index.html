@@ -1120,8 +1120,8 @@
             .contact-layout {
                 grid-template-columns: 1fr
             }
-            .order-steps .step-label {
-                font-size: 10px !important
+            .order-wilaya-commune {
+                grid-template-columns: 1fr !important;
             }
         }
         @media(max-width:600px) {
@@ -1163,379 +1163,132 @@
                 padding-bottom: calc(120px + env(safe-area-inset-bottom))
             }
             .order-variants-grid {
-                grid-template-columns: 1fr 1fr !important
+                grid-template-columns: 1fr 1fr !important;
             }
-            .order-wilaya-commune {
-                grid-template-columns: 1fr !important
+            .order-compact-grid {
+                grid-template-columns: 1fr 1fr !important;
             }
         }
 
-        /* --- Styles spécifiques à la section commande --- */
+        /* --- COMPACT ORDER SECTION STYLES --- */
         .order-variants-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px
+            gap: 6px;
         }
         .order-variant-card {
-            border: 2px solid var(--line);
-            border-radius: 14px;
-            padding: 12px 6px;
+            border: 1.5px solid var(--line);
+            border-radius: 10px;
+            padding: 6px 2px;
             text-align: center;
             cursor: pointer;
-            transition: all .2s;
+            transition: all .15s;
             background: #fff;
-            position: relative
+            position: relative;
         }
         .order-variant-card:hover {
-            border-color: var(--primary)
+            border-color: var(--primary);
         }
         .order-variant-card.active {
             border-color: var(--primary);
             background: var(--primary-soft);
-            box-shadow: 0 0 0 2px var(--primary)
+            box-shadow: 0 0 0 1px var(--primary);
         }
         .order-variant-card .ov-units {
             font-weight: 700;
-            font-size: 15px;
+            font-size: 13px;
             display: block;
-            color: var(--ink)
+            color: var(--ink);
+            line-height: 1.3;
         }
         .order-variant-card .ov-price {
             font-weight: 700;
-            font-size: 14px;
+            font-size: 12px;
             color: var(--primary-dark);
             display: block;
-            margin-top: 2px
+            margin-top: 1px;
         }
         .order-variant-card .ov-badge {
             display: inline-block;
             background: var(--primary);
             color: #fff;
-            font-size: 10px;
+            font-size: 8px;
             font-weight: 700;
-            padding: 1px 10px;
+            padding: 0 6px;
             border-radius: var(--pill);
-            margin-top: 4px
+            margin-top: 2px;
+            line-height: 1.6;
         }
         .order-variant-card .ov-check {
             position: absolute;
-            top: -6px;
-            inset-inline-end: -6px;
-            width: 20px;
-            height: 20px;
+            top: -4px;
+            inset-inline-end: -4px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--primary);
             color: #fff;
-            font-size: 12px;
+            font-size: 10px;
             display: none;
             align-items: center;
-            justify-content: center
+            justify-content: center;
         }
         .order-variant-card.active .ov-check {
-            display: flex
-        }
-        .order-qty-wrap {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1.5px solid var(--line);
-            border-radius: 12px;
-            padding: 2px;
-            background: #fff
-        }
-        .order-qty-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 10px;
-            background: var(--primary-soft2);
-            font-size: 20px;
-            color: var(--primary-dark);
-            cursor: pointer;
-            font-weight: 700;
-            transition: .15s
-        }
-        .order-qty-btn:hover {
-            background: var(--primary-soft)
-        }
-        .order-qty-num {
-            min-width: 32px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 18px;
-            font-family: 'Poppins', sans-serif;
-            color: var(--ink)
-        }
-        .order-subtotal-box {
-            background: var(--primary-soft2);
-            border-radius: 14px;
-            padding: 14px 18px;
-            border: 1px solid var(--line);
-            margin: 14px 0
-        }
-        .order-subtotal-box .label {
-            font-size: 14px;
-            color: var(--muted)
-        }
-        .order-subtotal-box .amount {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary-dark);
-            font-family: 'Poppins', sans-serif
-        }
-        .order-cta-btn {
-            width: 100%;
-            border-radius: 50px;
-            padding: 18px 22px;
-            font-size: 20px;
-            font-weight: 800;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: .2s;
-            box-shadow: 0 6px 24px rgba(226, 74, 139, .35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            letter-spacing: .02em
-        }
-        .order-cta-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.01);
-            box-shadow: 0 8px 32px rgba(226, 74, 139, .45)
-        }
-        .order-cta-btn:disabled {
-            opacity: .6;
-            transform: none
-        }
-        .order-steps {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 4px;
-            margin: 0 0 22px;
-            position: relative;
-            padding: 0 2px
-        }
-        .order-steps .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            flex: 1
-        }
-        .order-steps .step .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            font-weight: 700;
-            font-size: 14px;
-            transition: .3s
-        }
-        .order-steps .step .num.done {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(226, 74, 139, .25)
-        }
-        .order-steps .step .num.pending {
-            background: var(--line);
-            color: var(--muted)
-        }
-        .order-steps .step .num.active {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 2px 12px rgba(226, 74, 139, .35);
-            animation: pulse-step 1.5s ease-in-out infinite
-        }
-        @keyframes pulse-step {
-            0%,
-            100% {
-                transform: scale(1)
-            }
-            50% {
-                transform: scale(1.08)
-            }
-        }
-        .order-steps .step .label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--muted);
-            text-align: center
-        }
-        .order-steps .step .label.active-label {
-            color: var(--primary-dark)
-        }
-        .order-steps .line {
-            flex: 1;
-            height: 2px;
-            background: var(--line);
-            position: relative;
-            margin: 0 2px
-        }
-        .order-steps .line .fill {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: var(--primary);
-            border-radius: 2px;
-            transition: width .5s
         }
 
-        /* champs simplifiés */
-        .order-input {
+        .order-compact-input {
             width: 100%;
-            padding: 14px 16px;
-            border-radius: 14px;
+            padding: 8px 10px;
+            border-radius: 10px;
             border: 1.5px solid var(--line);
             background: #faf8f9;
-            font-size: 17px;
+            font-size: 15px;
             transition: .2s;
-            color: var(--ink)
+            color: var(--ink);
         }
-        .order-input:focus {
+        .order-compact-input:focus {
             border-color: var(--primary);
             background: #fff;
-            box-shadow: 0 0 0 3px rgba(226, 74, 139, .12)
+            box-shadow: 0 0 0 3px rgba(226, 74, 139, .12);
         }
-        .order-input.error {
-            border-color: #c0392b
+        .order-compact-input.error {
+            border-color: #c0392b;
         }
-        .order-input-label {
+        .order-compact-label {
             display: block;
             font-weight: 600;
-            font-size: 15px;
-            color: var(--ink-soft);
-            margin-bottom: 4px
-        }
-        .order-input-label .icon {
-            font-size: 18px;
-            margin-inline-end: 4px
-        }
-        .order-error-msg {
             font-size: 13px;
+            color: var(--ink-soft);
+            margin-bottom: 2px;
+        }
+        .order-compact-select {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1.5px solid var(--line);
+            background: #faf8f9;
+            font-size: 15px;
+            color: var(--ink);
+            appearance: auto;
+        }
+        .order-compact-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(226, 74, 139, .12);
+        }
+        .order-compact-err {
+            font-size: 11px;
             color: #c0392b;
             display: none;
-            margin-top: 4px
+            margin-top: 2px;
         }
-        .order-error-msg.visible {
-            display: block
+        .order-compact-err.visible {
+            display: block;
         }
-        .order-field-group {
-            margin-bottom: 14px
-        }
-        .order-field-group:last-of-type {
-            margin-bottom: 0
-        }
-
-        /* aide en bas */
-        .order-help-box {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 15px;
-            color: var(--ink-soft);
-            background: var(--primary-soft2);
-            border-radius: 16px;
-            padding: 14px 18px;
-            border: 1px solid var(--line)
-        }
-        .order-help-box a {
-            color: var(--primary-dark);
-            font-weight: 700;
-            text-decoration: underline
-        }
-        .order-help-box strong {
-            color: var(--primary-dark)
-        }
-
-        /* stock urgent */
-        .order-urgency {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .order-compact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
-            background: #fff5f5;
-            border: 1px solid #fdd;
-            border-radius: 50px;
-            padding: 6px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #c0392b;
-            margin-bottom: 14px
-        }
-        .order-urgency .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #e74c3c;
-            animation: blink-dot 1s ease-in-out infinite
-        }
-        @keyframes blink-dot {
-            0%,
-            100% {
-                opacity: 1
-            }
-            50% {
-                opacity: .3
-            }
-        }
-
-        /* décoration */
-        .order-deco-top {
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: var(--primary-soft);
-            opacity: .4;
-            pointer-events: none
-        }
-        .order-deco-bottom {
-            position: absolute;
-            bottom: -60px;
-            left: -60px;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: var(--primary-soft);
-            opacity: .3;
-            pointer-events: none
-        }
-
-        .order-trust-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 18px;
-            padding-top: 16px;
-            border-top: 1px solid var(--line)
-        }
-        .order-trust-badges .tb {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--ink-soft)
-        }
-        .order-trust-badges .tb .ic {
-            font-size: 18px
-        }
-
-        .order-privacy-note {
-            text-align: center;
-            font-size: 13px;
-            color: var(--muted);
-            margin: 14px 0 0;
-            line-height: 1.6
         }
     </style>
 </head>
@@ -1709,54 +1462,23 @@
     </section>
 
     <!-- ================================================================
-    ORDRE SUBMIT SECTION - CONVERSION OPTIMISÉE
+    ORDRE SECTION - COMPACT & ONE-PAGE OPTIMIZED
     ================================================================ -->
-    <section class="section band divider-top" id="order" style="padding:40px 0 60px;background:linear-gradient(180deg,#fbf4f7 0%,#fff 100%)">
-        <div class="container" style="max-width:720px;margin-inline:auto">
+    <section class="section band divider-top" id="order" style="padding:16px 0 24px;background:linear-gradient(180deg,#fbf4f7 0%,#fff 100%)">
+        <div class="container" style="max-width:640px;margin-inline:auto">
 
-            <div class="card order-card" style="border-radius:24px;padding:28px 22px 34px;box-shadow:0 8px 40px rgba(226,74,139,.10);border:1px solid #f0e2ea;background:#fff;position:relative;overflow:hidden">
+            <div class="card order-card" style="border-radius:16px;padding:14px 14px 18px;box-shadow:0 4px 16px rgba(226,74,139,.08);border:1px solid #f0e2ea;background:#fff;">
 
-                <!-- décorations -->
-                <div class="order-deco-top"></div>
-                <div class="order-deco-bottom"></div>
-
-                <!-- ====== HEADER ====== -->
-                <div style="position:relative;z-index:1;text-align:center;margin-bottom:18px">
-                    <div style="font-size:38px;line-height:1;margin-bottom:2px">🌸</div>
-                    <h2 style="font-size:clamp(26px,5vw,34px);font-weight:800;color:var(--ink);margin:0 0 2px;letter-spacing:-.02em">
-                        جهزي بشرتك للتألق ✨
+                <!-- ====== HEADER COMPACT ====== -->
+                <div style="text-align:center;margin-bottom:8px">
+                    <h2 style="font-size:clamp(20px,4vw,24px);font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em">
+                        📦 اطلبي الآن
                     </h2>
-                    <p style="font-size:17px;color:var(--ink-soft);margin:0;font-weight:500">
-                        املئي البيانات و نوصلو ليك 🚚
-                    </p>
+                    <p style="font-size:14px;color:var(--ink-soft);margin:0;font-weight:500">املئي البيانات و نوصلو ليك 🚚</p>
                 </div>
 
-                <!-- ====== URGENCE ====== -->
-                <div class="order-urgency" style="position:relative;z-index:1">
-                    <span class="dot"></span>
-                    <span>⚠️ الكميات محدودة — اطلبي الآن قبل نفاذها!</span>
-                </div>
-
-                <!-- ====== ÉTAPES ====== -->
-                <div class="order-steps" style="position:relative;z-index:1">
-                    <div class="step">
-                        <span class="num done">1</span>
-                        <span class="label active-label">العرض</span>
-                    </div>
-                    <div class="line"><div class="fill" style="width:50%"></div></div>
-                    <div class="step">
-                        <span class="num pending">2</span>
-                        <span class="label">بياناتك</span>
-                    </div>
-                    <div class="line"><div class="fill" style="width:0%"></div></div>
-                    <div class="step">
-                        <span class="num pending">3</span>
-                        <span class="label">تأكيد</span>
-                    </div>
-                </div>
-
-                <!-- ====== FORMULAIRE ====== -->
-                <form id="orderForm" novalidate style="position:relative;z-index:1">
+                <!-- ====== FORM ====== -->
+                <form id="orderForm" novalidate>
 
                     <!-- HONEYPOT -->
                     <div class="hp-field" aria-hidden="true">
@@ -1764,139 +1486,94 @@
                         <input type="text" id="order_website" name="website" tabindex="-1" autocomplete="off">
                     </div>
 
-                    <!-- ====== 1. OFFRE ====== -->
-                    <div style="margin-bottom:18px">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-                            <span style="font-size:20px">🛍️</span>
-                            <label style="font-weight:700;font-size:17px;color:var(--ink)">اختاري العرض المناسب لك</label>
-                        </div>
-
-                        <!-- variants avec ID unique pour la section commande -->
+                    <!-- ====== OFFERS ====== -->
+                    <div style="margin-bottom:8px">
+                        <label style="font-weight:700;font-size:14px;color:var(--ink);display:block;margin-bottom:4px">🛍️ اختاري العرض:</label>
                         <div class="order-variants-grid" id="orderVariants">
                             <!-- généré par JS -->
                         </div>
 
-                        <!-- quantité -->
-                        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap">
-                            <span style="font-size:14px;color:var(--ink-soft)">الكمية:</span>
-                            <div class="order-qty-wrap">
-                                <button type="button" class="order-qty-btn" id="orderMinus" aria-label="إنقاص الكمية">−</button>
-                                <span class="order-qty-num" id="orderQtyNum">1</span>
-                                <button type="button" class="order-qty-btn" id="orderPlus" aria-label="زيادة الكمية">+</button>
+                        <!-- Quantity -->
+                        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
+                            <span style="font-size:13px;font-weight:600;color:var(--ink-soft)">الكمية:</span>
+                            <div style="display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:8px;padding:1px;background:#fff">
+                                <button type="button" id="orderMinus" style="width:28px;height:28px;border:none;border-radius:6px;background:var(--primary-soft2);font-size:16px;color:var(--primary-dark);cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center">−</button>
+                                <span id="orderQtyNum" style="min-width:24px;text-align:center;font-weight:700;font-size:15px;font-family:'Poppins',sans-serif;color:var(--ink)">1</span>
+                                <button type="button" id="orderPlus" style="width:28px;height:28px;border:none;border-radius:6px;background:var(--primary-soft2);font-size:16px;color:var(--primary-dark);cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center">+</button>
                             </div>
-                            <span style="font-size:14px;color:var(--muted);margin-right:auto">(حد أقصى 10)</span>
+                            <span style="font-size:11px;color:var(--muted);">حد أقصى 10</span>
                         </div>
                     </div>
 
-                    <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
-
-                    <!-- ====== 2. COORDONNÉES ====== -->
-                    <div style="margin-bottom:16px">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-                            <span style="font-size:20px">📝</span>
-                            <label style="font-weight:700;font-size:17px;color:var(--ink)">بياناتك للتوصيل</label>
+                    <!-- ====== COORDONNÉES COMPACT ====== -->
+                    <div class="order-compact-grid" style="margin-bottom:6px">
+                        <div>
+                            <label for="orderFullName" class="order-compact-label">👤 الاسم الكامل</label>
+                            <input id="orderFullName" name="fullName" required autocomplete="name" placeholder="مثال: فاطمة" class="order-compact-input">
+                            <small class="order-compact-err" id="orderNameErr">✏️ مطلوب</small>
                         </div>
-
-                        <!-- Nom -->
-                        <div class="order-field-group">
-                            <label for="orderFullName" class="order-input-label">
-                                <span class="icon">👤</span> الاسم الكامل
-                            </label>
-                            <input id="orderFullName" name="fullName" required autocomplete="name" placeholder="مثال: فاطمة بن سعيد" class="order-input">
-                            <small class="order-error-msg" id="orderNameErr">✏️ الاسم الكامل مطلوب</small>
+                        <div>
+                            <label for="orderPhone" class="order-compact-label">📱 رقم الهاتف</label>
+                            <input id="orderPhone" name="phone" type="tel" inputmode="numeric" required placeholder="0550123456" autocomplete="tel" maxlength="14" class="order-compact-input">
+                            <small class="order-compact-err" id="orderPhoneErr">📞 رقم صحيح</small>
                         </div>
-
-                        <!-- Téléphone -->
-                        <div class="order-field-group">
-                            <label for="orderPhone" class="order-input-label">
-                                <span class="icon">📱</span> رقم الهاتف
-                            </label>
-                            <input id="orderPhone" name="phone" type="tel" inputmode="numeric" required placeholder="مثال: 0550123456" autocomplete="tel" maxlength="14" class="order-input">
-                            <small class="order-error-msg" id="orderPhoneErr">📞 أدخلي رقم هاتف جزائري صحيح (05 أو 06 أو 07)</small>
+                        <div>
+                            <label for="orderWilaya" class="order-compact-label">🏙️ الولاية</label>
+                            <input id="orderWilaya" name="wilaya" required autocomplete="address-level1" placeholder="مثال: الجزائر" class="order-compact-input">
+                            <small class="order-compact-err" id="orderWilayaErr">📍 مطلوبة</small>
                         </div>
-
-                        <!-- Wilaya + Commune -->
-                        <div class="order-wilaya-commune" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                            <div>
-                                <label for="orderWilaya" class="order-input-label">
-                                    <span class="icon">🏙️</span> الولاية
-                                </label>
-                                <input id="orderWilaya" name="wilaya" required autocomplete="address-level1" placeholder="مثال: الجزائر" class="order-input">
-                                <small class="order-error-msg" id="orderWilayaErr">📍 الولاية مطلوبة</small>
-                            </div>
-                            <div>
-                                <label for="orderCommune" class="order-input-label">
-                                    <span class="icon">🏘️</span> البلدية
-                                </label>
-                                <input id="orderCommune" name="commune" required autocomplete="address-level2" placeholder="مثال: سيدي أمحمد" class="order-input">
-                                <small class="order-error-msg" id="orderCommuneErr">📍 البلدية مطلوبة</small>
-                            </div>
-                        </div>
-
-                        <!-- Type de livraison -->
-                        <div style="margin-top:12px">
-                            <label for="orderDeliveryType" class="order-input-label">
-                                <span class="icon">🚚</span> نوع التوصيل
-                            </label>
-                            <select id="orderDeliveryType" style="width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:#faf8f9;font-size:17px;color:var(--ink);appearance:auto">
-                                <option>🏠 التوصيل إلى المنزل</option>
-                                <option>🏢 التوصيل إلى المكتب</option>
-                            </select>
+                        <div>
+                            <label for="orderCommune" class="order-compact-label">🏘️ البلدية</label>
+                            <input id="orderCommune" name="commune" required autocomplete="address-level2" placeholder="مثال: سيدي أمحمد" class="order-compact-input">
+                            <small class="order-compact-err" id="orderCommuneErr">📍 مطلوبة</small>
                         </div>
                     </div>
 
-                    <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
+                    <!-- Delivery -->
+                    <div style="margin-bottom:6px">
+                        <label for="orderDeliveryType" class="order-compact-label">🚚 نوع التوصيل</label>
+                        <select id="orderDeliveryType" class="order-compact-select">
+                            <option>🏠 التوصيل إلى المنزل</option>
+                            <option>🏢 التوصيل إلى المكتب</option>
+                        </select>
+                    </div>
 
-                    <!-- ====== 3. RÉSUMÉ ====== -->
-                    <div class="order-subtotal-box">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                            <span style="font-size:18px">🧾</span>
-                            <span style="font-weight:700;font-size:16px;color:var(--ink)">ملخص طلبك</span>
-                        </div>
-                        <div id="orderSummary" style="font-size:15.5px;color:var(--ink-soft);line-height:1.7" aria-live="polite">
+                    <!-- ====== SUMMARY ====== -->
+                    <div style="background:var(--primary-soft2);border-radius:10px;padding:8px 12px;margin:8px 0;border:1px solid var(--line);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                        <span style="font-size:16px;">🧾</span>
+                        <span id="orderSummary" style="font-size:14px;color:var(--ink-soft);flex:1;line-height:1.5" aria-live="polite">
                             <!-- généré par JS -->
-                        </div>
-                        <div style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:13.5px;color:var(--muted)">
-                            <span>💡</span>
-                            <span>رسوم التوصيل تختلف حسب الولاية (450–800 دج)</span>
-                        </div>
+                        </span>
                     </div>
 
                     <!-- ====== CTA ====== -->
-                    <button type="submit" class="order-cta-btn" id="orderSubmit">
+                    <button type="submit" id="orderSubmit" style="width:100%;border-radius:50px;padding:12px 16px;font-size:18px;font-weight:800;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:.2s;box-shadow:0 4px 16px rgba(226,74,139,.3);display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.02em">
                         <span>💖</span> تأكيد الطلب <span>💖</span>
                     </button>
-
-                    <!-- erreur -->
-                    <div class="error-box" id="orderError" role="alert" aria-live="assertive" style="display:none;margin-top:12px;padding:12px 16px;background:#fbe9e7;color:#b03a2e;border-radius:12px;font-size:14px;border:1px solid #f5c6cb"></div>
+                    <div class="error-box" id="orderError" role="alert" aria-live="assertive" style="display:none;margin-top:8px;padding:8px 12px;background:#fbe9e7;color:#b03a2e;border-radius:8px;font-size:13px;border:1px solid #f5c6cb"></div>
 
                     <!-- ====== TRUST BADGES ====== -->
-                    <div class="order-trust-badges">
-                        <span class="tb"><span class="ic">💵</span> دفع عند الاستلام</span>
-                        <span class="tb"><span class="ic">🚚</span> توصيل لكل الولايات</span>
-                        <span class="tb"><span class="ic">✅</span> جودة مضمونة</span>
-                        <span class="tb"><span class="ic">🌸</span> مناسب للبشرة الحساسة</span>
+                    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
+                        <span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink-soft)"><span style="font-size:14px">💵</span> دفع عند الاستلام</span>
+                        <span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink-soft)"><span style="font-size:14px">🚚</span> لكل الولايات</span>
+                        <span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink-soft)"><span style="font-size:14px">✅</span> جودة مضمونة</span>
+                        <span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink-soft)"><span style="font-size:14px">🌸</span> للبشرة الحساسة</span>
                     </div>
 
-                    <p class="order-privacy-note">
-                        🔒 بياناتك آمنة — نستخدمها فقط لتأكيد طلبك والتوصيل
-                    </p>
+                    <p style="text-align:center;font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4">🔒 بياناتك آمنة — نستخدمها فقط لتأكيد طلبك</p>
 
                 </form>
             </div>
 
-            <!-- ====== HELP ====== -->
-            <div class="order-help-box">
-                <span style="display:inline-flex;align-items:center;gap:8px">
-                    <span style="font-size:22px">💬</span>
-                    <span>عندك سؤال؟ <a href="#contact">اضغطي هنا</a> أو اتصل بنا على <strong>0540732771</strong></span>
-                </span>
+            <!-- ====== HELP MINI ====== -->
+            <div style="text-align:center;margin-top:10px;font-size:13px;color:var(--ink-soft)">
+                <span>💬 سؤال؟ <a href="#contact" style="color:var(--primary-dark);font-weight:700;text-decoration:underline">اتصل بنا</a> أو <strong style="color:var(--primary-dark)">0540732771</strong></span>
             </div>
 
         </div>
     </section>
     <!-- ================================================================
-    FIN DE LA SECTION ORDRE
+    FIN ORDRE COMPACT
     ================================================================ -->
 
     <footer>
@@ -2280,7 +1957,6 @@
                 '<span class="ov-check">✓</span>' +
                 '</div>'
             ).join('');
-            // clic sur les cartes
             container.querySelectorAll('.order-variant-card').forEach(card => {
                 card.addEventListener('click', function() {
                     const id = this.dataset.id;
@@ -2305,13 +1981,11 @@
             const el = document.getElementById('orderSummary');
             if (el) {
                 el.innerHTML = '<strong>ملخص الطلب:</strong> ' + escapeHTML(o.title) + (selectedQty > 1 ?
-                    ' × ' + selectedQty + ' (المجموع: ' + units + ' ماسك)' : '') + ' — <strong style="font-size:20px;color:var(--primary-dark)">' +
-                    money(total) + '</strong> + رسوم التوصيل (450-800 دج)';
+                    ' × ' + selectedQty + ' (' + units + ' ماسك)' : '') + ' — <strong style="font-size:16px;color:var(--primary-dark)">' +
+                    money(total) + '</strong> + رسوم التوصيل';
             }
-            // mise à jour du qty dans la section commande
             const qtyEl = document.getElementById('orderQtyNum');
             if (qtyEl) qtyEl.textContent = String(selectedQty);
-            // synchro avec la section produit
             syncHero();
         }
 
@@ -2360,7 +2034,6 @@
                 if (sending) return;
                 errorBox.style.display = 'none';
 
-                // Validation
                 let ok = !0;
                 const name = document.getElementById('orderFullName');
                 const phone = document.getElementById('orderPhone');
@@ -2372,7 +2045,7 @@
                 const wilayaErr = document.getElementById('orderWilayaErr');
                 const communeErr = document.getElementById('orderCommuneErr');
 
-                const validate = (input, err, test, msg) => {
+                const validate = (input, err, test) => {
                     const valid = test(input.value);
                     err.classList.toggle('visible', !valid);
                     input.classList.toggle('error', !valid);
@@ -2380,12 +2053,12 @@
                     return valid;
                 };
 
-                validate(name, nameErr, v => v.trim().length >= 3, '');
-                validate(phone, phoneErr, v => isValidAlgerianPhone(v), '');
-                validate(wilaya, wilayaErr, v => v.trim().length >= 2, '');
-                validate(commune, communeErr, v => v.trim().length >= 2, '');
+                validate(name, nameErr, v => v.trim().length >= 3);
+                validate(phone, phoneErr, v => isValidAlgerianPhone(v));
+                validate(wilaya, wilayaErr, v => v.trim().length >= 2);
+                validate(commune, communeErr, v => v.trim().length >= 2);
 
-                if (!ok) { document.querySelector('.order-input.error')?.focus(); return; }
+                if (!ok) { document.querySelector('.order-compact-input.error')?.focus(); return; }
                 if (!antiSpamCheck(form, errorBox)) return;
 
                 const offer = getOffer();
