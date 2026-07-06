@@ -221,7 +221,7 @@
   </style>
 </head>
 <body>
-<div class="promo">تخفيضات خاصة  الكميات الاخيرة</div>
+<div class="promo">تخفيضات خاصة الكميات الاخيرة</div>
 <header class="header">
   <div class="container header-wrap">
     <div class="logo lat">bio<b>dance</b></div>
@@ -231,7 +231,6 @@
     <nav class="quicknav" aria-label="روابط سريعة">
       <button data-scroll="#buy">العروض</button>
       <button data-scroll="#before-after">قبل وبعد</button>
-      <button data-scroll="#gallery">المعرض</button>
       <button data-scroll="#reviews">آراء فيسبوك</button>
       <button data-scroll="#order">اطلبي الآن</button>
     </nav>
@@ -352,13 +351,6 @@
     <div class="ba-wrap reveal" id="baWrap"></div>
   </div>
 </section>
-<section class="section band divider-top" id="gallery">
-  <div class="container">
-    <h2 class="section-title reveal">معرض الصور</h2>
-    <p class="section-text reveal">صور وتفاصيل المنتج. اضغطي على أي صورة للتكبير.</p>
-    <div class="gallery-stack" id="galleryGrid"></div>
-  </div>
-</section>
 <section class="section divider-top" id="reviews">
   <div class="container">
     <h2 class="section-title reveal">آراء حقيقية على فيسبوك</h2>
@@ -466,14 +458,6 @@
     'social-proof-4.jpg',
     'social-proof-5.jpg'
   ];
-  // صور المعرض (صور إضافية)
-  const GALLERY_IMAGES = [
-    'edit-1.png',
-    'edit-2.png',
-    'edit-3.png',
-    'edit-4.png',
-    'edit-5.png'
-  ];
   // صور قبل/بعد (أزواج)
   const BEFORE_AFTER = [
     { before: 'before1.jpg', after: 'after1.jpg' },
@@ -503,7 +487,6 @@
     (scope || document).querySelectorAll('img').forEach(img => {
       if (!img.dataset.fbBound) {
         img.dataset.fbBound = '1';
-        // إذا كانت الصورة فارغة أو لم تحمل، نضع الاحتياطية
         if (!img.src || img.src === '') {
           img.src = FALLBACK_IMG;
         } else {
@@ -544,9 +527,7 @@
 
   let pgIndex=0, pgUrls=[];
   function buildProductGallery(urls){
-    // إذا لم توجد صور، نعرض صورة احتياطية واحدة
     pgUrls = (urls && urls.length) ? urls : [FALLBACK_IMG];
-    // تأكد من أن كل صورة غير فارغة
     pgUrls = pgUrls.map(u => (u && u.trim() !== '') ? u : FALLBACK_IMG);
     const track=$('#pgTrack'), thumbs=$('#pgThumbs');
     track.innerHTML=pgUrls.map((u,i)=>'<div class="pg-slide'+(i===0?' active':'')+'"><img src="'+escapeHTML(u)+'" alt="صورة المنتج '+(i+1)+'" '+(i===0?'fetchpriority="high"':'loading="lazy"')+' decoding="async"></div>').join('');
@@ -573,14 +554,12 @@
 
   function buildBeforeAfter(items){
     const wrap=$('#baWrap'), sec=$('#before-after');
-    // تصفية العناصر التي تحتوي على صور فارغة أو غير معروفة
     const validItems = items.filter(it => {
       if (it.type === 'single') return it.src && it.src.trim() !== '';
       return it.before && it.before.trim() !== '' && it.after && it.after.trim() !== '';
     });
     if(!validItems.length){sec.style.display='none';return;}
     const singles=validItems.filter(it=>it.type==='single').map(it=>it.src);
-    // تحويل الأزواج إلى صيغة العرض
     const htmlItems = validItems.map((it,i)=>{
       if(it.type==='pair') return '<div class="cmp'+(i===0?' active':'')+'" data-i="'+i+'"><img class="cmp-after" src="'+escapeHTML(it.after)+'" alt="بعد"><img class="cmp-before" src="'+escapeHTML(it.before)+'" alt="قبل"><span class="cmp-label b">قبل</span><span class="cmp-label a">بعد</span><div class="cmp-handle"></div></div>';
       return '<div class="cmp'+(i===0?' active':'')+'" data-i="'+i+'" data-single="1"><img class="cmp-after" src="'+escapeHTML(it.src)+'" alt="نتيجة"></div>';
@@ -606,15 +585,6 @@
     });
     wrap.addEventListener('click',e=>{const c=e.target.closest('.cmp[data-single]');if(c)openLightbox(singles,singles.indexOf(c.querySelector('img').src));});
     applyImgFallback(wrap);
-  }
-
-  function buildGallery(urls){
-    const host=$('#galleryGrid'), sec=$('#gallery');
-    const valid = urls.filter(u => u && u.trim() !== '');
-    if(!valid.length){sec.style.display='none';return;}
-    host.innerHTML=valid.map((u,i)=>'<figure class="reveal"><img src="'+escapeHTML(u)+'" alt="صورة المنتج '+(i+1)+'" loading="lazy" decoding="async"></figure>').join('');
-    host.addEventListener('click',e=>{const img=e.target.closest('img');if(img)openLightbox(valid,valid.indexOf(img.src));});
-    applyImgFallback(host);
   }
 
   function buildReviews(urls){
@@ -750,17 +720,14 @@
   observeReveals();
   track('ViewContent',{value:getOffer().price,currency:'DZD',content_name:CONFIG.productName,content_type:'product'});
 
-  // تحويل BEFORE_AFTER إلى الصيغة المطلوبة (نوع pair)
   const baItems = BEFORE_AFTER.map(item => ({ type: 'pair', before: item.before, after: item.after }));
 
   buildProductGallery(PRODUCT_IMAGES);syncHero();
   buildBeforeAfter(baItems);
-  buildGallery(GALLERY_IMAGES);
   buildReviews(REVIEW_IMAGES);
   applyImgFallback(document);
   observeReveals();
 
-  // Facebook Pixel (مهيأ مسبقاً)
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
   fbq('init','1444522217477477');fbq('track','PageView');
 </script>
