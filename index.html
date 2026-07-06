@@ -221,7 +221,7 @@
   </style>
 </head>
 <body>
-<div class="promo">2 ماسك ب 1900 دج فقطة</div>
+<div class="promo">تخفيضات خاصة بيوم الاحد 5 جويلية فقط الكميات الاخيرة</div>
 <header class="header">
   <div class="container header-wrap">
     <div class="logo lat">bio<b>dance</b></div>
@@ -440,15 +440,48 @@
 </div>
 <script>
   'use strict';
-  // ===== EXPLICIT IMAGE ARRAYS (replace with your actual image URLs) =====
-  const PRODUCT_IMAGES=['product1.jpg','product2.jpg','product3.jpg','product4.jpg','product5.jpg','product6.jpg','product7.jpg','product8.jpg','product9.jpg','product10.jpg','product11.jpg','product12.jpg'];
-  const REVIEW_IMAGES=['social-proof-1.jpg','social-proof-2.jpg','social-proof-3.jpg','social-proof-4.jpg','social-proof-5.jpg'];
-  const GALLERY_IMAGES=['edit-1.png','edit-2.png','edit-3.png','edit-4.png','edit-5.png'];
-  const BEFORE_AFTER=[
-    {before:'before1.jpg',after:'after1.jpg'},
-    {before:'before2.jpg',after:'after2.jpg'},
-    {before:'before3.jpg',after:'after3.jpg'}
+  // ================================================================
+  // 🔽🔽🔽  قم بتعديل هذه المصفوفات لتحديد صورك الفعلية  🔽🔽🔽
+  // ================================================================
+  // صور المنتج (سلة العرض الرئيسية) - اكتب عناوين URLs الصحيحة
+  const PRODUCT_IMAGES = [
+    'product1.jpg',
+    'product2.jpg',
+    'product3.jpg',
+    'product4.jpg',
+    'product5.jpg',
+    'product6.jpg',
+    'product7.jpg',
+    'product8.jpg',
+    'product9.jpg',
+    'product10.jpg',
+    'product11.jpg',
+    'product12.jpg'
   ];
+  // صور آراء فيسبوك (لقطات شاشة)
+  const REVIEW_IMAGES = [
+    'social-proof-1.jpg',
+    'social-proof-2.jpg',
+    'social-proof-3.jpg',
+    'social-proof-4.jpg',
+    'social-proof-5.jpg'
+  ];
+  // صور المعرض (صور إضافية)
+  const GALLERY_IMAGES = [
+    'edit-1.png',
+    'edit-2.png',
+    'edit-3.png',
+    'edit-4.png',
+    'edit-5.png'
+  ];
+  // صور قبل/بعد (أزواج)
+  const BEFORE_AFTER = [
+    { before: 'before1.jpg', after: 'after1.jpg' },
+    { before: 'before2.jpg', after: 'after2.jpg' },
+    { before: 'before3.jpg', after: 'after3.jpg' }
+  ];
+  // ================================================================
+  // 🔼🔼🔼  انتهى تعديل المصفوفات  🔼🔼🔼
   // ================================================================
 
   const CONFIG={productName:'Biodance Bio-Collagen Real Deep Mask',trustBadges:['منتج ذو جودة عالية','الدفع عند الاستلام','توصيل إلى 58 ولاية','مناسب للبشرة الحساسة'],offers:[{id:'offer1',title:'2 ماسك بـ 1900 دج',units:2,price:1900,compareAt:1900,badge:'اقتصادي',save:'وفري 600 دج',selected:!1},{id:'offer2',title:'4 ماسك (علبة) بـ 3500 دج',units:4,price:3500,compareAt:4400,badge:'الأكثر مبيعاً',save:'وفري 1500 دج',selected:!0},{id:'offer3',title:'8 ماسك (علبتان) بـ 6500 دج',units:8,price:6500,compareAt:8400,badge:'أفضل قيمة',save:'وفري 3500 دج',selected:!1}],benefits:[{icon:'💧',title:'ترطيب عميق',text:'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.'},{icon:'✨',title:'إشراقة طبيعية',text:'يمنح البشرة مظهراً أكثر نضارة وإشراقاً.'},{icon:'🪶',title:'ملمس ناعم',text:'يساعد البشرة على أن تبدو أكثر نعومة.'},{icon:'🌸',title:'لطيف على البشرة',text:'تركيبة مناسبة حتى للبشرة الحساسة.'}],contactChannels:{whatsapp:'واتساب: 213540732771+',phone:'اتصال: 0540732771'},emailjs:{serviceId:'service_q7wx8gn',templateId:'template_xkpm4qc'},sheet:{endpoint:'https://script.google.com/macros/s/AKfycbyf9e03fDCOrevcxji92LNEUPDlgn2MZWXaMrbk47QZoa0xsEIDk7XOWgCZHgSVvpKGVw/exec',secret:'CHANGEZ-MOI-phrase-secrete-2026'},minFormTimeMs:3000,submitCooldownMs:60000};
@@ -456,8 +489,31 @@
   const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
   const money=v=>v.toLocaleString('fr-FR')+' دج';
-  const IMG_FALLBACK="data:image/svg+xml,"+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%23fdeaf3'/><text x='50%' y='50%' text-anchor='middle' fill='%23c2356f' font-size='24' font-family='Arial'>biodance</text></svg>");
-  function applyImgFallback(scope){(scope||document).querySelectorAll('img').forEach(img=>{if(!img.dataset.fbBound){img.dataset.fbBound='1';img.addEventListener('error',()=>{img.src=IMG_FALLBACK;},{once:!0});}});}
+
+  // صورة احتياطية (تظهر عند فشل تحميل الصورة) – غير سوداء
+  const FALLBACK_IMG = "data:image/svg+xml," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">' +
+      '<rect width="100%" height="100%" fill="#fdeaf3"/>' +
+      '<text x="50%" y="50%" font-size="28" font-family="Arial" fill="#c2356f" text-anchor="middle" dominant-baseline="central">biodance</text>' +
+    '</svg>'
+  );
+
+  // معالج الأخطاء للصور: استبدالها بالاحتياطية
+  function applyImgFallback(scope) {
+    (scope || document).querySelectorAll('img').forEach(img => {
+      if (!img.dataset.fbBound) {
+        img.dataset.fbBound = '1';
+        // إذا كانت الصورة فارغة أو لم تحمل، نضع الاحتياطية
+        if (!img.src || img.src === '') {
+          img.src = FALLBACK_IMG;
+        } else {
+          img.addEventListener('error', function() {
+            this.src = FALLBACK_IMG;
+          }, { once: true });
+        }
+      }
+    });
+  }
 
   let selectedOfferId=CONFIG.offers.find(o=>o.selected)?.id||CONFIG.offers[0].id;
   let selectedQty=1; const pageLoadTime=Date.now();
@@ -488,7 +544,10 @@
 
   let pgIndex=0, pgUrls=[];
   function buildProductGallery(urls){
-    pgUrls=urls.length?urls:[IMG_FALLBACK];
+    // إذا لم توجد صور، نعرض صورة احتياطية واحدة
+    pgUrls = (urls && urls.length) ? urls : [FALLBACK_IMG];
+    // تأكد من أن كل صورة غير فارغة
+    pgUrls = pgUrls.map(u => (u && u.trim() !== '') ? u : FALLBACK_IMG);
     const track=$('#pgTrack'), thumbs=$('#pgThumbs');
     track.innerHTML=pgUrls.map((u,i)=>'<div class="pg-slide'+(i===0?' active':'')+'"><img src="'+escapeHTML(u)+'" alt="صورة المنتج '+(i+1)+'" '+(i===0?'fetchpriority="high"':'loading="lazy"')+' decoding="async"></div>').join('');
     thumbs.innerHTML=pgUrls.map((u,i)=>'<button class="pg-thumb'+(i===0?' active':'')+'" type="button" data-i="'+i+'" aria-label="صورة '+(i+1)+'"><img src="'+escapeHTML(u)+'" alt="" loading="lazy"></button>').join('');
@@ -514,15 +573,24 @@
 
   function buildBeforeAfter(items){
     const wrap=$('#baWrap'), sec=$('#before-after');
-    if(!items.length){sec.style.display='none';return;}
-    const singles=items.filter(it=>it.type==='single').map(it=>it.src);
-    wrap.innerHTML=items.map((it,i)=>{
-      if(it.type==='pair')return '<div class="cmp'+(i===0?' active':'')+'" data-i="'+i+'"><img class="cmp-after" src="'+escapeHTML(it.after)+'" alt="بعد"><img class="cmp-before" src="'+escapeHTML(it.before)+'" alt="قبل"><span class="cmp-label b">قبل</span><span class="cmp-label a">بعد</span><div class="cmp-handle"></div></div>';
+    // تصفية العناصر التي تحتوي على صور فارغة أو غير معروفة
+    const validItems = items.filter(it => {
+      if (it.type === 'single') return it.src && it.src.trim() !== '';
+      return it.before && it.before.trim() !== '' && it.after && it.after.trim() !== '';
+    });
+    if(!validItems.length){sec.style.display='none';return;}
+    const singles=validItems.filter(it=>it.type==='single').map(it=>it.src);
+    // تحويل الأزواج إلى صيغة العرض
+    const htmlItems = validItems.map((it,i)=>{
+      if(it.type==='pair') return '<div class="cmp'+(i===0?' active':'')+'" data-i="'+i+'"><img class="cmp-after" src="'+escapeHTML(it.after)+'" alt="بعد"><img class="cmp-before" src="'+escapeHTML(it.before)+'" alt="قبل"><span class="cmp-label b">قبل</span><span class="cmp-label a">بعد</span><div class="cmp-handle"></div></div>';
       return '<div class="cmp'+(i===0?' active':'')+'" data-i="'+i+'" data-single="1"><img class="cmp-after" src="'+escapeHTML(it.src)+'" alt="نتيجة"></div>';
-    }).join('')+(items.length>1?'<div class="ba-controls"><button class="prev" type="button" aria-label="السابق">›</button><div class="ba-dots">'+items.map((_,i)=>'<button class="ba-dot'+(i===0?' active':'')+'" data-i="'+i+'" type="button" aria-label="مقارنة '+(i+1)+'"></button>').join('')+'</div><button class="next" type="button" aria-label="التالي">‹</button></div>':'');
+    }).join('');
+    const controls = validItems.length>1 ? '<div class="ba-controls"><button class="prev" type="button" aria-label="السابق">›</button><div class="ba-dots">'+validItems.map((_,i)=>'<button class="ba-dot'+(i===0?' active':'')+'" data-i="'+i+'" type="button" aria-label="مقارنة '+(i+1)+'"></button>').join('')+'</div><button class="next" type="button" aria-label="التالي">‹</button></div>' : '';
+    wrap.innerHTML = htmlItems + controls;
+
     let cur=0; const cmps=[...wrap.querySelectorAll('.cmp')];
     const show=i=>{cur=(i+cmps.length)%cmps.length;cmps.forEach((c,k)=>c.classList.toggle('active',k===cur));wrap.querySelectorAll('.ba-dot').forEach((d,k)=>d.classList.toggle('active',k===cur));};
-    if(items.length>1){
+    if(validItems.length>1){
       wrap.querySelector('.ba-controls .prev').addEventListener('click',()=>show(cur-1));
       wrap.querySelector('.ba-controls .next').addEventListener('click',()=>show(cur+1));
       wrap.querySelector('.ba-dots').addEventListener('click',e=>{const d=e.target.closest('.ba-dot');if(d)show(+d.dataset.i);});
@@ -542,23 +610,25 @@
 
   function buildGallery(urls){
     const host=$('#galleryGrid'), sec=$('#gallery');
-    if(!urls.length){sec.style.display='none';return;}
-    host.innerHTML=urls.map((u,i)=>'<figure class="reveal"><img src="'+escapeHTML(u)+'" alt="صورة المنتج '+(i+1)+'" loading="lazy" decoding="async"></figure>').join('');
-    host.addEventListener('click',e=>{const img=e.target.closest('img');if(img)openLightbox(urls,urls.indexOf(img.src));});
+    const valid = urls.filter(u => u && u.trim() !== '');
+    if(!valid.length){sec.style.display='none';return;}
+    host.innerHTML=valid.map((u,i)=>'<figure class="reveal"><img src="'+escapeHTML(u)+'" alt="صورة المنتج '+(i+1)+'" loading="lazy" decoding="async"></figure>').join('');
+    host.addEventListener('click',e=>{const img=e.target.closest('img');if(img)openLightbox(valid,valid.indexOf(img.src));});
     applyImgFallback(host);
   }
 
   function buildReviews(urls){
     const wrap=$('#revWrap'), sec=$('#reviews');
-    if(!urls.length){sec.style.display='none';return;}
-    wrap.innerHTML='<div class="rev-track" id="revTrack">'+urls.map((u,i)=>'<div class="rev-item" data-i="'+i+'"><img src="'+escapeHTML(u)+'" alt="رأي زبونة '+(i+1)+'" loading="lazy" decoding="async"></div>').join('')+'</div>'+(urls.length>1?'<button class="rev-nav prev" type="button" aria-label="السابق">›</button><button class="rev-nav next" type="button" aria-label="التالي">‹</button>':'');
+    const valid = urls.filter(u => u && u.trim() !== '');
+    if(!valid.length){sec.style.display='none';return;}
+    wrap.innerHTML='<div class="rev-track" id="revTrack">'+valid.map((u,i)=>'<div class="rev-item" data-i="'+i+'"><img src="'+escapeHTML(u)+'" alt="رأي زبونة '+(i+1)+'" loading="lazy" decoding="async"></div>').join('')+'</div>'+(valid.length>1?'<button class="rev-nav prev" type="button" aria-label="السابق">›</button><button class="rev-nav next" type="button" aria-label="التالي">‹</button>':'');
     const trk=$('#revTrack');
-    if(urls.length>1){
+    if(valid.length>1){
       const step=()=>Math.min(trk.clientWidth*.85,340);
       wrap.querySelector('.rev-nav.prev').addEventListener('click',()=>trk.scrollBy({left:step(),behavior:'smooth'}));
       wrap.querySelector('.rev-nav.next').addEventListener('click',()=>trk.scrollBy({left:-step(),behavior:'smooth'}));
     }
-    wrap.addEventListener('click',e=>{const it=e.target.closest('.rev-item');if(it)openLightbox(urls,+it.dataset.i);});
+    wrap.addEventListener('click',e=>{const it=e.target.closest('.rev-item');if(it)openLightbox(valid,+it.dataset.i);});
     applyImgFallback(wrap);
   }
 
@@ -680,15 +750,17 @@
   observeReveals();
   track('ViewContent',{value:getOffer().price,currency:'DZD',content_name:CONFIG.productName,content_type:'product'});
 
+  // تحويل BEFORE_AFTER إلى الصيغة المطلوبة (نوع pair)
+  const baItems = BEFORE_AFTER.map(item => ({ type: 'pair', before: item.before, after: item.after }));
+
   buildProductGallery(PRODUCT_IMAGES);syncHero();
-  const baItems=BEFORE_AFTER.map(item=>({type:'pair',before:item.before,after:item.after}));
   buildBeforeAfter(baItems);
   buildGallery(GALLERY_IMAGES);
   buildReviews(REVIEW_IMAGES);
   applyImgFallback(document);
   observeReveals();
 
-  // Facebook Pixel initialization (delayed)
+  // Facebook Pixel (مهيأ مسبقاً)
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
   fbq('init','1444522217477477');fbq('track','PageView');
 </script>
