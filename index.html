@@ -1041,14 +1041,85 @@
             max-width: 720px;
             margin-inline: auto
         }
+        /* Honeypot: display:none is respected by password managers / browser
+           autofill far more reliably than a clipped field, so real customers
+           no longer get silently blocked by an autofilled "Website" input. */
         .hp-field {
-            position: absolute !important;
-            width: 1px !important;
-            height: 1px !important;
-            overflow: hidden !important;
-            clip-path: inset(50%) !important;
-            white-space: nowrap !important;
-            opacity: 0
+            display: none !important
+        }
+        /* --- ZERO LEAD LOSS UI --- */
+        .zll-note {
+            display: none;
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.55
+        }
+        .zll-note.show {
+            display: block
+        }
+        .zll-restored {
+            background: #e7f6ee;
+            color: #146c49;
+            border: 1px solid #bfe6d3
+        }
+        .zll-offline {
+            background: #fff4e5;
+            color: #8a5300;
+            border: 1px solid #f3dcb5
+        }
+        .zll-recovery {
+            background: #fff8e6;
+            border: 1px solid #f0dca8;
+            color: #6b5312
+        }
+        .zll-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px
+        }
+        .zll-btn {
+            flex: 1 1 auto;
+            min-width: 140px;
+            border: none;
+            border-radius: var(--pill);
+            padding: 10px 14px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center
+        }
+        .zll-btn-retry {
+            background: var(--primary);
+            color: #fff
+        }
+        .zll-btn-wa {
+            background: #25d366;
+            color: #fff
+        }
+        .zll-spinner {
+            width: 17px;
+            height: 17px;
+            border: 2.5px solid rgba(255, 255, 255, .45);
+            border-top-color: #fff;
+            border-radius: 50%;
+            display: none;
+            animation: zllspin .7s linear infinite
+        }
+        #orderSubmit.is-busy .zll-spinner {
+            display: inline-block
+        }
+        @keyframes zllspin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+        @media(prefers-reduced-motion:reduce) {
+            .zll-spinner {
+                animation-duration: 2s
+            }
         }
         .floating-bar {
             position: fixed;
@@ -1621,10 +1692,15 @@
                 <!-- ====== FORM ====== -->
                 <form id="orderForm" novalidate>
 
-                    <!-- HONEYPOT -->
+                    <!-- HONEYPOT (display:none — invisible to autofill, still catches naive bots) -->
                     <div class="hp-field" aria-hidden="true">
                         <label for="order_website">Website</label>
                         <input type="text" id="order_website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <!-- Draft restored notice (discreet, no popup) -->
+                    <div class="zll-note zll-restored" id="orderRestored" role="status" aria-live="polite">
+                        ✅ تم استرجاع معلوماتك المحفوظة تلقائياً — كمّلي من وين وقفتِ.
                     </div>
 
                     <!-- ====== OFFERS ====== -->
@@ -1689,9 +1765,21 @@
 
                     <!-- ====== CTA ====== -->
                     <button type="submit" id="orderSubmit" style="width:100%;border-radius:50px;padding:12px 16px;font-size:18px;font-weight:800;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:.2s;box-shadow:0 4px 16px rgba(226,74,139,.3);display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.02em">
-                        <span>💖</span> تأكيد الطلب <span>💖</span>
+                        <span class="zll-spinner" aria-hidden="true"></span><span id="orderSubmitLabel"><span>💖</span> تأكيد الطلب <span>💖</span></span>
                     </button>
                     <div class="error-box" id="orderError" role="alert" aria-live="assertive" style="display:none;margin-top:8px;padding:8px 12px;background:#fbe9e7;color:#b03a2e;border-radius:8px;font-size:13px;border:1px solid #f5c6cb"></div>
+
+                    <!-- ====== ZERO LEAD LOSS: recovery / offline / restore ====== -->
+                    <div class="zll-note zll-recovery" id="orderRecovery" role="alert" aria-live="assertive">
+                        <div id="orderRecoveryMsg"></div>
+                        <div class="zll-actions">
+                            <button type="button" class="zll-btn zll-btn-retry" id="orderRetry">🔄 إعادة المحاولة</button>
+                            <a class="zll-btn zll-btn-wa" id="orderWhatsapp" href="https://wa.me/213540732771" target="_blank" rel="noopener">📲 أتمّي الطلب عبر واتساب</a>
+                        </div>
+                    </div>
+                    <div class="zll-note zll-offline" id="orderOffline" role="status" aria-live="polite">
+                        📴 انقطع الاتصال بالإنترنت. <b>معلوماتك محفوظة</b> — بمجرّد رجوع الاتصال أعيدي المحاولة.
+                    </div>
 
                     <!-- ====== TRUST BADGES ====== -->
                     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
@@ -1819,7 +1907,13 @@
             });
         }
 
-        function normalizePhone(raw) { let p = String(raw).replace(/[\s.\-()]/g, ''); return p.replace(/^\+?213/, '0'); }
+        // Accepte 0550…, +213550…, 00213550…, 213550…, avec espaces/points/tirets (Phase 16).
+        function normalizePhone(raw) {
+            let p = String(raw == null ? '' : raw).replace(/[\s.\-() ]/g, '');
+            p = p.replace(/^00213/, '0').replace(/^\+213/, '0').replace(/^213(?=[5-7]\d{8}$)/, '0');
+            if (/^[5-7]\d{8}$/.test(p)) p = '0' + p;   // saisie sans le 0 initial
+            return p;
+        }
 
         function isValidAlgerianPhone(raw) { const p = normalizePhone(raw); return /^0[567]\d{8}$/.test(p) || /^0[1-4]\d{7}$/
                 .test(p); }
@@ -2210,150 +2304,761 @@
         // ================================================================
         // VALIDATION & SOUMISSION (COMMANDE)
         // ================================================================
-        function showError(box, msg) { box.textContent = msg;
+        // Sticky = reste affiché (échec de commande : le client doit pouvoir le lire et réagir).
+        function showError(box, msg, sticky) {
+            if (!box) return;
+            box.textContent = msg;
             box.style.display = 'block';
-            setTimeout(() => { box.style.display = 'none'; }, 6000); }
+            if (box._hideT) clearTimeout(box._hideT);
+            if (!sticky) box._hideT = setTimeout(() => { box.style.display = 'none'; }, 8000);
+        }
 
-        function antiSpamCheck(form, errorBox) {
+        function antiSpamCheck(form, errorBox, cooldownKey) {
+            const key = cooldownKey || 'bd_last_submit';
             const hp = form.querySelector('[name="website"]');
-            if (hp && hp.value.trim() !== '') return !1;
-            if (Date.now() - pageLoadTime < CONFIG.minFormTimeMs) { showError(errorBox, 'يرجى الانتظار لحظة قبل الإرسال.');
-                return !1; }
-            try { const last = +localStorage.getItem('bd_last_submit') || 0; if (Date.now() - last < CONFIG
+            // Le honeypot ne meurt plus en silence : le client voit toujours un message.
+            if (hp && hp.value.trim() !== '') {
+                console.warn('[form] honeypot filled — submission blocked');
+                showError(errorBox, 'تعذّر إرسال الطلب من المتصفح. معلوماتك محفوظة — أرسلي طلبك عبر واتساب: 0540732771', true);
+                return !1;
+            }
+            try { const last = +localStorage.getItem(key) || 0; if (Date.now() - last < CONFIG
                     .submitCooldownMs) { showError(errorBox, 'تم إرسال طلب قبل قليل. يرجى الانتظار دقيقة.'); return !1; } } catch (
                 e) {}
             return !0;
         }
 
-        function markSubmitted() { try { localStorage.setItem('bd_last_submit', String(Date.now())); } catch (e) {} }
+        function markSubmitted(key) { try { localStorage.setItem(key || 'bd_last_submit', String(Date.now())); } catch (e) {} }
 
+        // ================================================================
+        // ZERO LEAD LOSS
+        // ----------------------------------------------------------------
+        // Règle absolue : les données client ne dépendent JAMAIS d'une seule
+        // requête réseau. Elles sont persistées AVANT toute tentative d'envoi
+        // et ne sont effacées qu'après un succès confirmé par le backend.
+        // ================================================================
+        const ZLL = {
+            DRAFT_KEY: 'bd_draft_v1',
+            PENDING_KEY: 'bd_pending_v1',
+            ALERT_KEY: 'bd_alert_v1',
+            DONE_KEY: 'bd_done_v1',
+            DRAFT_TTL_MS: 30 * 24 * 60 * 60 * 1000, // 30 jours (Phase 23)
+            SUBMIT_TIMEOUT_MS: 12000,
+            EMAIL_TIMEOUT_MS: 9000,
+            AUTOSAVE_MS: 400,
+            WHATSAPP: '213540732771'
+        };
+
+        // Machine à états explicite (Phase 5)
+        const S = {
+            STARTED: 'FORM_STARTED', PARTIAL: 'FORM_PARTIAL', READY: 'READY_TO_SUBMIT',
+            SUBMITTING: 'SUBMITTING', SUBMITTED: 'SUBMITTED', FAILED: 'FAILED',
+            RECOVERY: 'RECOVERY_PENDING', RECOVERED: 'RECOVERED'
+        };
+
+        // Classification des erreurs (Phase 22)
+        const E = {
+            VALIDATION: 'VALIDATION_ERROR', NETWORK: 'NETWORK_ERROR', TIMEOUT: 'TIMEOUT',
+            SERVER: 'SERVER_ERROR', CLIENT: 'CLIENT_ERROR', CORS: 'CORS_ERROR', OFFLINE: 'OFFLINE',
+            EMAILJS: 'EMAILJS_ERROR', AMBIGUOUS: 'AMBIGUOUS_RESULT', DUPLICATE: 'DUPLICATE_PREVENTED',
+            UNKNOWN: 'UNKNOWN_ERROR'
+        };
+
+        // --- Stockage tolérant aux pannes (Safari privé / quota plein) -----
+        const _mem = {};
+        function lsGet(k) { try { const v = localStorage.getItem(k); return v === null ? (_mem[k] || null) : v; } catch (e) { return _mem[k] || null; } }
+        function lsSet(k, v) { _mem[k] = v; try { localStorage.setItem(k, v); } catch (e) {} }
+        function lsDel(k) { delete _mem[k]; try { localStorage.removeItem(k); } catch (e) {} }
+
+        function newId(prefix) {
+            let r = '';
+            try { if (window.crypto && typeof crypto.randomUUID === 'function') r = crypto.randomUUID().replace(/-/g, '').toUpperCase(); } catch (e) {}
+            if (!r) { const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'; r = Array.from({ length: 10 }, () => c[Math.floor(Math.random() * c.length)]).join(''); }
+            return prefix + '-' + Date.now().toString(36).toUpperCase().slice(-4) + '-' + r.slice(0, 6);
+        }
+        // Jamais de numéro complet en console (Phase 23)
+        function maskPhone(p) { const s = String(p || ''); return s.length < 7 ? '***' : s.slice(0, 4) + '***' + s.slice(-2); }
+
+        function debounce(fn, ms) {
+            let t;
+            const w = function () { const a = arguments, c = this; clearTimeout(t); t = setTimeout(() => fn.apply(c, a), ms); };
+            w.flush = function () { clearTimeout(t); try { fn(); } catch (e) {} };
+            return w;
+        }
+
+        // Isolation des tiers (Phase 19) : un script cassé ne tue jamais la commande.
+        function safeCall(label, fn) { try { return fn(); } catch (err) { console.error('[safe] ' + label + ':', err); return null; } }
+
+        function trackEvent(name, extra) {
+            safeCall('track:' + name, () => {
+                if (typeof fbq !== 'function') return;
+                const p = { draft_id: (draft && draft.draftId) || '', step: name };
+                if (extra) Object.assign(p, extra); // jamais de données personnelles
+                fbq('trackCustom', name, p);
+            });
+        }
+        const _tracked = {};
+        function trackOnce(name, extra) { if (_tracked[name]) return; _tracked[name] = 1; trackEvent(name, extra); }
+
+        // ================================================================
+        // DRAFT (Phases 4-6)
+        // ================================================================
+        let draft = null;
+
+        function blankDraft() {
+            const now = new Date().toISOString();
+            return {
+                draftId: newId('BDD'), orderRef: '', status: S.STARTED,
+                productId: 'biodance-bio-collagen-real-deep-mask', productName: CONFIG.productName,
+                name: '', phone: '', wilaya: '', commune: '',
+                variant: selectedOfferId, quantity: selectedQty, deliveryType: getDeliveryKey(),
+                attempts: 0, lastError: '', createdAt: now, updatedAt: now
+            };
+        }
+
+        function loadDraft() {
+            try {
+                const raw = lsGet(ZLL.DRAFT_KEY);
+                if (!raw) return null;
+                const d = JSON.parse(raw);
+                if (!d || !d.draftId) return null;
+                const age = Date.now() - new Date(d.updatedAt || d.createdAt || 0).getTime();
+                if (!(age >= 0) || age > ZLL.DRAFT_TTL_MS) { lsDel(ZLL.DRAFT_KEY); return null; }
+                return d;
+            } catch (e) { return null; }
+        }
+
+        function saveDraft(patch) {
+            if (!draft) draft = blankDraft();
+            if (patch) Object.assign(draft, patch);
+            draft.updatedAt = new Date().toISOString();
+            lsSet(ZLL.DRAFT_KEY, JSON.stringify(draft));
+            return draft;
+        }
+
+        // Une fois la commande passée, l'autosave doit se taire : sinon le flush
+        // de `pagehide` (déclenché par la redirection) recréerait aussitôt le
+        // brouillon qu'on vient d'effacer.
+        let _completed = false;
+        // Passe à true dès que la cliente retouche un champ : autorise alors le
+        // recalcul du statut après un échec.
+        let _userEdited = false;
+
+        // N'est appelée QUE après un succès confirmé par le backend (Phase 20).
+        function clearDraft() { _completed = true; draft = null; lsDel(ZLL.DRAFT_KEY); lsDel(ZLL.PENDING_KEY); }
+
+        function readOrderFields() {
+            const g = id => { const el = document.getElementById(id); return el ? String(el.value || '').trim() : ''; };
+            return { name: g('orderFullName'), phone: g('orderPhone'), wilaya: g('orderWilaya'), commune: g('orderCommune') };
+        }
+
+        function isDraftComplete(f) {
+            return f.name.length >= 3 && isValidAlgerianPhone(f.phone) && f.wilaya.length >= 2 && f.commune.length >= 2;
+        }
+
+        function draftStatusFor(f) {
+            if (![f.name, f.phone, f.wilaya, f.commune].some(v => v.length > 0)) return S.STARTED;
+            return isDraftComplete(f) ? S.READY : S.PARTIAL;
+        }
+
+        // Autosave : capture l'état courant du formulaire (debouncé par bindAutosave)
+        function captureDraft() {
+            if (_completed) return draft;          // commande déjà confirmée : plus rien à sauver
+            const f = readOrderFields();
+            // On ne rétrograde jamais un envoi en cours, ni un échec tant que la
+            // cliente n'a pas re-modifié le formulaire. Sinon un simple passage en
+            // arrière-plan (aller sur WhatsApp puis revenir) effacerait l'état FAILED.
+            const locked = draft && (draft.status === S.SUBMITTING ||
+                (!_userEdited && (draft.status === S.RECOVERY || draft.status === S.FAILED)));
+            const next = {
+                name: f.name, phone: f.phone, wilaya: f.wilaya, commune: f.commune,
+                variant: selectedOfferId, quantity: selectedQty, deliveryType: getDeliveryKey()
+            };
+            if (!locked) next.status = draftStatusFor(f);
+            const d = saveDraft(next);
+            if (f.name.length >= 3) trackOnce('name_completed');
+            if (isValidAlgerianPhone(f.phone)) trackOnce('phone_completed');
+            if (f.wilaya.length >= 2) trackOnce('wilaya_completed');
+            if (!locked && next.status === S.READY) trackOnce('form_ready');
+            return d;
+        }
+
+        function restoreForm(d) {
+            if (!d) return false;
+            let restored = false;
+            const set = (id, v) => {
+                const el = document.getElementById(id);
+                if (el && v && !String(el.value || '').trim()) { el.value = v; restored = true; }
+            };
+            set('orderFullName', d.name); set('orderPhone', d.phone);
+            set('orderWilaya', d.wilaya); set('orderCommune', d.commune);
+            if (d.variant && CONFIG.offers.some(o => o.id === d.variant)) selectedOfferId = d.variant;
+            if (typeof d.quantity === 'number' && d.quantity >= 1 && d.quantity <= 10) selectedQty = d.quantity;
+            const sel = document.getElementById('orderDeliveryType');
+            if (sel && d.deliveryType && DELIVERY[d.deliveryType]) sel.value = d.deliveryType;
+            safeCall('restore:render', () => { renderOrderVariants(); renderHeroVariants(); syncHero(); renderOrderSummary(); });
+            return restored;
+        }
+
+        // ================================================================
+        // UI helpers
+        // ================================================================
+        function showNote(id, on) { const el = document.getElementById(id); if (el) el.classList.toggle('show', !!on); }
+
+        function whatsappOrderLink() {
+            const f = readOrderFields();
+            const t = computeTotals();
+            const lines = [
+                'السلام عليكم، نحب نطلب:',
+                '📦 ' + t.offer.title,
+                '🔢 الكمية: ' + selectedQty,
+                '🚚 ' + t.del.label,
+                '💰 المجموع: ' + t.grandTotal + ' دج',
+                f.name ? '👤 ' + f.name : '',
+                f.phone ? '📱 ' + f.phone : '',
+                (f.wilaya || f.commune) ? '📍 ' + f.wilaya + ' / ' + f.commune : '',
+                draft && draft.orderRef ? '🔖 ' + draft.orderRef : ''
+            ].filter(Boolean);
+            return 'https://wa.me/' + ZLL.WHATSAPP + '?text=' + encodeURIComponent(lines.join('\n'));
+        }
+
+        function showRecovery(msg) {
+            const box = document.getElementById('orderRecovery');
+            const m = document.getElementById('orderRecoveryMsg');
+            const wa = document.getElementById('orderWhatsapp');
+            if (m) m.innerHTML = msg;
+            if (wa) safeCall('wa-link', () => { wa.href = whatsappOrderLink(); });
+            if (!box) return;
+            box.classList.add('show');
+            // La barre flottante peut masquer le panneau : on l'amène au centre
+            // pour que le bouton "Réessayer" ne passe jamais inaperçu.
+            safeCall('scroll-recovery', () => box.scrollIntoView({ block: 'center', behavior: 'smooth' }));
+        }
+        function hideRecovery() { showNote('orderRecovery', false); }
+
+        function setSubmitBusy(busy, text) {
+            const btn = document.getElementById('orderSubmit');
+            const label = document.getElementById('orderSubmitLabel');
+            if (!btn) return;
+            btn.disabled = !!busy;
+            btn.classList.toggle('is-busy', !!busy);
+            if (!label) return;
+            if (busy) {
+                if (!label.dataset.orig) label.dataset.orig = label.innerHTML; // conserve le markup <span>💖</span>
+                label.textContent = text || 'جارٍ الإرسال...';
+            } else if (label.dataset.orig) {
+                label.innerHTML = label.dataset.orig;
+            }
+        }
+
+        // ================================================================
+        // RÉSEAU (Phases 8, 21, 22)
+        // ================================================================
+        function classifyError(err) {
+            if (typeof navigator !== 'undefined' && navigator.onLine === false) return E.OFFLINE;
+            if (err && (err.name === 'AbortError' || err.code === 20)) return E.TIMEOUT;
+            if (err && err.name === 'TypeError') return E.NETWORK; // inclut CORS / CSP / DNS
+            return E.UNKNOWN;
+        }
+
+        function buildOrderPayload(ctx) {
+            // ⚠️ Les clés existantes sont conservées à l'identique — le Apps Script
+            // actuel les lit telles quelles. On n'AJOUTE que des champs (ignorés
+            // sans risque tant que Code.gs n'est pas mis à jour).
+            return {
+                secret: CONFIG.sheet.secret,
+                ref: ctx.ref,
+                name: ctx.f.name,
+                phone: ctx.phone,
+                wilaya: ctx.f.wilaya,
+                commune: ctx.f.commune,
+                delivery: ctx.t.del.label,
+                deliveryType: getDeliveryKey(),
+                deliveryFee: ctx.t.deliveryFee,
+                offer: ctx.t.offer.title,
+                qty: selectedQty,
+                units: ctx.t.units,
+                boxes: ctx.t.boxes,
+                productTotal: ctx.t.productTotal,
+                total: ctx.t.grandTotal,
+                grandTotal: ctx.t.grandTotal,
+                // --- ajouts Zero Lead Loss ---
+                idempotencyKey: ctx.ref,          // identique à `ref`, stable sur toutes les tentatives
+                draftId: draft ? draft.draftId : '',
+                attempt: draft ? draft.attempts : 1,
+                clientTs: new Date().toISOString()
+            };
+        }
+
+        async function postOrder(payload) {
+            const ep = CONFIG.sheet && CONFIG.sheet.endpoint;
+            if (!ep || ep.indexOf('https://script.google.com/') !== 0) {
+                return { ok: false, type: E.CLIENT, status: 0, message: 'endpoint-not-configured' };
+            }
+            const ctrl = ('AbortController' in window) ? new AbortController() : null;
+            const timer = setTimeout(() => safeCall('abort', () => ctrl && ctrl.abort()), ZLL.SUBMIT_TIMEOUT_MS);
+            try {
+                const res = await fetch(CONFIG.sheet.endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // évite le preflight CORS
+                    body: JSON.stringify(payload),
+                    cache: 'no-store',
+                    signal: ctrl ? ctrl.signal : undefined
+                });
+                clearTimeout(timer);
+                const status = res.status;
+                let text = '';
+                try { text = await res.text(); } catch (e) { text = ''; }
+                if (!res.ok) return { ok: false, type: status >= 500 ? E.SERVER : E.CLIENT, status: status };
+                let data = null;
+                try { data = JSON.parse(text); } catch (e) { data = null; }
+                if (data && data.ok === true) return { ok: true, status: status, data: data };
+                if (data && data.ok === false) return { ok: false, type: E.SERVER, status: status, message: String(data.error || '') };
+                // HTTP 200 mais corps illisible (page HTML d'Apps Script) :
+                // la ligne A PEUT-ÊTRE été écrite → résultat ambigu, jamais un échec net.
+                return { ok: false, type: E.AMBIGUOUS, status: status };
+            } catch (err) {
+                clearTimeout(timer);
+                return { ok: false, type: classifyError(err), status: 0, error: err };
+            }
+        }
+
+        // ================================================================
+        // EMAILJS — canal d'alerte NON critique (Phases 11-13)
+        // ================================================================
+        const EMAILJS_PUBLIC_KEY = 'wI4lyiYiXT4aP6jfk';
+        let _emailjsPromise = null;
+
+        function emailjsReady() { return !!(window.emailjs && typeof window.emailjs.send === 'function'); }
+
+        // Chargement à la demande : le fallback n'est plus absent au moment où il sert.
+        function ensureEmailJs(timeoutMs) {
+            if (emailjsReady()) return Promise.resolve(true);
+            if (_emailjsPromise) return _emailjsPromise;
+            _emailjsPromise = new Promise(resolve => {
+                let done = false;
+                const finish = ok => { if (!done) { done = true; resolve(!!ok); } };
+                const t = setTimeout(() => finish(emailjsReady()), timeoutMs || 8000);
+                const onLoad = () => {
+                    clearTimeout(t);
+                    safeCall('emailjs:init', () => { if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); });
+                    finish(emailjsReady());
+                };
+                let s = document.querySelector('script[data-emailjs]');
+                if (s) {
+                    if (emailjsReady()) { clearTimeout(t); return finish(true); }
+                } else {
+                    s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js';
+                    s.crossOrigin = 'anonymous';
+                    s.async = true;
+                    s.setAttribute('data-emailjs', '1');
+                    document.head.appendChild(s);
+                }
+                s.addEventListener('load', onLoad);
+                s.addEventListener('error', () => { clearTimeout(t); finish(false); });
+            });
+            return _emailjsPromise;
+        }
+
+        function withTimeout(promise, ms) {
+            return new Promise(resolve => {
+                let done = false;
+                const t = setTimeout(() => { if (!done) { done = true; resolve({ ok: false, type: E.TIMEOUT }); } }, ms);
+                promise.then(v => { if (!done) { done = true; clearTimeout(t); resolve(v); } })
+                    .catch(err => { if (!done) { done = true; clearTimeout(t); resolve({ ok: false, type: E.EMAILJS, error: err }); } });
+            });
+        }
+
+        async function sendEmail(subject, message, fromName) {
+            const ready = await ensureEmailJs(ZLL.EMAIL_TIMEOUT_MS);
+            if (!ready) return { ok: false, type: E.EMAILJS, message: 'sdk-unavailable' };
+            return withTimeout(
+                emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId,
+                    { from_name: fromName || 'Biodance', message: message, subject: subject })
+                    .then(() => ({ ok: true })),
+                ZLL.EMAIL_TIMEOUT_MS
+            );
+        }
+
+        // Notification de commande normale (comportement existant préservé)
+        function sendOrderEmail(ctx, sheetFailed) {
+            const t = ctx.t;
+            const details = '\nNouvelle commande [' + ctx.ref + ']' +
+                (sheetFailed ? '\n⚠️ ATTENTION : écriture Google Sheet ÉCHOUÉE — à ajouter manuellement.' : '') +
+                '\nNom: ' + ctx.f.name + '\nTél: ' + ctx.phone +
+                '\nWilaya: ' + ctx.f.wilaya + '\nCommune: ' + ctx.f.commune +
+                '\nLivraison: ' + t.del.label + ' (' + t.deliveryFee + ' DA - tarif fixe)' +
+                '\nOffre: ' + t.offer.title + '\nQuantité: ' + selectedQty + ' (' + t.units + ' masques / ' + t.boxes + ' boîtes)' +
+                '\nProduit: ' + t.productTotal + ' DA' +
+                '\nLivraison: ' + t.deliveryFee + ' DA' +
+                '\nTOTAL À ENCAISSER: ' + t.grandTotal + ' DA';
+            return sendEmail(
+                (sheetFailed ? '⚠️ ' : '') + 'Commande ' + ctx.ref + ' - ' + ctx.f.name + ' - ' + t.grandTotal + ' DA',
+                details, ctx.f.name);
+        }
+
+        // Alerte de récupération — une seule par (orderRef + type d'échec) [Phase 12]
+        async function sendRecoveryAlert(ctx, info) {
+            const key = (ctx.ref || (draft && draft.draftId) || '?') + '|' + (info.type || E.UNKNOWN);
+            let sent = [];
+            try { sent = JSON.parse(lsGet(ZLL.ALERT_KEY) || '[]'); } catch (e) { sent = []; }
+            if (sent.indexOf(key) !== -1) return { ok: true, skipped: true };
+            sent.push(key);
+            lsSet(ZLL.ALERT_KEY, JSON.stringify(sent.slice(-40)));
+
+            const t = ctx.t;
+            const body = [
+                '--------------------------------',
+                '🚨 ORDER RECOVERY ALERT',
+                '--------------------------------',
+                '',
+                'Draft ID: ' + (draft ? draft.draftId : '-'),
+                'Order ID: ' + (ctx.ref || '-'),
+                '',
+                'Product: ' + CONFIG.productName,
+                'Offer: ' + t.offer.title,
+                'Quantity: ' + selectedQty + ' (' + t.units + ' masques / ' + t.boxes + ' boîtes)',
+                'Variant: ' + t.offer.id,
+                'Delivery: ' + t.del.label + ' (' + t.deliveryFee + ' DA)',
+                'Order total: ' + t.grandTotal + ' DA',
+                '',
+                'Customer name: ' + (ctx.f.name || '-'),
+                'Phone: ' + (ctx.phone || '-'),
+                'Wilaya: ' + (ctx.f.wilaya || '-'),
+                'Commune: ' + (ctx.f.commune || '-'),
+                'Address: (non collectée sur ce formulaire)',
+                '',
+                'Status: ' + (info.status || S.FAILED),
+                'Failure type: ' + (info.type || E.UNKNOWN),
+                'HTTP status: ' + (info.httpStatus ? info.httpStatus : 'n/a'),
+                'Attempt #: ' + (draft ? draft.attempts : 1),
+                'Online: ' + (navigator.onLine === false ? 'no' : 'yes'),
+                '',
+                'Timestamp: ' + new Date().toISOString(),
+                'Landing page: ' + location.origin + location.pathname,
+                'Technical error ID: ' + key,
+                '',
+                info.type === E.AMBIGUOUS
+                    ? '⚠️ RÉSULTAT AMBIGU : la commande a PEUT-ÊTRE été enregistrée. Vérifier le Sheet AVANT de rappeler pour éviter un doublon.'
+                    : '➡️ Appeler la cliente : la commande n’a PAS pu être enregistrée.',
+                '--------------------------------'
+            ].join('\n');
+
+            trackEvent('recovery_triggered', { failure_type: info.type || E.UNKNOWN });
+            return sendEmail('🚨 RECOVERY ' + (info.type || E.UNKNOWN) + ' — ' + (ctx.f.name || 'client') +
+                ' — ' + t.grandTotal + ' DA', body, ctx.f.name || 'Biodance');
+        }
+
+        function computeTotals() {
+            const offer = getOffer(), del = getDelivery();
+            const productTotal = offer.price * selectedQty;
+            const units = offer.units * selectedQty;
+            return {
+                offer: offer, del: del, productTotal: productTotal, deliveryFee: del.fee,
+                grandTotal: productTotal + del.fee, units: units,
+                boxes: Math.round(units / MASKS_PER_BOX * 10) / 10
+            };
+        }
+
+        function buildCtx() {
+            const f = readOrderFields();
+            return { f: f, phone: normalizePhone(f.phone), t: computeTotals(), ref: '' };
+        }
+
+        function validateOrderForm() {
+            let ok = true;
+            [['orderFullName', 'orderNameErr', v => v.trim().length >= 3],
+             ['orderPhone', 'orderPhoneErr', v => isValidAlgerianPhone(v)],
+             ['orderWilaya', 'orderWilayaErr', v => v.trim().length >= 2],
+             ['orderCommune', 'orderCommuneErr', v => v.trim().length >= 2]
+            ].forEach(p => {
+                const input = document.getElementById(p[0]), err = document.getElementById(p[1]);
+                if (!input) return;
+                const valid = p[2](String(input.value || ''));
+                if (err) err.classList.toggle('visible', !valid);
+                input.classList.toggle('error', !valid);
+                if (!valid) ok = false;
+            });
+            return ok;
+        }
+
+        // Messages client — jamais de détail technique (Phase 22)
+        function recoveryMessage(type) {
+            if (type === E.OFFLINE) return '📴 <b>انقطع الاتصال بالإنترنت.</b> معلوماتك محفوظة تلقائياً — أعيدي المحاولة كي يرجع الاتصال.';
+            if (type === E.TIMEOUT) return '⏳ <b>الاتصال بطيء.</b> معلوماتك محفوظة تلقائياً. أعيدي المحاولة، أو أرسلي الطلب عبر واتساب.';
+            if (type === E.AMBIGUOUS) return '⚠️ <b>ما قدرناش نتأكدو واش الطلب تسجّل.</b> معلوماتك محفوظة. باش نتجنبو طلب مضاعف: تواصلي معنا عبر واتساب ونأكّدو معاك — ولا أعيدي الإرسال بنفس الرقم المرجعي (ما يخلقش طلب جديد).';
+            return '❌ <b>ما تقدرناش نسجّلو الطلب.</b> معلوماتك محفوظة ولن تضيع — أعيدي المحاولة، أو أتمّي الطلب عبر واتساب.';
+        }
+
+        // ================================================================
+        // SOUMISSION (Phases 7-10, 20-21)
+        // ================================================================
+        let _submitting = false;
+
+        async function notifySheetDown(ctx, res) {
+            // Une seule alerte "Sheet HS" par jour — l'email de commande, lui, est bien parti.
+            const day = new Date().toISOString().slice(0, 10);
+            const key = 'SHEET_DOWN|' + day;
+            let sent = [];
+            try { sent = JSON.parse(lsGet(ZLL.ALERT_KEY) || '[]'); } catch (e) { sent = []; }
+            if (sent.indexOf(key) !== -1) return;
+            sent.push(key); lsSet(ZLL.ALERT_KEY, JSON.stringify(sent.slice(-40)));
+            await sendEmail('⚠️ Google Sheet injoignable — commandes reçues par email seulement',
+                'Le backend Google Sheet ne répond pas correctement.\n\n' +
+                'Type: ' + (res.type || E.UNKNOWN) + '\nHTTP: ' + (res.status || 'n/a') +
+                '\nDernière commande concernée: ' + ctx.ref +
+                '\nDate: ' + new Date().toISOString() +
+                '\n\nLes commandes continuent d\'arriver par email, mais elles ne sont PAS ajoutées au Sheet.',
+                'Biodance');
+        }
+
+        // Filet de sécurité ultime : quoi qu'il arrive, le bouton se débloque et
+        // la cliente voit un message + un moyen de finir sa commande.
+        async function submitOrder(isRetry) {
+            try {
+                await submitOrderInner(isRetry);
+            } catch (err) {
+                console.error('[order] unexpected failure:', err);
+                _submitting = false;
+                safeCall('unbusy', () => setSubmitBusy(false));
+                safeCall('save-crash', () => saveDraft({ status: S.FAILED, lastError: E.UNKNOWN }));
+                safeCall('show', () => showRecovery(recoveryMessage(E.UNKNOWN)));
+                trackEvent('submit_failed', { failure_type: E.UNKNOWN });
+            }
+        }
+
+        async function submitOrderInner(isRetry) {
+            if (_submitting) return;                        // anti double / triple clic
+            const form = document.getElementById('orderForm');
+            const errorBox = document.getElementById('orderError');
+            if (!form) return;
+
+            _submitting = true;
+            hideRecovery();
+            if (errorBox) errorBox.style.display = 'none';
+            trackEvent(isRetry ? 'retry_clicked' : 'submit_clicked');
+
+            // 1) SAUVEGARDE AVANT TOUT — la donnée ne dépend jamais du réseau
+            safeCall('capture', captureDraft);
+            _userEdited = false;                            // l'état d'échec redevient protégé
+
+            // 2) Validation (n'efface jamais la saisie)
+            if (!validateOrderForm()) {
+                _submitting = false;
+                safeCall('save-invalid', () => saveDraft({ lastError: E.VALIDATION }));
+                const first = document.querySelector('.order-compact-input.error');
+                if (first) first.focus();
+                trackEvent('submit_failed', { failure_type: E.VALIDATION });
+                return;
+            }
+
+            // 3) Anti-spam (honeypot + cooldown) — après la sauvegarde
+            if (!antiSpamCheck(form, errorBox)) { _submitting = false; return; }
+
+            // 4) Retour visuel immédiat
+            setSubmitBusy(true, 'جارٍ الإرسال...');
+
+            // 5) Délai anti-bot : on ATTEND le reliquat au lieu de refuser l'envoi
+            const elapsed = Date.now() - pageLoadTime;
+            if (elapsed < CONFIG.minFormTimeMs) {
+                await new Promise(r => setTimeout(r, CONFIG.minFormTimeMs - elapsed));
+            }
+
+            const ctx = buildCtx();
+
+            // 6) Hors ligne : on ne prétend JAMAIS que la commande est partie
+            if (navigator.onLine === false) {
+                ctx.ref = (draft && draft.orderRef) || '';
+                safeCall('save-offline', () => saveDraft({ status: S.FAILED, lastError: E.OFFLINE }));
+                trackEvent('submit_failed', { failure_type: E.OFFLINE });
+                setSubmitBusy(false);
+                _submitting = false;
+                showNote('orderOffline', true);
+                showRecovery(recoveryMessage(E.OFFLINE));
+                return;
+            }
+
+            // 7) Référence STABLE = clé d'idempotence (réutilisée à chaque retry)
+            ctx.ref = (draft && draft.orderRef) || newId('BD');
+            safeCall('save-submitting', () => saveDraft({
+                orderRef: ctx.ref, status: S.SUBMITTING,
+                attempts: ((draft && draft.attempts) || 0) + 1
+            }));
+
+            // 8) Marqueur persisté AVANT la requête → survit à un crash / refresh
+            lsSet(ZLL.PENDING_KEY, JSON.stringify({
+                ref: ctx.ref, draftId: draft ? draft.draftId : '', status: S.SUBMITTING,
+                ts: Date.now(), total: ctx.t.grandTotal
+            }));
+            trackEvent('submit_started');
+
+            // 9) Les deux canaux en parallèle → pire cas ~12 s, jamais 21 s
+            let sheetRes = { ok: false, type: E.UNKNOWN, status: 0 };
+            let emailRes = { ok: false, type: E.EMAILJS };
+            try {
+                const payload = buildOrderPayload(ctx);
+                const out = await Promise.all([
+                    postOrder(payload).catch(err => ({ ok: false, type: classifyError(err), status: 0, error: err })),
+                    sendOrderEmail(ctx, false).catch(err => ({ ok: false, type: E.EMAILJS, error: err }))
+                ]);
+                sheetRes = out[0] || sheetRes;
+                emailRes = out[1] || emailRes;
+            } catch (err) {
+                sheetRes = { ok: false, type: classifyError(err), status: 0, error: err };
+            }
+
+            // ---------- SUCCÈS (confirmé par au moins un canal) ----------
+            if (sheetRes.ok || emailRes.ok) {
+                safeCall('mark', markSubmitted);
+                safeCall('save-done', () => saveDraft({ status: S.SUBMITTED }));
+                lsSet(ZLL.DONE_KEY, JSON.stringify({ ref: ctx.ref, ts: Date.now() }));
+                safeCall('journal', () => {
+                    const orders = JSON.parse(lsGet('bd_orders') || '[]');
+                    orders.push({
+                        ref: ctx.ref, ts: new Date().toISOString(), name: ctx.f.name, phone: ctx.phone,
+                        offer: ctx.t.offer.id, qty: selectedQty, productTotal: ctx.t.productTotal,
+                        deliveryFee: ctx.t.deliveryFee, total: ctx.t.grandTotal,
+                        sheetOk: sheetRes.ok, emailOk: emailRes.ok
+                    });
+                    lsSet('bd_orders', JSON.stringify(orders.slice(-20)));
+                });
+                track('InitiateCheckout', {
+                    value: ctx.t.grandTotal, currency: 'DZD', content_name: ctx.t.offer.title,
+                    num_items: selectedQty
+                }, ctx.ref);
+                trackEvent('submit_success', { channel: sheetRes.ok ? 'sheet' : 'email' });
+
+                // Sheet HS mais email OK : la commande est sauvée, on prévient le proprio.
+                if (!sheetRes.ok) safeCall('sheet-down', () => { notifySheetDown(ctx, sheetRes); });
+
+                clearDraft();                                   // ⬅ UNIQUEMENT après succès confirmé
+                _submitting = false;
+                window.location.href = 'merci.html?' + 'ref=' + encodeURIComponent(ctx.ref) + '&offer=' +
+                    encodeURIComponent(ctx.t.offer.title) + '&value=' + ctx.t.grandTotal + '&qty=' + selectedQty +
+                    '&product=' + ctx.t.productTotal + '&shipping=' + ctx.t.deliveryFee;
+                return;
+            }
+
+            // ---------- ÉCHEC : la donnée est préservée, jamais effacée ----------
+            const type = sheetRes.type || E.UNKNOWN;
+            const ambiguous = (type === E.AMBIGUOUS);
+            safeCall('save-failed', () => saveDraft({
+                status: ambiguous ? S.RECOVERY : S.FAILED, lastError: type
+            }));
+            lsSet(ZLL.PENDING_KEY, JSON.stringify({
+                ref: ctx.ref, draftId: draft ? draft.draftId : '',
+                status: ambiguous ? S.RECOVERY : S.FAILED, type: type,
+                ts: Date.now(), total: ctx.t.grandTotal
+            }));
+
+            console.error('[order] submit failed', {
+                ref: ctx.ref, type: type, http: sheetRes.status || 0,
+                emailChannel: emailRes.ok ? 'ok' : (emailRes.type || E.EMAILJS),
+                phone: maskPhone(ctx.phone)               // jamais le numéro complet
+            });
+            trackEvent(type === E.TIMEOUT ? 'submit_timeout' : 'submit_failed',
+                { failure_type: type, http_status: sheetRes.status || 0 });
+
+            // Alerte propriétaire — non bloquante, un échec ici ne casse rien (Phase 13)
+            safeCall('recovery-alert', () => {
+                sendRecoveryAlert(ctx, {
+                    type: type, status: ambiguous ? S.RECOVERY : S.FAILED, httpStatus: sheetRes.status || 0
+                }).catch(err => console.error('[recovery] alert failed:', err));
+            });
+
+            setSubmitBusy(false);
+            _submitting = false;
+            const retryBtn = document.getElementById('orderRetry');
+            if (retryBtn) retryBtn.textContent = ambiguous ? '🔄 إعادة الإرسال بنفس الرقم المرجعي' : '🔄 إعادة المحاولة';
+            showRecovery(recoveryMessage(type));
+        }
+
+        // Reprise après fermeture / refresh pendant l'envoi (TEST 10 & 22)
+        function checkInterruptedSubmit() {
+            let p = null;
+            try { p = JSON.parse(lsGet(ZLL.PENDING_KEY) || 'null'); } catch (e) { p = null; }
+            if (!p || !p.ref) return;
+            if (p.status !== S.SUBMITTING && p.status !== S.RECOVERY && p.status !== S.FAILED) return;
+            // Au-delà de 7 jours la commande a été traitée par téléphone : on n'inquiète plus la cliente.
+            if (!p.ts || (Date.now() - p.ts) > 7 * 24 * 60 * 60 * 1000) { lsDel(ZLL.PENDING_KEY); return; }
+            // Si le brouillon a expiré mais que l'envoi en attente a survécu, on
+            // reprend SA référence : le retry reste idempotent côté backend.
+            if (draft && !draft.orderRef && p.ref) safeCall('adopt-ref', () => saveDraft({ orderRef: p.ref }));
+            const interrupted = (p.status === S.SUBMITTING);
+            showRecovery(
+                (interrupted
+                    ? '⚠️ <b>طلبك السابق ما كملش الإرسال</b> (رقم <b class="lat">' + escapeHTML(p.ref) + '</b>). يمكن يكون وصل ويمكن لا.'
+                    : '💾 <b>عندك طلب محفوظ</b> (رقم <b class="lat">' + escapeHTML(p.ref) + '</b>) ما تسجّلش.') +
+                ' معلوماتك محفوظة — أعيدي الإرسال (نفس الرقم المرجعي، ما يخلقش طلب مضاعف) ولا تواصلي معنا عبر واتساب.'
+            );
+            const retryBtn = document.getElementById('orderRetry');
+            if (retryBtn) retryBtn.textContent = '🔄 إعادة الإرسال بنفس الرقم المرجعي';
+            safeCall('interrupted-alert', () => {
+                if (!draft || !draft.phone || !isValidAlgerianPhone(draft.phone)) return;
+                const ctx = buildCtx();
+                ctx.ref = p.ref;
+                sendRecoveryAlert(ctx, {
+                    type: interrupted ? E.AMBIGUOUS : (p.type || E.UNKNOWN),
+                    status: S.RECOVERY, httpStatus: 0
+                }).catch(() => {});
+            });
+        }
+
+        function bindAutosave() {
+            const save = debounce(() => safeCall('autosave', captureDraft), ZLL.AUTOSAVE_MS);
+            ['orderFullName', 'orderPhone', 'orderWilaya', 'orderCommune'].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('input', () => {
+                    _completed = false;                    // nouvelle saisie = nouvelle commande potentielle
+                    _userEdited = true;
+                    trackOnce('form_started'); hideRecovery(); save();
+                });
+                el.addEventListener('change', save);
+                el.addEventListener('blur', () => save.flush());
+            });
+            ['orderDeliveryType', 'orderVariants', 'orderMinus', 'orderPlus'].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('change', save);
+                el.addEventListener('click', save);
+            });
+            // Écriture synchrone quand la page se ferme / passe en arrière-plan
+            const flush = () => safeCall('flush', () => save.flush());
+            window.addEventListener('pagehide', flush);
+            window.addEventListener('beforeunload', flush);
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') flush();
+            });
+        }
+
+        function bindConnectivity() {
+            const upd = () => showNote('orderOffline', navigator.onLine === false);
+            window.addEventListener('online', upd);
+            window.addEventListener('offline', upd);
+            upd();
+        }
+
+        // Remplace l'ancien handler monolithique : ne fait plus que câbler.
         function bindOrderEmail() {
             const form = document.getElementById('orderForm');
-            const submitBtn = document.getElementById('orderSubmit');
-            const errorBox = document.getElementById('orderError');
-            if (!form || !submitBtn) return;
-            let sending = !1;
-
-            form.addEventListener('submit', async e => {
+            if (!form || form.dataset.zllBound) return;      // jamais de double binding
+            form.dataset.zllBound = '1';
+            form.addEventListener('submit', e => {
                 e.preventDefault();
-                if (sending) return;
-                errorBox.style.display = 'none';
-
-                let ok = !0;
-                const name = document.getElementById('orderFullName');
-                const phone = document.getElementById('orderPhone');
-                const wilaya = document.getElementById('orderWilaya');
-                const commune = document.getElementById('orderCommune');
-
-                const nameErr = document.getElementById('orderNameErr');
-                const phoneErr = document.getElementById('orderPhoneErr');
-                const wilayaErr = document.getElementById('orderWilayaErr');
-                const communeErr = document.getElementById('orderCommuneErr');
-
-                const validate = (input, err, test) => {
-                    const valid = test(input.value);
-                    err.classList.toggle('visible', !valid);
-                    input.classList.toggle('error', !valid);
-                    if (!valid) ok = !1;
-                    return valid;
-                };
-
-                validate(name, nameErr, v => v.trim().length >= 3);
-                validate(phone, phoneErr, v => isValidAlgerianPhone(v));
-                validate(wilaya, wilayaErr, v => v.trim().length >= 2);
-                validate(commune, communeErr, v => v.trim().length >= 2);
-
-                if (!ok) { document.querySelector('.order-compact-input.error')?.focus(); return; }
-                if (!antiSpamCheck(form, errorBox)) return;
-
-                const offer = getOffer();
-                const productTotal = offer.price * selectedQty;
-                const del = getDelivery();
-                const deliveryFee = del.fee;
-                const grandTotal = productTotal + deliveryFee;
-                const boxes = Math.round((offer.units * selectedQty) / MASKS_PER_BOX * 10) / 10;
-                const phoneVal = normalizePhone(phone.value);
-                const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-                const ref = 'BD-' + Date.now().toString(36).toUpperCase().slice(-4) + '-' + Array.from({ length: 4 },
-                    () => chars[Math.floor(Math.random() * chars.length)]).join('');
-                const details = '\nNouvelle commande [' + ref + ']\nNom: ' + name.value.trim() + '\nTél: ' +
-                    phoneVal + '\nWilaya: ' + wilaya.value.trim() + '\nCommune: ' + commune.value.trim() +
-                    '\nLivraison: ' + del.label + ' (' + deliveryFee + ' DA - tarif fixe)' +
-                    '\nOffre: ' + offer.title + '\nQuantité: ' + selectedQty + ' (' + (offer.units * selectedQty) +
-                    ' masques / ' + boxes + ' boîtes)' +
-                    '\nProduit: ' + productTotal + ' DA' +
-                    '\nLivraison: ' + deliveryFee + ' DA' +
-                    '\nTOTAL À ENCAISSER: ' + grandTotal + ' DA';
-
-                sending = !0;
-                submitBtn.disabled = !0;
-                const ot = submitBtn.textContent;
-                submitBtn.textContent = 'جارٍ الإرسال...';
-
-                let sheetOk = !1;
-                if (CONFIG.sheet.endpoint && CONFIG.sheet.endpoint.startsWith('https://script.google.com/')) {
-                    try {
-                        const res = await fetch(CONFIG.sheet.endpoint, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                            body: JSON.stringify({
-                                secret: CONFIG.sheet.secret,
-                                ref,
-                                name: name.value.trim(),
-                                phone: phoneVal,
-                                wilaya: wilaya.value.trim(),
-                                commune: commune.value.trim(),
-                                delivery: del.label,
-                                deliveryType: getDeliveryKey(),
-                                deliveryFee,
-                                offer: offer.title,
-                                qty: selectedQty,
-                                units: offer.units * selectedQty,
-                                boxes,
-                                productTotal,
-                                total: grandTotal,
-                                grandTotal
-                            })
-                        });
-                        const r = await res.json();
-                        sheetOk = r && r.ok === !0;
-                    } catch (err) { console.error('Sheet send failed:', err); }
-                }
-
-                let emailOk = !1;
-                if (window.emailjs) {
-                    try {
-                        await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-                            from_name: name.value.trim(),
-                            message: details,
-                            subject: 'Commande ' + ref + ' - ' + name.value.trim() + ' - ' + grandTotal + ' DA'
-                        });
-                        emailOk = !0;
-                    } catch (err) { console.error('Email send failed:', err); }
-                }
-
-                if (sheetOk || emailOk) {
-                    markSubmitted();
-                    try {
-                        const orders = JSON.parse(localStorage.getItem('bd_orders') || '[]');
-                        orders.push({ ref, ts: new Date().toISOString(), name: name.value.trim(),
-                            phone: phoneVal, offer: offer.id, qty: selectedQty, productTotal, deliveryFee,
-                            total: grandTotal, sheetOk, emailOk });
-                        localStorage.setItem('bd_orders', JSON.stringify(orders.slice(-20)));
-                    } catch (e) {}
-                    track('InitiateCheckout', { value: grandTotal, currency: 'DZD', content_name: offer.title,
-                        num_items: selectedQty }, ref);
-                    window.location.href = 'merci.html?' + 'ref=' + encodeURIComponent(ref) + '&offer=' +
-                        encodeURIComponent(offer.title) + '&value=' + grandTotal + '&qty=' + selectedQty +
-                        '&product=' + productTotal + '&shipping=' + deliveryFee;
-                } else {
-                    showError(errorBox, 'حدث خطأ أثناء إرسال الطلب. حاولي مرة أخرى أو اطلبي عبر واتساب: 0540732771');
-                }
-
-                sending = !1;
-                submitBtn.disabled = !1;
-                submitBtn.textContent = ot;
+                submitOrder(false);
             });
+            const retry = document.getElementById('orderRetry');
+            if (retry) retry.addEventListener('click', () => submitOrder(true));
+        }
+
+        function zllInit() {
+            draft = loadDraft() || blankDraft();
+            if (restoreForm(draft)) showNote('orderRestored', true);
+            bindAutosave();
+            bindConnectivity();
+            checkInterruptedSubmit();
         }
 
         // ================================================================
@@ -2363,14 +3068,16 @@
             const form = document.getElementById('infoForm');
             const submitBtn = document.getElementById('infoSubmit');
             const errorBox = document.getElementById('infoError');
-            if (!form) return;
+            if (!form || form.dataset.zllBound) return;
+            form.dataset.zllBound = '1';
             let sending = !1;
             form.addEventListener('submit', async e => {
                 e.preventDefault();
                 if (sending) return;
                 errorBox.style.display = 'none';
-                if (!antiSpamCheck(form, errorBox)) return;
-                if (!window.emailjs) { errorBox.style.display = 'block'; return; }
+                // Cooldown propre au formulaire d'info : poser une question ne doit
+                // JAMAIS bloquer une commande pendant 60 s.
+                if (!antiSpamCheck(form, errorBox, 'bd_last_info')) return;
                 const name = document.getElementById('infoName').value.trim();
                 const contact = document.getElementById('infoContact').value.trim();
                 const msg = document.getElementById('infoMessage').value.trim();
@@ -2379,20 +3086,21 @@
                 submitBtn.disabled = !0;
                 const ot = submitBtn.textContent;
                 submitBtn.textContent = 'جارٍ الإرسال...';
-                try {
-                    await emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-                        from_name: name,
-                        message: 'Demande info de ' + name + ' (' + contact + '): ' + msg,
-                        subject: 'Info ' + name
-                    });
-                    markSubmitted();
+                // Charge le SDK à la demande s'il n'est pas encore prêt.
+                const res = await sendEmail('Info ' + name,
+                    'Demande info de ' + name + ' (' + contact + '): ' + msg, name);
+                if (res && res.ok) {
+                    markSubmitted('bd_last_info');
                     document.getElementById('infoSuccess').style.display = 'block';
                     form.reset();
                     setTimeout(() => document.getElementById('infoSuccess').style.display = 'none', 4000);
-                } catch (err) { errorBox.style.display = 'block';
-                    console.error('Info send failed:', err); } finally { sending = !1;
-                    submitBtn.disabled = !1;
-                    submitBtn.textContent = ot; }
+                } else {
+                    errorBox.style.display = 'block';
+                    console.error('Info send failed:', (res && res.type) || E.EMAILJS);
+                }
+                sending = !1;
+                submitBtn.disabled = !1;
+                submitBtn.textContent = ot;
             });
         }
 
@@ -2422,79 +3130,80 @@
                     document.head.appendChild(s); } }, { once: !0, passive: !0 });
         }
 
+        // Préchargement paresseux : même poids qu'avant (un seul <script> au lieu de 3),
+        // mais ensureEmailJs() peut aussi le charger à la demande au moment de l'envoi.
         function initEmailJs() {
-            const s = document.createElement('script');
-            s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js';
-            s.crossOrigin = 'anonymous';
-            s.onload = () => { if (window.emailjs) emailjs.init({ publicKey: 'wI4lyiYiXT4aP6jfk' }); };
-            document.head.appendChild(s);
-            const t = setTimeout(() => {
-                if (!document.querySelector('script[src*="email.min.js"]')) { const s2 = document
-                        .createElement('script');
-                    s2.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js';
-                    s2.crossOrigin = 'anonymous';
-                    s2.onload = () => { if (window.emailjs) emailjs.init({ publicKey: 'wI4lyiYiXT4aP6jfk' }); };
-                    document.head.appendChild(s2); }
-            }, 1500);
-            document.addEventListener('click', () => { clearTimeout(t); if (!document.querySelector(
-                    'script[src*="email.min.js"]')) { const s2 = document.createElement('script');
-                    s2.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js';
-                    s2.crossOrigin = 'anonymous';
-                    s2.onload = () => { if (window.emailjs) emailjs.init({ publicKey: 'wI4lyiYiXT4aP6jfk' }); };
-                    document.head.appendChild(s2); } }, { once: !0 });
-            document.addEventListener('touchstart', () => { clearTimeout(t); if (!document.querySelector(
-                    'script[src*="email.min.js"]')) { const s2 = document.createElement('script');
-                    s2.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js';
-                    s2.crossOrigin = 'anonymous';
-                    s2.onload = () => { if (window.emailjs) emailjs.init({ publicKey: 'wI4lyiYiXT4aP6jfk' }); };
-                    document.head.appendChild(s2); } }, { once: !0, passive: !0 });
+            const kick = () => safeCall('emailjs:preload', () => ensureEmailJs(ZLL.EMAIL_TIMEOUT_MS));
+            const t = setTimeout(kick, 1500);
+            const early = () => { clearTimeout(t); kick(); };
+            document.addEventListener('click', early, { once: !0 });
+            document.addEventListener('touchstart', early, { once: !0, passive: !0 });
         }
 
         // ================================================================
         // INIT
+        // ----------------------------------------------------------------
+        // Chaque étape est isolée : un rendu cosmétique qui plante ne peut
+        // plus empêcher le formulaire de commande d'être câblé.
         // ================================================================
+        let _inited = false;
+
         function init() {
-            renderBasic();
-            renderBoxEquation();
-            renderHeroVariants();
-            renderBenefits();
-            syncHero();
-            renderOrderVariants();
-            renderOrderSummary();
-            bindOrderControls();
-            bindHeroBuy();
-            bindTabs();
-            renderFAQ();
-            bindOrderEmail();
-            bindContactEmail();
-            bindScroll();
-            bindLightbox();
-            observeReveals();
+            if (_inited) return;                     // pas de double init (in-app browsers, bfcache)
+            _inited = true;
 
-            const baItems = BEFORE_AFTER.map(item => ({ type: 'pair', before: item.before, after: item.after }));
-            buildProductGallery(PRODUCT_IMAGES);
-            buildBeforeAfter(baItems);
-            buildReviews(REVIEW_IMAGES);
-            applyImgFallback(document);
-            observeReveals();
+            // --- CRITIQUE : la commande d'abord, toujours ---
+            safeCall('bindOrderEmail', bindOrderEmail);
+            safeCall('zllInit', zllInit);
 
-            track('ViewContent', { value: getOffer().price, currency: 'DZD', content_name: CONFIG.productName,
-                content_type: 'product' });
+            // --- Non critique : chaque appel isolé ---
+            safeCall('renderBasic', renderBasic);
+            safeCall('renderBoxEquation', renderBoxEquation);
+            safeCall('renderHeroVariants', renderHeroVariants);
+            safeCall('renderBenefits', renderBenefits);
+            safeCall('syncHero', syncHero);
+            safeCall('renderOrderVariants', renderOrderVariants);
+            safeCall('renderOrderSummary', renderOrderSummary);
+            safeCall('bindOrderControls', bindOrderControls);
+            safeCall('bindHeroBuy', bindHeroBuy);
+            safeCall('bindTabs', bindTabs);
+            safeCall('renderFAQ', renderFAQ);
+            safeCall('bindContactEmail', bindContactEmail);
+            safeCall('bindScroll', bindScroll);
+            safeCall('bindLightbox', bindLightbox);
+            safeCall('observeReveals', observeReveals);
+
+            safeCall('gallery', () => {
+                const baItems = BEFORE_AFTER.map(item => ({ type: 'pair', before: item.before, after: item.after }));
+                buildProductGallery(PRODUCT_IMAGES);
+                buildBeforeAfter(baItems);
+                buildReviews(REVIEW_IMAGES);
+                applyImgFallback(document);
+                observeReveals();
+            });
+
+            safeCall('viewcontent', () => track('ViewContent', {
+                value: getOffer().price, currency: 'DZD', content_name: CONFIG.productName,
+                content_type: 'product'
+            }));
+            trackEvent('page_view');
         }
 
-        // Pixel
-        ! function(f, b, e, v, n, t, s) { if (f.fbq) return;
-            n = f.fbq = function() { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
-            if (!f._fbq) f._fbq = n;
-            n.push = n;
-            n.loaded = !0;
-            n.version = '2.0';
-            n.queue = [] }(window);
-        fbq('init', '1444522217477477');
-        fbq('track', 'PageView');
+        // Pixel — entièrement isolé : un pixel cassé ne doit jamais tuer la commande.
+        safeCall('pixel-stub', () => {
+            ! function(f, b, e, v, n, t, s) { if (f.fbq) return;
+                n = f.fbq = function() { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = '2.0';
+                n.queue = [] }(window);
+            fbq('init', '1444522217477477');
+            fbq('track', 'PageView');
+        });
 
-        delayFbPixel();
-        initEmailJs();
+        safeCall('delayFbPixel', delayFbPixel);
+        safeCall('initEmailJs', initEmailJs);
 
         document.addEventListener('DOMContentLoaded', init);
         if (document.readyState === 'complete' || document.readyState === 'interactive') init();
