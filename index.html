@@ -185,6 +185,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .tl-step h3{font-size:15px;font-weight:800;margin-bottom:3px}
 .tl-step p{font-size:12.5px;color:var(--muted);line-height:1.6}
 
+/* ---------- ROUTINE ---------- */
+.rt-list{list-style:none;display:grid;gap:10px;margin:0 0 18px}
+.rt-item{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.rt-week{flex:0 0 auto;display:grid;place-items:center;width:52px;min-height:52px;border-radius:12px;background:var(--primary-soft);color:var(--primary-dark);font-size:10.5px;font-weight:700;line-height:1.25;text-align:center}
+.rt-week b{display:block;font-size:19px;font-weight:800}
+.rt-item h4{font-size:15px;font-weight:800;margin-bottom:2px}
+.rt-item p{font-size:13px;color:var(--muted);line-height:1.6}
+.rt-rules{background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:11px 14px;font-size:13px;color:var(--ink-soft);line-height:1.9}
+.rt-rules b{display:block;color:var(--primary-dark);margin-bottom:3px}
+.rt-rules span{display:block}
+
 /* ---------- PHOTO CARDS (benefits / ingredients) ---------- */
 .fc-media{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;margin-bottom:12px;background:var(--primary-soft)}
 .fc-media img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
@@ -308,6 +319,9 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .order-variant-card .ov-price{font-weight:800;font-size:18px;color:var(--primary-dark);display:block;line-height:1.2}
 .order-variant-card .ov-unit{display:block;font-size:10.5px;color:var(--muted);font-weight:600;line-height:1.5}
 .order-variant-card .ov-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11px;font-weight:800;padding:2px 9px;border-radius:var(--pill);margin-top:6px}
+/* Anti-guarantee on the trial: telling her it is NOT enough converts better
+   than pushing the bundle. */
+.order-variant-card .ov-note{display:block;font-size:10.5px;font-weight:700;color:#a06a1e;background:#fff8e6;border:1px solid #f0dca8;border-radius:8px;padding:3px 8px;margin-top:6px;line-height:1.5}
 .order-variant-card .ov-badge{position:absolute;top:-8px;inset-inline-start:12px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:1px 9px;border-radius:var(--pill);line-height:1.7}
 .order-variant-card .ov-check{position:absolute;top:-6px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
 .order-variant-card.active .ov-check{display:flex}
@@ -341,6 +355,10 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .bd-bump-btn:disabled{opacity:.6;cursor:default}
 .bd-bump.done{border-style:solid;border-color:var(--success);background:#e7f6ee}
 .bd-wa-bonus{display:block;font-size:12px;font-weight:700;color:#146c49;background:#e7f6ee;border-radius:var(--pill);padding:5px 10px;margin-bottom:8px}
+.bd-club{display:block;margin-top:14px;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink-soft);line-height:1.6}
+.bd-club b{color:var(--primary-dark)}
+.bd-reorder{background:#eef6ff;border:1px solid #c9def5;color:#14507f}
+.bd-reorder b{color:#0d3d63}
 .order-compact-input{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;transition:.2s;color:var(--ink)}
 .order-compact-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(226,74,139,.12)}
 .order-compact-input.error{border-color:#c0392b}
@@ -427,7 +445,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
     <p class="buy-desc">ماسك هيدروجيل بالكولاجين منخفض الجزيئات — ترطيب عميق، إشراقة فورية وملمس أنعم وأكثر امتلاءً.</p>
     <!-- The offer picker + quantity live ONLY in the order form below. Having
          them here too made the customer choose twice within one screen. -->
-    <div class="ship-note">🎁 <b>توصيل مجاني</b> على <b>علبتين فما فوق</b> — لكل الولايات الـ58.<br>للعلبة الوحدة: <span class="lat">400 دج</span> مكتب · <span class="lat">600 دج</span> منزل.</div>
+    <div class="ship-note">🎁 <b>توصيل مجاني</b> على <b>علبتين فما فوق</b> — لكل الولايات الـ58.<br>للعلبة الوحدة: <span class="lat">300 دج</span> مكتب · <span class="lat">600 دج</span> منزل.</div>
     <button class="btn btn-primary btn-cart" id="heroAddCart" data-scroll="#order">اختاري عرضك واطلبي الآن ⬇ — الدفع عند الاستلام</button>
     <div class="trust-row" id="trustBadges"></div>
   </div>
@@ -462,6 +480,12 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           <li><span class="n">2</span> نجهّزو الطرد ونبعثوه لولايتك 🚚</li>
           <li><span class="n">3</span> تخلّصي عند الاستلام 💵</li>
         </ol>
+        <!-- Every buyer who joins is a zero-CPA channel for the day-25
+             reorder message. This list is the only permanent escape from
+             rising Meta CPMs. -->
+        <a class="bd-club" id="doneClub" href="#" target="_blank" rel="noopener">
+          🌸 انضمّي لـ<b>نادي بايودانس</b> — نصائح لروتينك + عروض خاصة للعضوات
+        </a>
         <button type="button" class="bd-back" id="doneBack">← طلب جديد / العودة للتسوّق</button>
       </div>
 
@@ -480,6 +504,13 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 
           <div class="zll-note zll-restored" id="orderRestored" role="status" aria-live="polite">
             ✅ تم استرجاع معلوماتك المحفوظة تلقائياً — كمّلي من وين وقفتِ.
+          </div>
+
+          <!-- Returning customer: one tap refills everything from her last
+               order. The day-25 reorder message lands on THIS. -->
+          <div class="zll-note bd-reorder" id="orderReorder" role="status">
+            <div id="orderReorderMsg"></div>
+            <button type="button" class="zll-btn zll-btn-retry" id="orderReorderBtn" style="margin-top:7px;width:100%">🔁 نعم، عاود نفس الطلب</button>
           </div>
 
           <div style="margin-bottom:8px">
@@ -525,7 +556,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
             <label for="orderDeliveryType" class="order-compact-label">🚚 نوع التوصيل — سعر ثابت لكل الولايات</label>
             <select id="orderDeliveryType" class="order-compact-select">
               <option value="home" data-fee="600">🏠 التوصيل إلى المنزل — 600 دج</option>
-              <option value="office" data-fee="400">🏢 التوصيل إلى المكتب — 400 دج</option>
+              <option value="office" data-fee="300">🏢 التوصيل إلى المكتب — 300 دج</option>
             </select>
           </div>
 
@@ -678,8 +709,45 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
+<!-- ================= THE ROUTINE =================
+     The timeline proves the mask works TONIGHT. This proves the routine
+     works over 30 days — which is what justifies buying 8 masks instead
+     of 4. Text-only on purpose: zero extra requests on a 3G connection.
+     Claims stay on hydration / softness / glow — the things this product
+     actually delivers. A promise it cannot keep would kill the reorder. -->
+<section class="section band divider-top cv" id="routine">
+  <div class="container" style="max-width:760px">
+    <h2 class="section-title reveal">الروتين — الفرق في الانتظام 🗓️</h2>
+    <p class="section-text reveal">ماسك واحد يعطيك ترطيب ليلة. <b>الروتين</b> هو اللي يخلّي بشرتك مرطّبة وناعمة كل يوم.</p>
 
-<section class="section band divider-top cv">
+    <ol class="rt-list">
+      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">1</b></span>
+        <div><h4>البداية — ماسكين</h4><p>ترطيب فوري وملمس أنعم من أول ليلة.</p></div></li>
+      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">2</b></span>
+        <div><h4>الانتظام — ماسكين</h4><p>البشرة تولّي أنعم، والمكياج يتوزّع أحسن.</p></div></li>
+      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">3</b></span>
+        <div><h4>الإشراقة — ماسكين</h4><p>لون أكثر توحّداً وإشراقة أوضح.</p></div></li>
+      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">4</b></span>
+        <div><h4>النتيجة — ماسكين</h4><p>بشرة مرطّبة، ناعمة ومشدودة — هذا هو الفرق اللي تحسّي بيه.</p></div></li>
+    </ol>
+
+    <div class="rt-rules reveal">
+      <b>باش يخدم مليح:</b>
+      <span>✔️ مرتين في الأسبوع</span>
+      <span>✔️ على بشرة نظيفة، بعد التونر</span>
+      <span>✔️ اتركيه طوال الليل</span>
+      <span>✔️ رقّمي الماسكات <span class="lat">1</span>→<span class="lat">8</span> وتبّعي تقدّمك</span>
+    </div>
+
+    <p class="footnote reveal">الفرق في الانتظام، ماشي في ماسك واحد. النتائج تختلف من بشرة لأخرى.</p>
+
+    <div style="text-align:center;margin-top:18px">
+      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">ابدئي تحدي 30 يوم ⬇</button>
+    </div>
+  </div>
+</section>
+
+<section class="section divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">الأسئلة الشائعة</h2>
     <div class="faq-list" id="faqList"></div>
@@ -739,9 +807,9 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 </div>
 
 <noscript>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap">
-<!-- Meta Pixel 1351942426554008 — JS-disabled fallback -->
-<img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1351942426554008&ev=PageView&noscript=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;700;800&display=swap">
+<!-- Meta Pixel 1351942426553008 — JS-disabled fallback -->
+<img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1351942426553008&ev=PageView&noscript=1">
 </noscript>
 
 <script>
@@ -768,13 +836,13 @@ const REVIEW_IMAGES  = ['social-proof-1.jpg','social-proof-2.jpg','social-proof-
    If any file is missing the whole section stays hidden — deploying before
    you have the photos breaks nothing. */
 const MASK_TIMELINE = [
-  {src:'mask-1.jpg', time:'٠ دقيقة',    title:'حطّي الماسك',   text:'هيدروجيل أبيض سميك، يلتصق مليح على ملامح الوجه.'},
+  {src:'mask-1.jpg', time:'0 دقيقة',    title:'حطّي الماسك',   text:'هيدروجيل أبيض سميك، يلتصق مليح على ملامح الوجه.'},
   {src:'mask-2.jpg', time:'بعد ساعة',   title:'يبدا يشفّ',     text:'الأطراف تولّي شفافة — بشرتك بدات تشرب الكولاجين.'},
-  {src:'mask-3.jpg', time:'٣-٤ ساعات',  title:'شفاف كامل',     text:'كي يولّي شفاف، معناها امتصّت كل الإسانس اللي فيه.'},
+  {src:'mask-3.jpg', time:'3-4 ساعات',  title:'شفاف كامل',     text:'كي يولّي شفاف، معناها امتصّت كل الإسانس اللي فيه.'},
   {src:'mask-4.jpg', time:'بعد النزع',  title:'بشرة مرطّبة',   text:'اربتي بلطف على الوجه — ملمس ناعم ومشدود.'}
 ];
 
-const DELIVERY = { office:{fee:400,label:'التوصيل إلى المكتب'}, home:{fee:600,label:'التوصيل إلى المنزل'} };
+const DELIVERY = { office:{fee:300,label:'التوصيل إلى المكتب'}, home:{fee:600,label:'التوصيل إلى المنزل'} };
 const MASKS_PER_BOX = 4;
 
 const CONFIG = {
@@ -785,10 +853,19 @@ const CONFIG = {
      that refuses the parcel at delivery) and cannibalised 3700 DA sales.
      Free delivery on 2+ boxes is the bundle trigger: it costs 600 DA and
      moves her from a 2600 DA margin order to a 4100 DA one. */
+  /* Named as PROGRAMS, not quantities. «علبتان» is a warehouse label;
+     «تحدي 30 يوم» is an outcome. Same product, same price — but the reason
+     to buy more stops being "save money" and becomes "this is the amount you
+     actually need to see a difference". The trial carries an anti-guarantee:
+     disqualifying the small option converts better than pushing the big one. */
   offers:[
-    {id:'offer2',title:'علبة واحدة (4 ماسكات)',units:4,headline:'علبة واحدة',subline:'فيها 4 ماسكات',price:3700,compareAt:4400,badge:'',freeShip:false,selected:true},
-    {id:'offer3',title:'علبتان (8 ماسكات) + توصيل مجاني',units:8,headline:'علبتان',subline:'فيهم 8 ماسكات',price:6900,compareAt:8800,badge:'الأكثر مبيعاً',freeShip:true,selected:false},
-    {id:'offer4',title:'3 علب (12 ماسك) + توصيل مجاني + هدية',units:12,headline:'3 علب',subline:'فيهم 12 ماسك',price:8900,compareAt:13200,badge:'أفضل قيمة',freeShip:true,gift:true,selected:false}
+    {id:'offer2',title:'تجربة أسبوعين (علبة — 4 ماسكات)',units:4,headline:'تجربة أسبوعين',subline:'علبة وحدة — 4 ماسكات',
+     price:3700,compareAt:4300,badge:'',freeShip:false,
+     note:'تكفي باش تجرّبي — ما تكفيش باش تشوفي فرق حقيقي',selected:true},
+    {id:'offer3',title:'تحدي 30 يوم (علبتان — 8 ماسكات) + توصيل مجاني',units:8,headline:'تحدي 30 يوم',subline:'علبتان — 8 ماسكات',
+     price:6900,compareAt:8800,badge:'الأكثر مبيعاً',freeShip:true,selected:false},
+    {id:'offer4',title:'برنامج 45 يوم (3 علب — 12 ماسك) + توصيل مجاني + هدية',units:12,headline:'برنامج 45 يوم',subline:'3 علب — 12 ماسك',
+     price:8900,compareAt:13200,badge:'أفضل قيمة',freeShip:true,gift:true,selected:false}
   ],
   badgedOffers:['offer3','offer4'],
   /* One-tap upgrade shown when she has a single box selected. */
@@ -797,6 +874,8 @@ const CONFIG = {
   bump:{price:2500,compareAt:3700,units:4,label:'علبة إضافية (4 ماسكات)'},
   /* Incentive to confirm on WhatsApp — buys back delivery-refusal risk. */
   waConfirmDiscount:200,
+  /* Post-purchase club: the list you send the day-25 reorder message to. */
+  clubJoinText:'السلام عليكم 🌸 نحب ننضم لنادي بايودانس — نصائح للروتين وعروض العضوات.',
   /* `img` is optional on every card below. Add the file and the card becomes
      a photo card; leave it missing (or let it 404) and it falls back to the
      emoji exactly as before — so the page never looks broken. */
@@ -818,7 +897,7 @@ const CONFIG = {
     endpoint:'https://script.google.com/macros/s/AKfycbyf9e03fDCOrevcxji92LNEUPDlgn2MZWXaMrbk47QZoa0xsEIDk7XOWgCZHgSVvpKGVw/exec',
     secret:'CHANGEZ-MOI-phrase-secrete-2026'
   },
-  pixelId:'1351942426554008',            // Biodancecharaf
+  pixelId:'1351942426553008',            // Biodancecharaf
   submitCooldownMs:45000,
   /* 'inline'  = instant in-page thank-you screen (fastest, recommended)
      'redirect'= go to THANKYOU_URL. Still fast (the POST survives the
@@ -844,7 +923,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const idle  = fn => ('requestIdleCallback' in window) ? requestIdleCallback(fn, {timeout:2500}) : setTimeout(fn, 200);
 function safeCall(label, fn){ try { return fn(); } catch(err){ console.error('[safe] '+label+':', err); return null; } }
 
-const FALLBACK_IMG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="100%" height="100%" fill="#fdeaf3"/><text x="50%" y="50%" font-size="28" font-family="Arial" fill="#c2356f" text-anchor="middle" dominant-baseline="central">biodance</text></svg>');
+const FALLBACK_IMG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="100%" height="100%" fill="#fdeaf3"/><text x="50%" y="50%" font-size="28" font-family="Arial" fill="#c2356f" text-anchor="middle" dominant-baseline="central">biodance</text></svg>');
 
 function applyImgFallback(scope){
   (scope || document).querySelectorAll('img').forEach(img => {
@@ -1188,6 +1267,7 @@ function renderOrderVariants(){
         + '</div>'
       + '</div>'
       + (save > 0 ? '<span class="ov-save">💰 توفري <b class="lat">'+money(save)+'</b></span>' : '')
+      + (o.note ? '<span class="ov-note">⚠️ '+escapeHTML(o.note)+'</span>' : '')
       + '<span class="ov-check">✓</span></div>';
   }).join('');
   renderUpsellNudge();
@@ -1275,7 +1355,7 @@ function renderIngredients(){ renderCardGrid('#ingGrid', CONFIG.ingredients, 'in
 
 function renderFAQ(){
   const faq = [
-    {q:'كم يكلّف التوصيل؟', a:'التوصيل مجاني تماماً إذا طلبتِ علبتين فما فوق. للعلبة الوحدة: 400 دج إلى المكتب و600 دج إلى المنزل — لكل الولايات الـ58، بدون أي رسوم إضافية.'},
+    {q:'كم يكلّف التوصيل؟', a:'التوصيل مجاني تماماً إذا طلبتِ علبتين فما فوق. للعلبة الوحدة: 300 دج إلى المكتب و600 دج إلى المنزل — لكل الولايات الـ58، بدون أي رسوم إضافية.'},
     {q:'كم ماسك في العلبة؟', a:'كل علبة تحتوي على 4 ماسكات. العرض 8 ماسك = علبتان، والعرض 12 ماسك = 3 علب.'},
     {q:'هل يناسب البشرة الحساسة؟', a:'نعم، مناسب للبشرة الحساسة.'},
     {q:'كم مدة الاستخدام؟', a:'3-4 ساعات أو طوال الليل.'},
@@ -1333,7 +1413,7 @@ const ZLL = {
   DRAFT_TTL_MS: 30*24*60*60*1000,
   SUBMIT_TIMEOUT_MS: 15000,     // generous: it no longer blocks the UI
   EMAIL_TIMEOUT_MS: 12000,
-  AUTOSAVE_MS: 400,
+  AUTOSAVE_MS: 300,
   RETRY_DELAYS: [2000, 6000],   // background retries, same idempotency key
   WHATSAPP:'213540732771'
 };
@@ -1765,6 +1845,54 @@ function renderDoneSummary(){
     + '<div class="sum-line"><span>🚚 التوصيل</span><span class="sum-val">'+(t.freeShip ? '<b class="sum-free">مجاناً ✨</b>' : '<span class="lat">'+escapeHTML(t.del.label)+' — '+money(t.deliveryFee)+'</span>')+'</span></div>'
     + '<div class="sum-line total"><span>المبلغ عند الاستلام</span><span class="sum-val lat">'+money(total)+'</span></div>';
   $('#doneWa').href = whatsappOrderLink(s.ctx.ref, {bonus:true, bumped:s.bumped, total:total});
+  const club = $('#doneClub');
+  if (club) club.href = 'https://wa.me/' + ZLL.WHATSAPP + '?text=' + encodeURIComponent(CONFIG.clubJoinText);
+}
+
+/* ---------------- RETURNING CUSTOMER ----------------
+   If she has ordered before on this device, offer a one-tap repeat instead
+   of making her retype four fields. Retention is cheaper than acquisition,
+   and this is the landing spot for the day-25 WhatsApp reorder message. */
+function lastOrder(){
+  try {
+    const orders = JSON.parse(lsGet('bd_orders') || '[]');
+    for (let i = orders.length - 1; i >= 0; i--){
+      const o = orders[i];
+      if (o && o.name && o.phone && o.wilaya) return o;
+    }
+  } catch(e){}
+  return null;
+}
+function offerReorder(){
+  const last = lastOrder();
+  if (!last) return;
+  const f = readOrderFields();
+  if (f.name || f.phone || f.wilaya || f.commune) return;   // she is already typing
+  const box = $('#orderReorder'), msg = $('#orderReorderMsg');
+  if (!box || !msg) return;
+  const days = Math.max(0, Math.round((Date.now() - new Date(last.ts).getTime()) / 86300000));
+  msg.innerHTML = '🌸 <b>مرحبا بيك مرة أخرى، ' + escapeHTML(String(last.name).split(' ')[0]) + '!</b><br>'
+    + 'آخر طلب ليك كان من <b class="lat">' + days + '</b> يوم. نعاودو نفس المعلومات؟';
+  box.classList.add('show');
+  trackEvent('reorder_shown', {days_since: days});
+}
+function applyReorder(){
+  const last = lastOrder();
+  if (!last) return;
+  const set = (id,v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
+  set('orderFullName', last.name); set('orderPhone', last.phone);
+  set('orderWilaya', last.wilaya); set('orderCommune', last.commune);
+  const sel = $('#orderDeliveryType');
+  if (sel && last.deliveryType && DELIVERY[last.deliveryType]) sel.value = last.deliveryType;
+  if (last.offer && CONFIG.offers.some(o => o.id === last.offer)) selectedOfferId = last.offer;
+  selectedQty = 1;
+  _userEdited = true; _completed = false;
+  safeCall('reorder-render', syncAll);
+  safeCall('reorder-save', captureDraft);
+  showNote('orderReorder', false);
+  loadPixel(); warmBackend();
+  trackEvent('reorder_applied', {offer: last.offer || ''});
+  $('#orderSubmit').scrollIntoView({block:'center', behavior:'smooth'});
 }
 
 function showSuccessScreen(ctx){
@@ -1863,7 +1991,10 @@ function markConfirmed(ctx, channel){
   lsSet(ZLL.DONE_KEY, JSON.stringify({ref:ctx.ref, ts:Date.now()}));
   safeCall('journal', () => {
     const orders = JSON.parse(lsGet('bd_orders') || '[]');
+    // wilaya/commune/deliveryType are stored so a returning customer can
+    // reorder in one tap — this is what the day-25 message lands on.
     orders.push({ref:ctx.ref, ts:new Date().toISOString(), name:ctx.f.name, phone:ctx.phone,
+      wilaya:ctx.f.wilaya, commune:ctx.f.commune, deliveryType:ctx.deliveryKey,
       offer:ctx.t.offer.id, qty:ctx.qty, total:ctx.t.grandTotal, channel});
     lsSet('bd_orders', JSON.stringify(orders.slice(-20)));
   });
@@ -2001,6 +2132,12 @@ function bindOrderForm(){
   const bumpBtn = $('#doneBumpBtn');
   if (bumpBtn) bumpBtn.addEventListener('click', acceptBump);
 
+  const reBtn = $('#orderReorderBtn');
+  if (reBtn) reBtn.addEventListener('click', applyReorder);
+
+  const club = $('#doneClub');
+  if (club) club.addEventListener('click', () => trackEvent('club_joined'));
+
   /* THE optimisation signal. A submitted COD form is a lead; a customer who
      opens WhatsApp to confirm is a real buyer. Build a Custom Conversion on
      `OrderConfirmed` and optimise the campaign for THAT, not for form fills —
@@ -2034,6 +2171,7 @@ function zllInit(){
   bindAutosave();
   bindConnectivity();
   checkInterruptedSubmit();
+  safeCall('reorder', offerReorder);
 }
 
 /* ---------------- CONTACT FORM (bottom of page, lazy) ---------------- */
@@ -2056,7 +2194,7 @@ function bindContactEmail(){
       markSubmitted('bd_last_info');
       $('#infoSuccess').style.display = 'block';
       form.reset();
-      setTimeout(() => { $('#infoSuccess').style.display = 'none'; }, 4000);
+      setTimeout(() => { $('#infoSuccess').style.display = 'none'; }, 3000);
     } else {
       errorBox.style.display = 'block';
       console.error('Info send failed:', (res && res.type) || E.EMAILJS);
@@ -2157,7 +2295,7 @@ function loadFont(){
   if (NET.saveData || NET.effectiveType === '2g' || NET.effectiveType === 'slow-2g') return;
   const l = document.createElement('link');
   l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap';
+  l.href = 'https://fonts.googleapis.com/css2?family=Tajawal:wght@300;700;800&display=swap';
   document.head.appendChild(l);
 }
 
