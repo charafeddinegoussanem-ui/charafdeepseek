@@ -75,7 +75,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .btn-secondary{background:#fff;color:var(--primary-dark);border:1.5px solid var(--primary)}
 .btn-secondary:hover{background:var(--primary-soft)}
 .btn:disabled{opacity:.55;cursor:not-allowed}
-.promo{background:var(--primary);color:#fff;text-align:center;font-size:13.5px;padding:8px 12px;font-weight:500;line-height:1.5}
+.promo{background:var(--primary);color:#fff;text-align:center;font-size:13.5px;padding:8px 12px;font-weight:600;line-height:1.5}
 .promo b{font-weight:800}
 .header{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid var(--line);padding:12px 0}
 .header-wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -85,7 +85,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .header .top-cta:hover{background:var(--primary-dark)}
 .quicknav{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .quicknav::-webkit-scrollbar{display:none}
-.quicknav button{flex:0 0 auto;background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-weight:500;font-size:13.5px;padding:8px 16px;border-radius:var(--pill);cursor:pointer}
+.quicknav button{flex:0 0 auto;background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-weight:600;font-size:13.5px;padding:8px 16px;border-radius:var(--pill);cursor:pointer}
 .quicknav button:hover{background:var(--primary-soft);color:var(--primary-dark)}
 [id]{scroll-margin-top:128px}
 .breadcrumb{color:var(--muted);font-size:13px;padding:10px 0 0}
@@ -124,7 +124,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .box-equation .be-sub{display:block;font-size:12px;font-weight:700;color:var(--ink-soft)}
 .box-equation .be-eq{display:grid;place-items:center;font-size:18px;font-weight:800;color:var(--primary);flex:0 0 auto}
 .price-what{font-size:13.5px;font-weight:700;color:var(--ink-soft);margin:-4px 0 10px}
-.price-what .pw-unit{color:var(--muted);font-weight:500}
+.price-what .pw-unit{color:var(--muted);font-weight:600}
 .offer-hint{background:var(--primary-soft2);border:1px dashed #edd3e0;border-radius:var(--radius);padding:7px 11px;font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:10px}
 .offer-hint b{color:var(--primary-dark)}
 .price-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
@@ -137,7 +137,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .ship-note b{color:var(--primary-dark)}
 .btn-cart{width:100%;font-size:16px;padding:16px;border-radius:var(--pill)}
 .trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.trust-row .badge{background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:var(--pill)}
+.trust-row .badge{background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:var(--pill)}
 
 /* ---------- CONTENT BLOCKS ---------- */
 .guarantees{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -174,23 +174,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .why-item h4{font-size:16.5px;font-weight:700;margin-bottom:3px}
 .why-item p{color:var(--muted);font-size:13.5px}
 
-/* ---------- BEFORE / AFTER ---------- */
-.ba-wrap{max-width:680px;margin-inline:auto;min-height:200px}
-.cmp{position:relative;aspect-ratio:1/1;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);background:var(--primary-soft2);display:none;touch-action:pan-y;user-select:none}
-.cmp.active{display:block}
-.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.cmp .cmp-before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
-.cmp-handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;background:#fff;transform:translateX(-50%);cursor:ew-resize;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
-.cmp-handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;color:var(--primary-dark);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:16px;box-shadow:var(--shadow)}
-.cmp-label{position:absolute;top:12px;color:#fff;background:rgba(43,38,48,.7);padding:4px 12px;border-radius:var(--pill);font-size:12.5px;font-weight:700}
-.cmp-label.b{left:12px}
-.cmp-label.a{right:12px}
-.ba-controls{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:14px}
-.ba-controls button{background:#fff;border:1px solid var(--line);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px;color:var(--ink)}
-.ba-dots{display:flex;gap:7px}
-.ba-dot{width:9px;height:9px;border-radius:50%;background:var(--line);border:none;cursor:pointer}
-.ba-dot.active{background:var(--primary)}
+/* ---------- TRANSPARENCY TIMELINE ---------- */
+.tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin-inline:auto}
+.tl-step{margin:0;cursor:zoom-in}
+.tl-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);background:var(--primary-soft2);aspect-ratio:1/1}
+.tl-media img{width:100%;height:100%;object-fit:cover;display:block}
+.tl-time{position:absolute;bottom:8px;inset-inline-start:8px;background:rgba(43,38,48,.78);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:var(--pill)}
+.tl-num{position:absolute;top:8px;inset-inline-end:8px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
+.tl-step figcaption{padding:10px 2px 0;text-align:center}
+.tl-step h3{font-size:15px;font-weight:800;margin-bottom:3px}
+.tl-step p{font-size:12.5px;color:var(--muted);line-height:1.6}
 
+/* ---------- PHOTO CARDS (benefits / ingredients) ---------- */
+.fc-media{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;margin-bottom:12px;background:var(--primary-soft)}
+.fc-media img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
+.fc-media .fc-fallback{position:absolute;inset:0;width:100%;height:100%;border-radius:0;margin:0;z-index:0}
+.fc-media.no-photo{aspect-ratio:auto;background:none;overflow:visible}
+.fc-media.no-photo .fc-fallback{position:static;width:54px;height:54px;border-radius:50%;margin:0 auto}
 /* ---------- REVIEWS ---------- */
 .rev-wrap{position:relative;max-width:1000px;margin-inline:auto;min-height:200px}
 .rev-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;-webkit-overflow-scrolling:touch}
@@ -217,7 +217,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field{display:grid;gap:6px}
 .field.full{grid-column:1/-1}
-.field label{font-size:14px;font-weight:500;color:var(--ink-soft)}
+.field label{font-size:14px;font-weight:600;color:var(--ink-soft)}
 input,select,textarea{width:100%;padding:13px 14px;border-radius:var(--radius);border:1px solid var(--line);background:#fff;outline:none;font-size:16px;color:var(--ink)}
 input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(226,74,139,.15)}
 .success-box{display:none;margin-top:14px;padding:13px 16px;background:#e7f6ee;color:#146c49;border-radius:var(--radius);font-size:14px}
@@ -302,11 +302,11 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .order-variant-card .ov-left{min-width:0}
 .order-variant-card .ov-right{text-align:center;flex:0 0 auto}
 .order-variant-card .ov-units{font-weight:800;font-size:15px;display:block;color:var(--ink);line-height:1.3}
-.order-variant-card .ov-boxes{display:block;font-size:12px;color:var(--ink-soft);font-weight:500;line-height:1.5}
+.order-variant-card .ov-boxes{display:block;font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.5}
 .order-variant-card .ov-ship{display:inline-block;font-size:11.5px;font-weight:800;color:var(--success);margin-top:2px}
 .order-variant-card .ov-gift{color:var(--primary-dark);margin-inline-start:6px}
 .order-variant-card .ov-price{font-weight:800;font-size:18px;color:var(--primary-dark);display:block;line-height:1.2}
-.order-variant-card .ov-unit{display:block;font-size:10.5px;color:var(--muted);font-weight:500;line-height:1.5}
+.order-variant-card .ov-unit{display:block;font-size:10.5px;color:var(--muted);font-weight:600;line-height:1.5}
 .order-variant-card .ov-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11px;font-weight:800;padding:2px 9px;border-radius:var(--pill);margin-top:6px}
 .order-variant-card .ov-badge{position:absolute;top:-8px;inset-inline-start:12px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:1px 9px;border-radius:var(--pill);line-height:1.7}
 .order-variant-card .ov-check{position:absolute;top:-6px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
@@ -316,12 +316,12 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .order-upsell{display:none;align-items:center;gap:10px;justify-content:space-between;background:linear-gradient(180deg,#fff9fc,#fdeaf3);border:1.5px dashed var(--primary);border-radius:12px;padding:9px 12px;margin-top:8px}
 .order-upsell.show{display:flex}
 .order-upsell .up-txt{font-size:13px;color:var(--ink);line-height:1.5;min-width:0}
-.order-upsell .up-sub{font-size:11.5px;color:var(--ink-soft);font-weight:500}
+.order-upsell .up-sub{font-size:11.5px;color:var(--ink-soft);font-weight:600}
 .order-upsell .up-btn{flex:0 0 auto;background:var(--primary);color:#fff;border:none;border-radius:var(--pill);padding:9px 15px;font-weight:800;font-size:13.5px;cursor:pointer}
 .order-upsell .up-btn:hover{background:var(--primary-dark)}
 
 /* Summary emphasis */
-.sum-strike{color:var(--muted);font-weight:500}
+.sum-strike{color:var(--muted);font-weight:600}
 .sum-free{color:var(--success);font-weight:800}
 
 /* Authenticity / risk-reversal block above the submit button */
@@ -335,7 +335,7 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .bd-bump h3{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
 .bd-bump p{font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:9px}
 .bd-bump .bump-price{color:var(--primary-dark);font-weight:800}
-.bd-bump .bump-was{text-decoration:line-through;color:var(--muted);font-weight:500}
+.bd-bump .bump-was{text-decoration:line-through;color:var(--muted);font-weight:600}
 .bd-bump-btn{width:100%;background:var(--primary);color:#fff;border:none;border-radius:var(--pill);padding:12px;font-weight:800;font-size:15px;cursor:pointer}
 .bd-bump-btn:hover{background:var(--primary-dark)}
 .bd-bump-btn:disabled{opacity:.6;cursor:default}
@@ -344,7 +344,7 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .order-compact-input{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;transition:.2s;color:var(--ink)}
 .order-compact-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(226,74,139,.12)}
 .order-compact-input.error{border-color:#c0392b}
-.order-compact-label{display:block;font-weight:500;font-size:13px;color:var(--ink-soft);margin-bottom:2px}
+.order-compact-label{display:block;font-weight:600;font-size:13px;color:var(--ink-soft);margin-bottom:2px}
 .order-compact-select{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;color:var(--ink);appearance:auto}
 .order-compact-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(226,74,139,.12)}
 .order-compact-err{font-size:11px;color:#c0392b;display:none;margin-top:2px}
@@ -362,9 +362,10 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .features,.guarantees,.ing-grid{grid-template-columns:repeat(2,1fr)}
 .why-grid,.contact-layout{grid-template-columns:1fr}
 }
-@media(max-width:500px){
+@media(max-width:600px){
 .section{padding:40px 0}
 .features,.guarantees,.ing-grid{grid-template-columns:1fr 1fr}
+.tl-grid{grid-template-columns:1fr 1fr;gap:12px}
 .kpi,.form-grid{grid-template-columns:1fr}
 .pg-nav{width:44px;height:44px}
 .card{padding:18px}
@@ -387,7 +388,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
     <nav class="quicknav" aria-label="روابط سريعة">
       <button data-scroll="#buy">العروض</button>
       <button data-scroll="#order">اطلبي الآن</button>
-      <button data-scroll="#before-after">قبل وبعد</button>
+      <button data-scroll="#how-it-works" id="navHowItWorks" hidden>كيفاش يخدم</button>
       <button data-scroll="#reviews">آراء فيسبوك</button>
       <button data-scroll="#contact">استفسار</button>
     </nav>
@@ -426,7 +427,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
     <p class="buy-desc">ماسك هيدروجيل بالكولاجين منخفض الجزيئات — ترطيب عميق، إشراقة فورية وملمس أنعم وأكثر امتلاءً.</p>
     <!-- The offer picker + quantity live ONLY in the order form below. Having
          them here too made the customer choose twice within one screen. -->
-    <div class="ship-note">🎁 <b>توصيل مجاني</b> على <b>علبتين فما فوق</b> — لكل الولايات الـ58.<br>للعلبة الوحدة: <span class="lat">400 دج</span> مكتب · <span class="lat">500 دج</span> منزل.</div>
+    <div class="ship-note">🎁 <b>توصيل مجاني</b> على <b>علبتين فما فوق</b> — لكل الولايات الـ58.<br>للعلبة الوحدة: <span class="lat">400 دج</span> مكتب · <span class="lat">600 دج</span> منزل.</div>
     <button class="btn btn-primary btn-cart" id="heroAddCart" data-scroll="#order">اختاري عرضك واطلبي الآن ⬇ — الدفع عند الاستلام</button>
     <div class="trust-row" id="trustBadges"></div>
   </div>
@@ -487,7 +488,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
             <div class="order-variants-grid" id="orderVariants"></div>
             <div class="order-upsell" id="orderUpsell"></div>
             <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
-              <span style="font-size:13px;font-weight:500;color:var(--ink-soft)">الكمية:</span>
+              <span style="font-size:13px;font-weight:600;color:var(--ink-soft)">الكمية:</span>
               <div style="display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:8px;padding:1px;background:#fff">
                 <button type="button" id="orderMinus" aria-label="إنقاص الكمية" style="width:30px;height:30px;border:none;border-radius:6px;background:var(--primary-soft2);font-size:16px;color:var(--primary-dark);cursor:pointer;font-weight:700">−</button>
                 <span id="orderQtyNum" class="lat" style="min-width:24px;text-align:center;font-weight:700;font-size:15px;color:var(--ink)">1</span>
@@ -523,7 +524,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           <div style="margin-bottom:6px">
             <label for="orderDeliveryType" class="order-compact-label">🚚 نوع التوصيل — سعر ثابت لكل الولايات</label>
             <select id="orderDeliveryType" class="order-compact-select">
-              <option value="home" data-fee="500">🏠 التوصيل إلى المنزل — 500 دج</option>
+              <option value="home" data-fee="600">🏠 التوصيل إلى المنزل — 600 دج</option>
               <option value="office" data-fee="400">🏢 التوصيل إلى المكتب — 400 دج</option>
             </select>
           </div>
@@ -560,10 +561,10 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           </div>
 
           <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
-            <span style="font-size:12px;font-weight:500;color:var(--ink-soft)">💵 دفع عند الاستلام</span>
-            <span style="font-size:12px;font-weight:500;color:var(--ink-soft)">🎁 توصيل مجاني على علبتين+</span>
-            <span style="font-size:12px;font-weight:500;color:var(--ink-soft)">📦 العلبة = 4 ماسكات</span>
-            <span style="font-size:12px;font-weight:500;color:var(--ink-soft)">🌸 للبشرة الحساسة</span>
+            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">💵 دفع عند الاستلام</span>
+            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🎁 توصيل مجاني على علبتين+</span>
+            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">📦 العلبة = 4 ماسكات</span>
+            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🌸 للبشرة الحساسة</span>
           </div>
           <p style="text-align:center;font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4">🔒 بياناتك آمنة — نستخدمها فقط لتأكيد طلبك</p>
         </form>
@@ -628,12 +629,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   <div class="container">
     <h2 class="section-title reveal">المكوّنات الأساسية</h2>
     <p class="section-text reveal">تركيبة مدروسة تجمع بين الترطيب والشدّ والإشراقة.</p>
-    <div class="grid ing-grid">
-      <article class="card ing-card reveal"><div class="icon">🧬</div><h3>كولاجين منخفض الجزيئات</h3><p>يصغّر المسام ويزيد مرونة البشرة</p></article>
-      <article class="card ing-card reveal"><div class="icon">🌾</div><h3>غالاكتومايسيس</h3><p>يحسّن لون البشرة وملمسها</p></article>
-      <article class="card ing-card reveal"><div class="icon">💧</div><h3>حمض الهيالورونيك</h3><p>ترطيب يتغلغل في الطبقات العميقة</p></article>
-      <article class="card ing-card reveal"><div class="icon">✨</div><h3>نياسيناميد</h3><p>يفتّح البشرة ويقلّل التجاعيد</p></article>
-    </div>
+    <div class="grid ing-grid" id="ingGrid"></div>
   </div>
 </section>
 
@@ -662,11 +658,23 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
-<section class="section divider-top" id="before-after">
+<!-- ================= TRANSPARENCY TIMELINE =================
+     Replaces the old before/after slider. Two reasons:
+     1. Meta's Personal Health & Appearance policy prohibits before/after
+        imagery, and landing pages are reviewed alongside the creative.
+     2. It shows the MECHANISM instead of claiming a result — and she can
+        verify it herself the night the parcel arrives, which is the exact
+        trust gap a COD buyer has.
+     The section hides itself automatically until the photos exist. -->
+<!-- Not `hidden` at rest: a display:none section has zero size, so the
+     IntersectionObserver that builds it on scroll would never fire.
+     buildTimeline() hides it if the photos turn out to be missing. -->
+<section class="section divider-top" id="how-it-works">
   <div class="container">
-    <h2 class="section-title reveal">قبل وبعد</h2>
-    <p class="section-text reveal">اسحبي المقبض لمقارنة النتيجة.</p>
-    <div class="ba-wrap" id="baWrap"></div>
+    <h2 class="section-title reveal">شوفي كيفاش يخدم الماسك 👀</h2>
+    <p class="section-text reveal">الماسك يولّي <b>شفاف</b> كي تمتص بشرتك الكولاجين والإسانس — هكذا تشوفي بعينيك بلي خدم.</p>
+    <div class="tl-grid" id="tlGrid"></div>
+    <p class="footnote reveal">صور حقيقية للمنتج — النتيجة تختلف من بشرة لأخرى.</p>
   </div>
 </section>
 
@@ -754,9 +762,19 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 /* ---------------- CONFIG ---------------- */
 const PRODUCT_IMAGES = ['product1.jpg','product2.jpg','product3.jpg','product4.jpg','product5.jpg','product6.jpg','product7.jpg','product8.jpg','product9.jpg','product10.jpg','product11.jpg','product12.jpg'];
 const REVIEW_IMAGES  = ['social-proof-1.jpg','social-proof-2.jpg','social-proof-3.jpg','social-proof-4.jpg','social-proof-5.jpg'];
-const BEFORE_AFTER   = [{before:'before1.jpg',after:'after1.jpg'},{before:'before2.jpg',after:'after2.jpg'},{before:'before3.jpg',after:'after3.jpg'}];
+/* ── TRANSPARENCY TIMELINE ────────────────────────────────────────────
+   Drop these 4 files next to index.html and the section appears by itself.
+   Shoot all four from the SAME spot, same daylight, no flash, 1:1 crop.
+   If any file is missing the whole section stays hidden — deploying before
+   you have the photos breaks nothing. */
+const MASK_TIMELINE = [
+  {src:'mask-1.jpg', time:'٠ دقيقة',    title:'حطّي الماسك',   text:'هيدروجيل أبيض سميك، يلتصق مليح على ملامح الوجه.'},
+  {src:'mask-2.jpg', time:'بعد ساعة',   title:'يبدا يشفّ',     text:'الأطراف تولّي شفافة — بشرتك بدات تشرب الكولاجين.'},
+  {src:'mask-3.jpg', time:'٣-٤ ساعات',  title:'شفاف كامل',     text:'كي يولّي شفاف، معناها امتصّت كل الإسانس اللي فيه.'},
+  {src:'mask-4.jpg', time:'بعد النزع',  title:'بشرة مرطّبة',   text:'اربتي بلطف على الوجه — ملمس ناعم ومشدود.'}
+];
 
-const DELIVERY = { office:{fee:400,label:'التوصيل إلى المكتب'}, home:{fee:500,label:'التوصيل إلى المنزل'} };
+const DELIVERY = { office:{fee:400,label:'التوصيل إلى المكتب'}, home:{fee:600,label:'التوصيل إلى المنزل'} };
 const MASKS_PER_BOX = 4;
 
 const CONFIG = {
@@ -765,8 +783,8 @@ const CONFIG = {
   /* OFFER LADDER — the 2200 DA / 2-mask entry was removed on purpose: it
      earned the least, recruited the most price-sensitive buyer (the profile
      that refuses the parcel at delivery) and cannibalised 3700 DA sales.
-     Free delivery on 2+ boxes is the bundle trigger: it costs 500 DA and
-     moves her from a 2500 DA margin order to a 4100 DA one. */
+     Free delivery on 2+ boxes is the bundle trigger: it costs 600 DA and
+     moves her from a 2600 DA margin order to a 4100 DA one. */
   offers:[
     {id:'offer2',title:'علبة واحدة (4 ماسكات)',units:4,headline:'علبة واحدة',subline:'فيها 4 ماسكات',price:3700,compareAt:4400,badge:'',freeShip:false,selected:true},
     {id:'offer3',title:'علبتان (8 ماسكات) + توصيل مجاني',units:8,headline:'علبتان',subline:'فيهم 8 ماسكات',price:6900,compareAt:8800,badge:'الأكثر مبيعاً',freeShip:true,selected:false},
@@ -779,11 +797,20 @@ const CONFIG = {
   bump:{price:2500,compareAt:3700,units:4,label:'علبة إضافية (4 ماسكات)'},
   /* Incentive to confirm on WhatsApp — buys back delivery-refusal risk. */
   waConfirmDiscount:200,
+  /* `img` is optional on every card below. Add the file and the card becomes
+     a photo card; leave it missing (or let it 404) and it falls back to the
+     emoji exactly as before — so the page never looks broken. */
   benefits:[
-    {icon:'💧',title:'ترطيب عميق',text:'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.'},
-    {icon:'✨',title:'إشراقة طبيعية',text:'يمنح البشرة مظهراً أكثر نضارة وإشراقاً.'},
-    {icon:'🪶',title:'ملمس ناعم',text:'يساعد البشرة على أن تبدو أكثر نعومة.'},
-    {icon:'🌸',title:'لطيف على البشرة',text:'تركيبة مناسبة حتى للبشرة الحساسة.'}
+    {img:'benefit-1.jpg',icon:'💧',title:'ترطيب عميق',text:'يساعد على ترطيب البشرة ومنحها مظهراً صحياً.'},
+    {img:'benefit-2.jpg',icon:'✨',title:'إشراقة طبيعية',text:'يمنح البشرة مظهراً أكثر نضارة وإشراقاً.'},
+    {img:'benefit-3.jpg',icon:'🪶',title:'ملمس ناعم',text:'يساعد البشرة على أن تبدو أكثر نعومة.'},
+    {img:'benefit-4.jpg',icon:'🌸',title:'لطيف على البشرة',text:'تركيبة مناسبة حتى للبشرة الحساسة.'}
+  ],
+  ingredients:[
+    {img:'ing-1.jpg',icon:'🧬',title:'كولاجين منخفض الجزيئات',text:'يصغّر المسام ويزيد مرونة البشرة'},
+    {img:'ing-2.jpg',icon:'🌾',title:'غالاكتومايسيس',text:'يحسّن لون البشرة وملمسها'},
+    {img:'ing-3.jpg',icon:'💧',title:'حمض الهيالورونيك',text:'ترطيب يتغلغل في الطبقات العميقة'},
+    {img:'ing-4.jpg',icon:'✨',title:'نياسيناميد',text:'يفتّح البشرة ويقلّل التجاعيد'}
   ],
   contactChannels:{whatsapp:'واتساب: 213540732771+',phone:'اتصال: 0540732771'},
   emailjs:{serviceId:'service_q7wx8gn',templateId:'template_xkpm4qc',publicKey:'wI4lyiYiXT4aP6jfk'},
@@ -1047,53 +1074,34 @@ function buildProductGallery(urls){
   applyImgFallback($('#pg'));
 }
 
-/* ---------------- BEFORE / AFTER (built on scroll) ---------------- */
-function buildBeforeAfter(items){
-  const wrap = $('#baWrap'), sec = $('#before-after');
-  const valid = items.filter(it => it.before && it.before.trim() && it.after && it.after.trim());
-  if (!valid.length){ sec.style.display = 'none'; return; }
+/* ---------------- TRANSPARENCY TIMELINE (built on scroll) ----------------
+   Shows the mechanism, not a result claim. Probes the first frame: if the
+   photos are not uploaded yet the whole section stays hidden rather than
+   rendering broken placeholders. */
+function buildTimeline(items){
+  const grid = $('#tlGrid'), sec = $('#how-it-works'), nav = $('#navHowItWorks');
+  const valid = (items || []).filter(it => it && it.src && it.src.trim());
+  if (!valid.length) return;
 
-  wrap.innerHTML = valid.map((it,i) =>
-    '<div class="cmp'+(i===0?' active':'')+'" data-i="'+i+'">' +
-      '<img class="cmp-after" src="'+escapeHTML(it.after)+'" alt="بعد" '+(i?'loading="lazy"':'')+' decoding="async">' +
-      '<img class="cmp-before" src="'+escapeHTML(it.before)+'" alt="قبل" '+(i?'loading="lazy"':'')+' decoding="async">' +
-      '<span class="cmp-label b">قبل</span><span class="cmp-label a">بعد</span><div class="cmp-handle"></div></div>').join('')
-    + (valid.length > 1
-      ? '<div class="ba-controls"><button class="prev" type="button" aria-label="السابق">›</button><div class="ba-dots">'
-        + valid.map((_,i)=>'<button class="ba-dot'+(i===0?' active':'')+'" data-i="'+i+'" type="button" aria-label="مقارنة '+(i+1)+'"></button>').join('')
-        + '</div><button class="next" type="button" aria-label="التالي">‹</button></div>'
-      : '');
-
-  let cur = 0;
-  const cmps = [...wrap.querySelectorAll('.cmp')];
-  const show = i => {
-    cur = (i + cmps.length) % cmps.length;
-    cmps.forEach((c,k) => c.classList.toggle('active', k === cur));
-    wrap.querySelectorAll('.ba-dot').forEach((d,k) => d.classList.toggle('active', k === cur));
+  const probe = new Image();
+  probe.onerror = () => { sec.hidden = true; if (nav) nav.hidden = true; };
+  probe.onload = () => {
+    grid.innerHTML = valid.map((it,i) =>
+      '<figure class="tl-step reveal">' +
+        '<div class="tl-media"><img src="'+escapeHTML(it.src)+'" alt="'+escapeHTML(it.title)+'" loading="'+(i?'lazy':'eager')+'" decoding="async">' +
+          '<span class="tl-time">'+escapeHTML(it.time)+'</span>' +
+          '<span class="tl-num lat">'+(i+1)+'</span></div>' +
+        '<figcaption><h3>'+escapeHTML(it.title)+'</h3><p>'+escapeHTML(it.text)+'</p></figcaption>' +
+      '</figure>').join('');
+    sec.hidden = false;
+    if (nav) nav.hidden = false;
+    grid.addEventListener('click', e => {
+      const f = e.target.closest('.tl-step');
+      if (f) openLightbox(valid.map(v => v.src), [...grid.children].indexOf(f));
+    });
+    observeReveals();
   };
-  if (valid.length > 1){
-    wrap.querySelector('.ba-controls .prev').addEventListener('click', () => show(cur-1));
-    wrap.querySelector('.ba-controls .next').addEventListener('click', () => show(cur+1));
-    wrap.querySelector('.ba-dots').addEventListener('click', e => { const d = e.target.closest('.ba-dot'); if (d) show(+d.dataset.i); });
-  }
-
-  cmps.forEach(cmp => {
-    const setPos = clientX => {
-      const r = cmp.getBoundingClientRect();
-      const p = Math.max(2, Math.min(98, ((clientX - r.left) / r.width) * 100));
-      cmp.style.setProperty('--pos', p + '%');
-      cmp.querySelector('.cmp-handle').style.left = p + '%';
-    };
-    const move = e => setPos(e.clientX);
-    const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
-    cmp.addEventListener('pointerdown', e => {
-      setPos(e.clientX);
-      window.addEventListener('pointermove', move, {passive:true});
-      window.addEventListener('pointerup', up, {passive:true});
-    }, {passive:true});
-    cmp.style.setProperty('--pos','50%');
-  });
-  applyImgFallback(wrap);
+  probe.src = valid[0].src;
 }
 
 /* ---------------- REVIEWS (built on scroll) ---------------- */
@@ -1237,14 +1245,37 @@ function renderOrderSummary(){
   const q = $('#orderQtyNum'); if (q) q.textContent = String(selectedQty);
 }
 
-function renderBenefits(){
-  $('#benefitsGrid').innerHTML = CONFIG.benefits.map(b =>
-    '<article class="card feature-card reveal"><div class="icon">'+escapeHTML(b.icon)+'</div><h3>'+escapeHTML(b.title)+'</h3><p>'+escapeHTML(b.text)+'</p></article>').join('');
+/* Photo card with an emoji safety net. A photo out-sells an emoji every
+   time, but a 404 must never leave a hole in the page — so the emoji stays
+   underneath and the <img> simply removes itself if it fails to load. */
+function cardMedia(item){
+  if (!item.img) return '<div class="icon">'+escapeHTML(item.icon || '✨')+'</div>';
+  return '<div class="fc-media"><div class="icon fc-fallback">'+escapeHTML(item.icon || '✨')+'</div>'
+       + '<img src="'+escapeHTML(item.img)+'" alt="'+escapeHTML(item.title)+'" loading="lazy" decoding="async" data-photocard="1"></div>';
 }
+function bindPhotoCards(scope){
+  (scope || document).querySelectorAll('img[data-photocard]').forEach(img => {
+    if (img.dataset.pcBound) return;
+    img.dataset.pcBound = '1';
+    const drop = () => { const w = img.closest('.fc-media'); if (w) w.classList.add('no-photo'); img.remove(); };
+    if (img.complete && img.naturalWidth === 0) return drop();   // already 404'd
+    img.addEventListener('error', drop, {once:true});
+    img.addEventListener('load', () => { const w = img.closest('.fc-media'); if (w) w.classList.add('has-photo'); }, {once:true});
+  });
+}
+function renderCardGrid(sel, items, cls){
+  const el = $(sel); if (!el) return;
+  el.innerHTML = items.map(b =>
+    '<article class="card '+cls+' reveal">' + cardMedia(b)
+    + '<h3>'+escapeHTML(b.title)+'</h3><p>'+escapeHTML(b.text)+'</p></article>').join('');
+  bindPhotoCards(el);
+}
+function renderBenefits(){ renderCardGrid('#benefitsGrid', CONFIG.benefits, 'feature-card'); }
+function renderIngredients(){ renderCardGrid('#ingGrid', CONFIG.ingredients, 'ing-card'); }
 
 function renderFAQ(){
   const faq = [
-    {q:'كم يكلّف التوصيل؟', a:'التوصيل مجاني تماماً إذا طلبتِ علبتين فما فوق. للعلبة الوحدة: 400 دج إلى المكتب و500 دج إلى المنزل — لكل الولايات الـ58، بدون أي رسوم إضافية.'},
+    {q:'كم يكلّف التوصيل؟', a:'التوصيل مجاني تماماً إذا طلبتِ علبتين فما فوق. للعلبة الوحدة: 400 دج إلى المكتب و600 دج إلى المنزل — لكل الولايات الـ58، بدون أي رسوم إضافية.'},
     {q:'كم ماسك في العلبة؟', a:'كل علبة تحتوي على 4 ماسكات. العرض 8 ماسك = علبتان، والعرض 12 ماسك = 3 علب.'},
     {q:'هل يناسب البشرة الحساسة؟', a:'نعم، مناسب للبشرة الحساسة.'},
     {q:'كم مدة الاستخدام؟', a:'3-4 ساعات أو طوال الليل.'},
@@ -1303,7 +1334,7 @@ const ZLL = {
   SUBMIT_TIMEOUT_MS: 15000,     // generous: it no longer blocks the UI
   EMAIL_TIMEOUT_MS: 12000,
   AUTOSAVE_MS: 400,
-  RETRY_DELAYS: [2000, 5000],   // background retries, same idempotency key
+  RETRY_DELAYS: [2000, 6000],   // background retries, same idempotency key
   WHATSAPP:'213540732771'
 };
 const S = { STARTED:'FORM_STARTED', PARTIAL:'FORM_PARTIAL', READY:'READY_TO_SUBMIT', SUBMITTING:'SUBMITTING',
@@ -1869,7 +1900,7 @@ async function finalizeOrder(firstAttempt, ctx, payload){
   for (let i = 0; i < ZLL.RETRY_DELAYS.length; i++){
     setAck('pending', ACK_SPINNER + 'جارٍ إعادة المحاولة… (' + (i+1) + '/' + ZLL.RETRY_DELAYS.length + ')');
     await sleep(ZLL.RETRY_DELAYS[i]);
-    if (navigator.onLine === false) await waitForOnline(50000);
+    if (navigator.onLine === false) await waitForOnline(60000);
     safeCall('bump', () => saveDraft({attempts:((draft && draft.attempts)||1)+1}));
     payload.attempt = (draft && draft.attempts) || 1;
     res = await postOrder(payload);
@@ -2090,6 +2121,7 @@ function init(){
   /* Everything else waits for an idle frame — it must not delay first input. */
   idle(() => {
     safeCall('renderBenefits', renderBenefits);
+    safeCall('renderIngredients', renderIngredients);
     safeCall('renderFAQ', renderFAQ);
     safeCall('bindTabs', bindTabs);
     safeCall('bindContactEmail', bindContactEmail);
@@ -2097,7 +2129,7 @@ function init(){
     safeCall('gallery', () => buildProductGallery(PRODUCT_IMAGES));
     safeCall('imgfallback', () => applyImgFallback(document));
     // Heavy image sections: nothing is requested until the customer scrolls there.
-    whenNear('#before-after', () => buildBeforeAfter(BEFORE_AFTER));
+    whenNear('#how-it-works', () => buildTimeline(MASK_TIMELINE));
     whenNear('#reviews',      () => buildReviews(REVIEW_IMAGES));
   });
 
