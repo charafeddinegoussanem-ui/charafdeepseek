@@ -28,7 +28,7 @@
 <meta property="og:locale" content="ar_DZ">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e24a8b'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='white' font-family='Arial'%3Eb%3C/text%3E%3C/svg%3E">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Biodance Bio-Collagen Real Deep Mask","description":"ماسك هيدروجيل بالكولاجين - العلبة تحتوي على 4 ماسكات - ترطيب عميق وإشراقة فورية","image":"https://skinyorabiodencedz.vercel.app/product1.jpg","brand":{"@type":"Brand","name":"Biodance"},"offers":{"@type":"AggregateOffer","priceCurrency":"DZD","lowPrice":"3700","highPrice":"8900","availability":"https://schema.org/InStock"},"shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"300","currency":"DZD"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"DZ"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Biodance Bio-Collagen Real Deep Mask","description":"ماسك هيدروجيل بالكولاجين - العلبة تحتوي على 4 ماسكات - ترطيب عميق وإشراقة فورية","image":"https://skinyorabiodencedz.vercel.app/product1.jpg","brand":{"@type":"Brand","name":"Biodance"},"offers":{"@type":"AggregateOffer","priceCurrency":"DZD","lowPrice":"3200","highPrice":"8900","availability":"https://schema.org/InStock"},"shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"300","currency":"DZD"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"DZ"}}}</script>
 
 <script>document.documentElement.classList.add('js');</script>
 
@@ -515,7 +515,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 
           <div style="margin-bottom:8px">
             <label style="font-weight:700;font-size:14px;color:var(--ink);display:block;margin-bottom:2px">🛍️ اختاري العرض:</label>
-            <div class="offer-hint" style="margin-bottom:6px">📦 <b>علبة وحدة = 4 ماسكات = شهر كامل</b> (ماسك كل أسبوع) = <b>3700 دج</b>. السعر هو سعر العرض كامل.</div>
+            <div class="offer-hint" style="margin-bottom:6px">📦 <b>علبة وحدة = 4 ماسكات = شهر كامل</b> (ماسك كل أسبوع) = <b>3200 دج</b>. السعر هو سعر العرض كامل.</div>
             <div class="order-variants-grid" id="orderVariants"></div>
             <div class="order-upsell" id="orderUpsell"></div>
             <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
@@ -855,7 +855,7 @@ const CONFIG = {
   trustBadges:['العلبة = شهر كامل (4 ماسكات)','الدفع عند الاستلام','توصيل ثابت 300/500 دج لكل الولايات','مناسب للبشرة الحساسة'],
   /* OFFER LADDER — the 2200 DA / 2-mask entry was removed on purpose: it
      earned the least, recruited the most price-sensitive buyer (the profile
-     that refuses the parcel at delivery) and cannibalised 3700 DA sales.
+     that refuses the parcel at delivery) and cannibalised 3200 DA sales.
      Free delivery on 2+ boxes is the bundle trigger: it costs 500 DA and
      moves her from a 2600 DA margin order to a 4100 DA one. */
   /* Named as PROGRAMS, not quantities. «علبتان» is a warehouse label;
@@ -871,10 +871,10 @@ const CONFIG = {
      That is an honest reason to buy 3 months, not a discount. */
   offers:[
     {id:'offer2',title:'شهر كامل (علبة — 4 ماسكات)',units:4,headline:'شهر كامل',subline:'علبة وحدة — 4 ماسكات · ماسك كل أسبوع',
-     price:3700,compareAt:4400,badge:'',freeShip:false,
+     price:3200,compareAt:4400,badge:'',freeShip:false,
      note:'شهر = دورة تجديد وحدة. الفرق اللي يدوم يجي بعد 3 دورات',selected:true},
     {id:'offer3',title:'شهرين (علبتان — 8 ماسكات) + توصيل مجاني',units:8,headline:'شهرين',subline:'علبتان — 8 ماسكات · ماسك كل أسبوع',
-     price:6900,compareAt:8800,badge:'الأكثر مبيعاً',freeShip:true,selected:false},
+     price:6400,compareAt:8800,badge:'الأكثر مبيعاً',freeShip:true,selected:false},
     {id:'offer4',title:'3 أشهر (3 علب — 12 ماسك) + توصيل مجاني + هدية',units:12,headline:'3 أشهر',subline:'3 علب — 12 ماسك · ماسك كل أسبوع',
      price:8900,compareAt:13200,badge:'النتيجة الكاملة',freeShip:true,gift:true,selected:false}
   ],
@@ -882,7 +882,7 @@ const CONFIG = {
   /* One-tap upgrade shown when she has a single box selected. */
   upsell:{from:'offer2',to:'offer3'},
   /* Post-order bump on the thank-you screen: pure margin, zero ad cost. */
-  bump:{targetOffer:'offer3',compareAt:3700,units:4,label:'علبة إضافية (4 ماسكات)'},
+  bump:{targetOffer:'offer3',compareAt:3200,units:4,label:'علبة إضافية (4 ماسكات)'},
   /* Post-purchase club: the list you send the day-25 reorder message to. */
   clubJoinText:'السلام عليكم 🌸 نحب ننضم لنادي بايودانس — نصائح للروتين وعروض العضوات.',
   /* `img` is optional on every card below. Add the file and the card becomes
