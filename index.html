@@ -12,23 +12,21 @@
      No render-blocking CSS, no render-blocking font, no 3rd-party JS.
      ============================================================ -->
 <link rel="preload" as="image" href="product1.jpg" fetchpriority="high">
-<!-- The money path: warm DNS for the order endpoint from the very first byte.
-     TLS is warmed later (on form intent) so it never steals hero bandwidth. -->
 <link rel="dns-prefetch" href="//script.google.com">
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
-<title>ماسك بايودانس بالكولاجين | العلبة 4 ماسكات — توصيل مجاني على علبتين+</title>
-<meta name="description" content="ماسك Biodance Bio-Collagen Real Deep Mask — العلبة تحتوي على 4 ماسكات. توصيل بسعر ثابت لكل الولايات: 400 دج للمكتب و600 دج للمنزل، ومجاني على علبتين فما فوق. الدفع عند الاستلام.">
+<title>ماسك بايودانس بالكولاجين | حضّري بشرتك قبل أي مناسبة — من 2200 دج</title>
+<meta name="description" content="عندك مناسبة؟ عرس، خطوبة، حنة، عيد، تصويرة، تخرّج ولا مقابلة عمل — حطّي ماسك Biodance بالكولاجين ليلة قبل وصبّحي ببشرة مرطّبة وناعمة والمكياج يقعد أحسن. عرض التحضير: ماسكين بـ2200 دج. الدفع عند الاستلام في 58 ولاية.">
 <link rel="canonical" href="https://skinyorabiodencedz.vercel.app/">
 <meta property="og:type" content="product">
-<meta property="og:title" content="ماسك بايودانس بالكولاجين | العلبة 4 ماسكات — الدفع عند الاستلام">
-<meta property="og:description" content="ترطيب عميق وإشراقة فورية. العلبة = شهر كامل. توصيل ثابت 400/600 دج لكل الولايات — مجاني على علبتين فما فوق.">
+<meta property="og:title" content="سرّ البشرة ليلة المناسبة — ماسك بايودانس بالكولاجين">
+<meta property="og:description" content="عرس، خطوبة، عيد، تصويرة ولا مقابلة عمل — ليلة وحدة قبل المناسبة تكفي: بشرة مرطّبة، ملمس ناعم، والمكياج يقعد كيما تحبي. من 2200 دج — الدفع عند الاستلام.">
 <meta property="og:image" content="https://skinyorabiodencedz.vercel.app/product1.jpg">
 <meta property="og:url" content="https://skinyorabiodencedz.vercel.app/">
 <meta property="og:locale" content="ar_DZ">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e24a8b'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='white' font-family='Arial'%3Eb%3C/text%3E%3C/svg%3E">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Biodance Bio-Collagen Real Deep Mask","description":"ماسك هيدروجيل بالكولاجين - العلبة تحتوي على 4 ماسكات - ترطيب عميق وإشراقة فورية","image":"https://skinyorabiodencedz.vercel.app/product1.jpg","brand":{"@type":"Brand","name":"Biodance"},"offers":{"@type":"AggregateOffer","priceCurrency":"DZD","lowPrice":"3600","highPrice":"9600","availability":"https://schema.org/InStock"},"shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"400","currency":"DZD"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"DZ"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Biodance Bio-Collagen Real Deep Mask","description":"ماسك هيدروجيل بالكولاجين للتحضير قبل المناسبات — ترطيب عميق وإشراقة فورية من ليلة وحدة","image":"https://skinyorabiodencedz.vercel.app/product1.jpg","brand":{"@type":"Brand","name":"Biodance"},"offers":{"@type":"AggregateOffer","priceCurrency":"DZD","lowPrice":"2200","highPrice":"6500","offerCount":"3","availability":"https://schema.org/InStock"},"shippingDetails":{"@type":"OfferShippingDetails","shippingDestination":{"@type":"DefinedRegion","addressCountry":"DZ"}}}</script>
 
 <script>document.documentElement.classList.add('js');</script>
 
@@ -36,10 +34,7 @@
 /* ============================================================
    FONTS — zero render-blocking requests.
    Tajawal is loaded by JS after `load` (and skipped on Save-Data
-   / 2g). Until then the system Arabic face renders instantly:
-   Noto Naskh/Droid Arabic on Android, Geeza Pro on iOS.
-   Poppins was removed entirely — system digits are identical in
-   practice and it cost a second family + 5 weights.
+   / 2g). Until then the system Arabic face renders instantly.
    ============================================================ */
 :root{
 --primary:#e24a8b;--primary-dark:#c2356f;--primary-soft:#fdeaf3;--primary-soft2:#fbf4f7;
@@ -61,7 +56,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .container{width:min(calc(100% - 32px),var(--max));margin-inline:auto}
 .section{padding:60px 0}
 /* Skip layout+paint for off-screen blocks — big win on low-end Android.
-   Not applied to scroll-anchor targets so jump links stay pixel-accurate. */
+   Never applied to scroll-anchor targets so jump links stay pixel-accurate. */
 .cv{content-visibility:auto;contain-intrinsic-size:auto 760px}
 .band{background:var(--bg-soft)}
 .divider-top{border-top:1px solid var(--line)}
@@ -115,18 +110,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .pg-dot{width:8px;height:8px;border-radius:50%;background:var(--line);border:none;padding:0;cursor:pointer}
 .pg-dot.active{background:var(--primary);width:20px;border-radius:var(--pill)}
 
-/* ---------- BUY BOX ---------- */
+/* ---------- BUY BOX / EVENT HERO ---------- */
 .buybox .vendor{display:inline-block;color:var(--primary-dark);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
 .buybox h1{font-size:clamp(24px,3.6vw,34px);line-height:1.25;font-weight:800;margin-bottom:8px}
+.ev-tag{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ev-tag span{background:var(--primary-soft);color:var(--primary-dark);font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:var(--pill)}
+.hero-kicker{font-size:clamp(15px,2.4vw,17px);font-weight:700;color:var(--ink-soft);margin-bottom:12px;line-height:1.65}
+.hero-kicker b{color:var(--primary-dark)}
+/* The night-before strip: replaces the old price "box equation".
+   It tells the mechanism in 3 beats before any number is shown. */
 .box-equation{display:flex;align-items:stretch;flex-wrap:nowrap;gap:4px;background:var(--primary-soft);border:1px solid #f6cfe0;border-radius:var(--radius-lg);padding:10px;margin-bottom:14px}
-.box-equation .be-part{flex:1 1 0;min-width:0;text-align:center;line-height:1.25}
-.box-equation .be-top{display:block;font-family:var(--font-lat);font-weight:800;font-size:clamp(17px,4.4vw,21px);color:var(--primary-dark)}
-.box-equation .be-sub{display:block;font-size:12px;font-weight:700;color:var(--ink-soft)}
-.box-equation .be-eq{display:grid;place-items:center;font-size:18px;font-weight:800;color:var(--primary);flex:0 0 auto}
+.box-equation .be-part{flex:1 1 0;min-width:0;text-align:center;line-height:1.3}
+.box-equation .be-top{display:block;font-size:20px}
+.box-equation .be-sub{display:block;font-size:11.5px;font-weight:700;color:var(--ink-soft)}
+.box-equation .be-eq{display:grid;place-items:center;font-size:16px;font-weight:800;color:var(--primary);flex:0 0 auto}
 .price-what{font-size:13.5px;font-weight:700;color:var(--ink-soft);margin:-4px 0 10px}
 .price-what .pw-unit{color:var(--muted);font-weight:600}
-.offer-hint{background:var(--primary-soft2);border:1px dashed #edd3e0;border-radius:var(--radius);padding:7px 11px;font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:10px}
-.offer-hint b{color:var(--primary-dark)}
+.hero-note{background:var(--primary-soft2);border:1px dashed #edd3e0;border-radius:var(--radius);padding:9px 12px;font-size:13px;color:var(--ink-soft);line-height:1.75;margin-bottom:12px}
+.hero-note b{color:var(--primary-dark)}
 .price-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
 .price-now{font-size:30px;font-weight:800;color:var(--primary-dark)}
 .price-was{text-decoration:line-through;color:var(--muted);font-size:17px}
@@ -174,6 +175,53 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .why-item h4{font-size:16.5px;font-weight:700;margin-bottom:3px}
 .why-item p{color:var(--muted);font-size:13.5px}
 
+/* ---------- EVENT PICKER + BIG OFFER CARDS ---------- */
+.ev-chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-bottom:24px}
+.ev-chip{background:#fff;border:1.5px solid var(--line);color:var(--ink);font-weight:700;font-size:13.5px;padding:10px 17px;border-radius:var(--pill);cursor:pointer;line-height:1.4;transition:.15s}
+.ev-chip:hover{border-color:var(--primary);color:var(--primary-dark)}
+.ev-chip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+/* ---------- OCCASIONS GRID ----------
+   Every woman must find HER event in this list within two seconds. A page
+   that only names weddings sells only to brides. */
+.occ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin-inline:auto}
+.occ{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;line-height:1.4}
+.occ .occ-em{font-size:21px;flex:none}
+.occ b{display:block;font-size:13.5px;font-weight:800;color:var(--ink)}
+.occ small{display:block;font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.5}
+.occ-any{max-width:940px;margin:18px auto 0;text-align:center;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:12px 15px;font-size:13.5px;color:var(--ink-soft);line-height:1.8}
+.occ-any b{color:var(--primary-dark)}
+.offer-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;max-width:1000px;margin-inline:auto}
+.offer-card{position:relative;background:#fff;border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:22px 16px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.offer-card.featured{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft),var(--shadow)}
+.offer-card.chosen{border-color:var(--primary);background:linear-gradient(180deg,#fff9fc,#fff)}
+.offer-card .oc-badge{position:absolute;top:-10px;inset-inline-start:16px;background:var(--primary);color:#fff;font-size:10.5px;font-weight:800;padding:3px 12px;border-radius:var(--pill);line-height:1.7}
+.offer-card .oc-when{display:inline-block;background:var(--primary-soft);color:var(--primary-dark);font-size:11.5px;font-weight:800;padding:4px 11px;border-radius:var(--pill);margin-bottom:9px}
+.offer-card h3{font-size:19px;font-weight:800;margin-bottom:3px;line-height:1.3}
+.offer-card .oc-sub{font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.6}
+.offer-card .oc-price{font-size:27px;font-weight:800;color:var(--primary-dark);line-height:1.15}
+.offer-card .oc-was{text-decoration:line-through;color:var(--muted);font-size:14px;margin-inline-start:8px;font-weight:600}
+.offer-card .oc-unit{display:block;font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:9px}
+.offer-card .oc-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:var(--pill);margin-bottom:11px}
+.offer-card ul{list-style:none;display:grid;gap:7px;margin-bottom:15px;font-size:13px;color:var(--ink-soft);line-height:1.6}
+.offer-card li{display:flex;gap:7px;align-items:flex-start}
+.offer-card .oc-btn{margin-top:auto;width:100%;border:none;border-radius:var(--pill);padding:13px;font-weight:800;font-size:15px;cursor:pointer;background:var(--primary);color:#fff}
+.offer-card .oc-btn:hover{background:var(--primary-dark)}
+.offer-card:not(.featured) .oc-btn{background:#fff;color:var(--primary-dark);border:1.5px solid var(--primary)}
+.offer-card:not(.featured) .oc-btn:hover{background:var(--primary-soft)}
+.offer-ship{max-width:1000px;margin:16px auto 0;text-align:center;font-size:13px;color:var(--ink-soft);background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 14px;line-height:1.7}
+.offer-ship b{color:var(--primary-dark)}
+
+/* ---------- PREPARED vs NOT PREPARED ---------- */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:880px;margin-inline:auto}
+.cmp-col{border-radius:var(--radius-lg);padding:18px 16px 15px;border:1px solid var(--line);background:#fff}
+.cmp-col h3{font-size:16.5px;font-weight:800;margin-bottom:12px;text-align:center}
+.cmp-col ul{list-style:none;display:grid;gap:9px}
+.cmp-col li{font-size:13.5px;line-height:1.6;display:flex;gap:8px;align-items:flex-start}
+.cmp-bad{background:#faf7f8;border-color:#eadfe4}
+.cmp-bad h3{color:var(--ink-soft)}
+.cmp-good{background:#f4fbf7;border-color:#cdeadc}
+.cmp-good h3{color:#12683f}
+
 /* ---------- TRANSPARENCY TIMELINE ---------- */
 .tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin-inline:auto}
 .tl-step{margin:0;cursor:zoom-in}
@@ -185,15 +233,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .tl-step h3{font-size:15px;font-weight:800;margin-bottom:3px}
 .tl-step p{font-size:12.5px;color:var(--muted);line-height:1.6}
 
-/* ---------- ROUTINE ---------- */
+/* ---------- PREP CALENDAR ---------- */
 .rt-list{list-style:none;display:grid;gap:10px;margin:0 0 18px}
 .rt-item{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.rt-week{flex:0 0 auto;display:grid;place-items:center;width:52px;min-height:52px;border-radius:12px;background:var(--primary-soft);color:var(--primary-dark);font-size:10.5px;font-weight:700;line-height:1.25;text-align:center}
+.rt-week{flex:0 0 auto;display:grid;place-items:center;width:60px;min-height:60px;border-radius:12px;background:var(--primary-soft);color:var(--primary-dark);font-size:10px;font-weight:700;line-height:1.3;text-align:center}
 .rt-week b{display:block;font-size:19px;font-weight:800}
+.rt-item.night{border-color:var(--primary);background:linear-gradient(180deg,#fff9fc,#fff)}
+.rt-item.night .rt-week{background:var(--primary);color:#fff}
 .rt-item h4{font-size:15px;font-weight:800;margin-bottom:2px}
 .rt-item p{font-size:13px;color:var(--muted);line-height:1.6}
-.rt-cycle{background:#f4fbf7;border:1px solid #cdeadc;border-radius:12px;padding:11px 14px;font-size:13px;color:#1c6b4b;line-height:1.75;margin-bottom:12px}
-.rt-cycle b{color:#12683f}
+.rt-cycle{background:#fff8e6;border:1px solid #f0dca8;border-radius:12px;padding:11px 14px;font-size:13px;color:#6b5312;line-height:1.75;margin-bottom:12px}
+.rt-cycle b{color:#8a5400}
 .rt-rules{background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:11px 14px;font-size:13px;color:var(--ink-soft);line-height:1.9}
 .rt-rules b{display:block;color:var(--primary-dark);margin-bottom:3px}
 .rt-rules span{display:block}
@@ -204,14 +254,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .fc-media .fc-fallback{position:absolute;inset:0;width:100%;height:100%;border-radius:0;margin:0;z-index:0}
 .fc-media.no-photo{aspect-ratio:auto;background:none;overflow:visible}
 .fc-media.no-photo .fc-fallback{position:static;width:54px;height:54px;border-radius:50%;margin:0 auto}
+
 /* ---------- REVIEWS ---------- */
 .rev-wrap{position:relative;max-width:1000px;margin-inline:auto;min-height:200px}
 .rev-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;-webkit-overflow-scrolling:touch}
 .rev-track::-webkit-scrollbar{display:none}
 .rev-item{flex:0 0 auto;width:400px;scroll-snap-align:center;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--primary-soft2);box-shadow:var(--shadow);cursor:zoom-in}
-/* Reserved box = zero layout shift when the lazy screenshot lands.
-   Top-anchored crop keeps the readable part of an FB screenshot visible;
-   tapping opens the full uncropped image in the lightbox. */
 .rev-item img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
 .rev-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:#fff;border:1px solid var(--line);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:18px}
 .rev-nav.prev{inset-inline-end:-8px}
@@ -254,7 +302,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0
 #orderSubmit.is-busy .zll-spinner{display:inline-block}
 @keyframes zllspin{to{transform:rotate(360deg)}}
 
-/* ---------- INSTANT SUCCESS SCREEN (replaces merci.html) ---------- */
+/* ---------- INSTANT SUCCESS SCREEN ---------- */
 .bd-done{display:none;text-align:center;padding:6px 2px 4px}
 .bd-done.show{display:block;animation:bdIn .28s ease}
 @keyframes bdIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -274,6 +322,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0
 .bd-steps{list-style:none;text-align:start;font-size:13.5px;color:var(--ink-soft);margin:16px 0 4px}
 .bd-steps li{display:flex;gap:9px;align-items:center;padding:5px 0}
 .bd-steps .n{width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-size:11.5px;font-weight:800;display:grid;place-items:center;flex:none}
+.bd-club{display:block;margin-top:14px;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink-soft);line-height:1.6}
+.bd-club b{color:var(--primary-dark)}
+.bd-reorder{background:#eef6ff;border:1px solid #c9def5;color:#14507f}
+.bd-reorder b{color:#0d3d63}
 .bd-back{background:none;border:none;color:var(--primary-dark);font-weight:700;font-size:13.5px;cursor:pointer;margin-top:12px;text-decoration:underline}
 
 /* ---------- FLOATING / LIGHTBOX ---------- */
@@ -305,8 +357,6 @@ footer .pay{background:#fff;border:1px solid var(--line);border-radius:6px;paddi
 footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:auto;line-height:1.7}
 
 /* ---------- ORDER SECTION ---------- */
-/* Three offers stacked vertically read far better than a cramped grid, and
-   they leave room for the free-delivery tag and the saving amount. */
 .order-variants-grid{display:grid;grid-template-columns:1fr;gap:7px}
 .order-variant-card{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;transition:border-color .15s,background .15s;background:#fff;position:relative}
 .order-variant-card:hover{border-color:var(--primary)}
@@ -316,29 +366,14 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .order-variant-card .ov-right{text-align:center;flex:0 0 auto}
 .order-variant-card .ov-units{font-weight:800;font-size:15px;display:block;color:var(--ink);line-height:1.3}
 .order-variant-card .ov-boxes{display:block;font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.5}
-.order-variant-card .ov-ship{display:inline-block;font-size:11.5px;font-weight:800;color:var(--success);margin-top:2px}
-.order-variant-card .ov-gift{color:var(--primary-dark);margin-inline-start:6px}
+.order-variant-card .ov-ship{display:inline-block;font-size:11.5px;font-weight:800;color:var(--primary-dark);margin-top:2px}
 .order-variant-card .ov-price{font-weight:800;font-size:18px;color:var(--primary-dark);display:block;line-height:1.2}
 .order-variant-card .ov-unit{display:block;font-size:10.5px;color:var(--muted);font-weight:600;line-height:1.5}
 .order-variant-card .ov-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11px;font-weight:800;padding:2px 9px;border-radius:var(--pill);margin-top:6px}
-/* Anti-guarantee on the trial: telling her it is NOT enough converts better
-   than pushing the bundle. */
-.order-variant-card .ov-note{display:block;font-size:10.5px;font-weight:700;color:#a06a1e;background:#fff8e6;border:1px solid #f0dca8;border-radius:8px;padding:3px 8px;margin-top:6px;line-height:1.5}
+.order-variant-card .ov-note{display:block;font-size:10.5px;font-weight:700;color:#a06a1e;background:#fff8e6;border:1px solid #f0dca8;border-radius:8px;padding:3px 8px;margin-top:6px;line-height:1.55}
 .order-variant-card .ov-badge{position:absolute;top:-8px;inset-inline-start:12px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:1px 9px;border-radius:var(--pill);line-height:1.7}
 .order-variant-card .ov-check{position:absolute;top:-6px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
 .order-variant-card.active .ov-check{display:flex}
-
-/* In-form one-tap upgrade */
-.order-upsell{display:none;align-items:center;gap:10px;justify-content:space-between;background:linear-gradient(180deg,#fff9fc,#fdeaf3);border:1.5px dashed var(--primary);border-radius:12px;padding:9px 12px;margin-top:8px}
-.order-upsell.show{display:flex}
-.order-upsell .up-txt{font-size:13px;color:var(--ink);line-height:1.5;min-width:0}
-.order-upsell .up-sub{font-size:11.5px;color:var(--ink-soft);font-weight:600}
-.order-upsell .up-btn{flex:0 0 auto;background:var(--primary);color:#fff;border:none;border-radius:var(--pill);padding:9px 15px;font-weight:800;font-size:13.5px;cursor:pointer}
-.order-upsell .up-btn:hover{background:var(--primary-dark)}
-
-/* Summary emphasis */
-.sum-strike{color:var(--muted);font-weight:600}
-.sum-free{color:var(--success);font-weight:800}
 
 /* Authenticity / risk-reversal block above the submit button */
 .order-assure{background:#f4fbf7;border:1px solid #cdeadc;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:12.5px;color:#1c6b4b;line-height:1.65}
@@ -346,26 +381,10 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .order-assure .oa-row{display:flex;gap:7px;align-items:flex-start}
 .order-assure .oa-row+.oa-row{margin-top:4px}
 
-/* Thank-you screen order bump */
-.bd-bump{background:linear-gradient(180deg,#fff9fc,#fdeaf3);border:1.5px dashed var(--primary);border-radius:14px;padding:12px 14px;margin-bottom:12px;text-align:start}
-.bd-bump h3{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
-.bd-bump p{font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:9px}
-.bd-bump .bump-price{color:var(--primary-dark);font-weight:800}
-.bd-bump .bump-was{text-decoration:line-through;color:var(--muted);font-weight:600}
-.bd-bump-btn{width:100%;background:var(--primary);color:#fff;border:none;border-radius:var(--pill);padding:12px;font-weight:800;font-size:15px;cursor:pointer}
-.bd-bump-btn:hover{background:var(--primary-dark)}
-.bd-bump-btn:disabled{opacity:.6;cursor:default}
-.bd-bump.done{border-style:solid;border-color:var(--success);background:#e7f6ee}
-.bd-club{display:block;margin-top:14px;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink-soft);line-height:1.6}
-.bd-club b{color:var(--primary-dark)}
-.bd-reorder{background:#eef6ff;border:1px solid #c9def5;color:#14507f}
-.bd-reorder b{color:#0d3d63}
 .order-compact-input{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;transition:.2s;color:var(--ink)}
 .order-compact-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(226,74,139,.12)}
 .order-compact-input.error{border-color:#c0392b}
 .order-compact-label{display:block;font-weight:600;font-size:13px;color:var(--ink-soft);margin-bottom:2px}
-.order-compact-select{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;color:var(--ink);appearance:auto}
-.order-compact-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(226,74,139,.12)}
 .order-compact-err{font-size:11px;color:#c0392b;display:none;margin-top:2px}
 .order-compact-err.visible{display:block}
 .order-compact-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -375,20 +394,74 @@ footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:aut
 .sum-line.total .sum-val{color:var(--primary-dark);font-size:19px;font-weight:800}
 .sum-line.total span:first-child{font-weight:700;color:var(--ink)}
 
+/* ---------- DYNAMIC WILAYA / SHIPPING ---------- */
+.wilaya-field{position:relative}
+.wilaya-suggestions{display:none;position:absolute;top:100%;inset-inline:0;z-index:100;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:4px;overflow:hidden;box-shadow:0 12px 30px rgba(43,38,48,.12);max-height:230px;overflow-y:auto}
+.wilaya-suggestions.show{display:block}
+.wilaya-suggestion{width:100%;display:block;border:0;border-bottom:1px solid #f3e9ee;background:#fff;color:var(--ink);padding:10px 12px;text-align:right;cursor:pointer;font-size:14px}
+.wilaya-suggestion:last-child{border-bottom:0}
+.wilaya-suggestion .ws-lat{color:var(--muted);font-size:12px;margin-inline-start:6px}
+.wilaya-suggestion:hover,.wilaya-suggestion:focus{background:var(--primary-soft);color:var(--primary-dark)}
+.shipping-options{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px}
+.shipping-option{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:.18s}
+.shipping-option:has(input:checked){border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 1px rgba(226,74,139,.08)}
+.shipping-option input{accent-color:var(--primary);flex:none}
+.shipping-option span{min-width:0}
+.shipping-option strong{display:block;font-size:12px;line-height:1.4}
+.shipping-option small{display:block;color:var(--primary-dark);font-weight:800;font-size:13px;line-height:1.35;margin-top:2px}
+.shipping-checker{margin-top:7px;padding:8px 11px;border-radius:10px;background:var(--primary-soft2);border:1px dashed #e7b7cd;color:var(--ink-soft);font-size:12.5px;line-height:1.55}
+.shipping-checker.ready{background:#f4fbf7;border-color:#cdeadc;color:#1c6b4b}
+.shipping-checker strong{color:var(--primary-dark)}
+
 @media(max-width:900px){
 .product{grid-template-columns:1fr;gap:24px}
 .gallery{position:static}
 .features,.guarantees,.ing-grid{grid-template-columns:repeat(2,1fr)}
-.why-grid,.contact-layout{grid-template-columns:1fr}
+.why-grid,.contact-layout,.offer-cards{grid-template-columns:1fr}
+.occ-grid{grid-template-columns:repeat(2,1fr)}
+}
+/* ---------- MOBILE HERO: the 2200 DA offer MUST be on the first screen ----------
+   Stacked naturally, a 1:1 gallery pushed the price to ~970px on a 375x812
+   phone — i.e. below the fold, which is exactly what this page must not do.
+   So on phones the buybox becomes a flex column and the money (price + CTA)
+   is reordered to sit directly under the H1, with the storytelling copy
+   (mechanism strip, the two-mask argument, description) moved beneath it.
+   Nothing is removed — only resequenced for the small screen. */
+@media(max-width:900px){
+.breadcrumb{display:none}
+.product{padding-top:8px;gap:16px}
+.pg-main{max-height:34vh}
+.pg-dots{margin-top:8px}
+.buybox{display:flex;flex-direction:column}
+.buybox .vendor{order:0;margin-bottom:1px;font-size:12px}
+.buybox .ev-tag{order:1;gap:4px;margin-bottom:7px}
+.buybox .ev-tag span{font-size:11px;padding:2px 8px}
+.buybox h1{order:2;font-size:clamp(21px,5.6vw,26px);margin-bottom:6px}
+.buybox .price-row{order:3;margin-bottom:8px}
+.buybox #heroAddCart{order:4;margin-bottom:8px;padding:15px}
+.buybox .price-what{order:5;margin:0 0 8px;text-align:center}
+.buybox .availability{order:6;text-align:center;margin-bottom:14px}
+.buybox .hero-kicker{order:7}
+.buybox .box-equation{order:8}
+.buybox .hero-note{order:9}
+.buybox .buy-desc{order:10}
+.buybox .ship-note{order:11}
+.buybox .trust-row{order:12}
 }
 @media(max-width:600px){
 .section{padding:40px 0}
 .features,.guarantees,.ing-grid{grid-template-columns:1fr 1fr}
 .tl-grid{grid-template-columns:1fr 1fr;gap:12px}
-.kpi,.form-grid{grid-template-columns:1fr}
+.kpi,.form-grid,.cmp{grid-template-columns:1fr}
 .pg-nav{width:44px;height:44px}
 .card{padding:18px}
 .rev-item{width:78vw}
+.ev-chip{font-size:12.5px;padding:9px 13px}
+.occ-grid{gap:8px}
+.occ{padding:9px 10px;gap:8px}
+.occ .occ-em{font-size:18px}
+.occ b{font-size:12.5px}
+.occ small{font-size:10.5px}
 .floating-bar{bottom:calc(10px + env(safe-area-inset-bottom))}
 footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 }
@@ -396,7 +469,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 </head>
 <body>
 
-<div class="promo">🚚 <b>سعر توصيل ثابت لكل الولايات الـ58:</b> <b class="lat">400 دج</b> مكتب · <b class="lat">600 دج</b> منزل — و<b>مجاني</b> على علبتين فما فوق 🎁</div>
+<div class="promo">🎀 <b>مناسبة قريبة؟</b> حضّري بشرتك من الليلة · 💵 الدفع عند الاستلام · 🚚 التوصيل لـ58 ولاية</div>
 
 <header class="header">
   <div class="container header-wrap">
@@ -405,18 +478,21 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
   <div class="container">
     <nav class="quicknav" aria-label="روابط سريعة">
-      <button data-scroll="#buy">العروض</button>
+      <button data-scroll="#buy">العرض</button>
       <button data-scroll="#order">اطلبي الآن</button>
-      <button data-scroll="#how-it-works" id="navHowItWorks" hidden>كيفاش يخدم</button>
-      <button data-scroll="#reviews">آراء فيسبوك</button>
+      <button data-scroll="#occasions">مناسبتك؟</button>
+      <button data-scroll="#offers">كل العروض</button>
+      <button data-scroll="#how-it-works" id="navHowItWorks" hidden>ليلة المناسبة</button>
+      <button data-scroll="#prep">روزنامة التحضير</button>
+      <button data-scroll="#reviews">آراء البنات</button>
       <button data-scroll="#contact">استفسار</button>
     </nav>
   </div>
 </header>
 
-<div class="container"><div class="breadcrumb">الرئيسية / <span>ماسك الكولاجين العميق</span></div></div>
+<div class="container"><div class="breadcrumb">الرئيسية / <span>ماسك التحضير قبل المناسبة</span></div></div>
 
-<!-- ================= 1. HERO / PRODUCT ================= -->
+<!-- ================= 1. HERO — THE NIGHT BEFORE ================= -->
 <section class="container product" id="buy">
   <div class="gallery">
     <div class="pg" id="pg">
@@ -425,8 +501,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
         <span class="pg-counter lat" id="pgCounter">1 / 12</span>
         <button class="pg-nav prev" type="button" aria-label="السابق">›</button>
         <button class="pg-nav next" type="button" aria-label="التالي">‹</button>
-        <!-- LCP image lives in the HTML, not in JS. It used to only start
-             downloading after the whole script parsed and executed. -->
+        <!-- LCP image lives in the HTML, not in JS. -->
         <div class="pg-track" id="pgTrack"><div class="pg-slide active"><img src="product1.jpg" alt="ماسك بايودانس بالكولاجين" width="800" height="800" fetchpriority="high" decoding="async"></div></div>
       </div>
       <div id="pgNavStrip"></div>
@@ -434,25 +509,40 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
   <div class="buybox">
     <span class="vendor lat">Biodance</span>
-    <h1>ماسك بايودانس بالكولاجين <span class="lat">Bio-Collagen Real Deep Mask</span></h1>
-    <div class="box-equation" id="boxEquation"></div>
+    <div class="ev-tag">
+      <span>💍 عرس</span><span>💐 خطوبة</span><span>🎉 حنة</span><span>🌙 عيد</span><span>📸 تصويرة</span><span>☕ ضيوف</span><span>🎓 تخرّج</span><span>💼 مقابلة</span>
+    </div>
+    <h1>ماسك بايودانس بالكولاجين — <span style="color:var(--primary-dark)">سرّ البشرة ليلة المناسبة</span></h1>
+    <p class="hero-kicker">حطّيه قبل ما ترقدي، وفي الصباح تلقاي بشرتك <b>مرطّبة، ناعمة ومشدودة</b> — والمكياج يقعد عليها كيما تحبي. 🌙✨</p>
+
+    <!-- The mechanism in 3 beats, before any number is shown. -->
+    <div class="box-equation" id="boxEquation">
+      <span class="be-part"><b class="be-top">🌙</b><span class="be-sub">حطّيه قبل ما ترقدي</span></span>
+      <span class="be-eq">→</span>
+      <span class="be-part"><b class="be-top">⏳</b><span class="be-sub">يشفّ في 3-4 ساعات</span></span>
+      <span class="be-eq">→</span>
+      <span class="be-part"><b class="be-top">✨</b><span class="be-sub">صباح المناسبة: بشرة جاهزة</span></span>
+    </div>
+
     <div class="price-row">
-      <span class="price-now lat" id="heroPrice">3 700 دج</span>
+      <span class="price-now lat" id="heroPrice">2 200 دج</span>
       <span class="price-was lat" id="heroCompare"></span>
       <span class="discount-badge lat" id="heroDiscount"></span>
     </div>
     <div class="price-what" id="heroPriceWhat"></div>
+
+    <!-- THE argument that makes the 2-mask entry offer necessary rather than cheap. -->
+    <div class="hero-note" id="heroNote"></div>
+
     <div class="availability">✓ متوفر — الدفع عند الاستلام داخل الجزائر</div>
     <p class="buy-desc">ماسك هيدروجيل بالكولاجين منخفض الجزيئات — ترطيب عميق، إشراقة فورية وملمس أنعم وأكثر امتلاءً.</p>
-    <!-- The offer picker + quantity live ONLY in the order form below. Having
-         them here too made the customer choose twice within one screen. -->
-    <div class="ship-note">🚚 <b>سعر ثابت لكل الولايات الـ58 — بدون فرق بين ولاية وأخرى:</b><br><span class="lat">400 دج</span> إلى المكتب · <span class="lat">600 دج</span> إلى المنزل.<br>🎁 <b>ومجاني تماماً</b> على <b>علبتين فما فوق</b>.</div>
-    <button class="btn btn-primary btn-cart" id="heroAddCart" data-scroll="#order">اختاري عرضك واطلبي الآن ⬇ — الدفع عند الاستلام</button>
+    <div class="ship-note">⏰ <b>مناسبتك قريبة؟ اطلبي بكري.</b><br>التوصيل عادةً من <b>2 إلى 5 أيام</b> حسب الولاية — وسعر التوصيل يبان لك مباشرة كي تختاري ولايتك في نموذج الطلب.</div>
+    <button class="btn btn-primary btn-cart" id="heroAddCart" data-scroll="#order">اطلبي عرض التحضير ⬇ — الدفع عند الاستلام</button>
     <div class="trust-row" id="trustBadges"></div>
   </div>
 </section>
 
-<!-- ================= 2. ORDER FORM — moved directly under the hero ================= -->
+<!-- ================= 2. ORDER FORM — directly under the hero ================= -->
 <section class="section band divider-top" id="order" style="padding:18px 0 26px;background:linear-gradient(180deg,#fbf4f7 0%,#fff 100%)">
   <div class="container" style="max-width:640px">
     <div class="card order-card" style="border-radius:16px;padding:14px 14px 18px;box-shadow:0 4px 16px rgba(226,74,139,.08);border:1px solid #f0e2ea;background:#fff">
@@ -461,17 +551,10 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
       <div class="bd-done" id="orderDone" role="status" aria-live="polite">
         <div class="bd-check" aria-hidden="true">✓</div>
         <h2>تم استلام طلبك بنجاح! 🎉</h2>
-        <p class="bd-lead">شكراً على ثقتك في <b class="lat">biodance</b> — نتصلو بيك قريب باش نأكّدو الطلب ونجهّزو التوصيل.</p>
+        <p class="bd-lead">شكراً على ثقتك في <b class="lat">biodance</b> — نتصلو بيك قريب باش نأكّدو الطلب ونجهّزو التوصيل قبل مناسبتك.</p>
         <div class="bd-ref">رقم الطلب: <b class="lat" id="doneRef">—</b></div>
         <div class="bd-sum" id="doneSummary"></div>
         <div class="bd-ack pending" id="doneAck"><span class="zll-spinner" style="display:inline-block;border-color:rgba(0,0,0,.15);border-top-color:var(--primary)"></span> جارٍ تأكيد تسجيل الطلب…</div>
-
-        <!-- ORDER BUMP — she has already decided, and this costs zero ad spend. -->
-        <div class="bd-bump" id="doneBump" hidden>
-          <h3>➕ تحبي ترقّي طلبك لـ«شهرين» قبل ما نجهّزو الطرد؟</h3>
-          <p>علبة إضافية (<span class="lat">4</span> ماسكات) بـ<span class="bump-price lat" id="bumpPrice">—</span> بدل <span class="bump-was lat" id="bumpWas">3 700 دج</span> — و<b>التوصيل يولّي مجاني</b> 🎁</p>
-          <button type="button" class="bd-bump-btn" id="doneBumpBtn">نعم، زيدها لطلبي ✓</button>
-        </div>
 
         <button type="button" class="zll-btn zll-btn-retry" id="doneRetry" style="display:none;width:100%;margin-bottom:9px">🔄 إعادة المحاولة</button>
         <a class="bd-wa" id="doneWa" href="#" target="_blank" rel="noopener">📲 أكّدي طلبك الآن عبر واتساب</a>
@@ -480,11 +563,10 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           <li><span class="n">2</span> نجهّزو الطرد ونبعثوه لولايتك 🚚</li>
           <li><span class="n">3</span> تخلّصي عند الاستلام 💵</li>
         </ol>
-        <!-- Every buyer who joins is a zero-CPA channel for the day-25
-             reorder message. This list is the only permanent escape from
-             rising Meta CPMs. -->
+        <!-- Every buyer who joins is a zero-CPA channel for the reorder
+             message before her next event. -->
         <a class="bd-club" id="doneClub" href="#" target="_blank" rel="noopener">
-          🌸 انضمّي لـ<b>نادي بايودانس</b> — نصائح لروتينك + عروض خاصة للعضوات
+          🌸 انضمّي لـ<b>نادي بايودانس</b> — نصائح لتحضير بشرتك قبل المناسبات + عروض خاصة للعضوات
         </a>
         <button type="button" class="bd-back" id="doneBack">← طلب جديد / العودة للتسوّق</button>
       </div>
@@ -493,7 +575,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
       <div id="orderFormWrap">
         <div style="text-align:center;margin-bottom:8px">
           <h2 style="font-size:clamp(20px,4vw,24px);font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em">📦 اطلبي الآن</h2>
-          <p style="font-size:14px;color:var(--ink-soft);margin:0;font-weight:600">املئي البيانات و نوصلو ليك 🚚</p>
+          <p style="font-size:14px;color:var(--ink-soft);margin:0;font-weight:600">املئي البيانات و نوصلو ليك قبل مناسبتك 🚚</p>
         </div>
 
         <form id="orderForm" novalidate>
@@ -506,19 +588,17 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
             ✅ تم استرجاع معلوماتك المحفوظة تلقائياً — كمّلي من وين وقفتِ.
           </div>
 
-          <!-- Returning customer: one tap refills everything from her last
-               order. The day-25 reorder message lands on THIS. -->
+          <!-- Returning customer: one tap refills everything from her last order. -->
           <div class="zll-note bd-reorder" id="orderReorder" role="status">
             <div id="orderReorderMsg"></div>
             <button type="button" class="zll-btn zll-btn-retry" id="orderReorderBtn" style="margin-top:7px;width:100%">🔁 نعم، عاود نفس الطلب</button>
           </div>
 
           <div style="margin-bottom:8px">
-            <label style="font-weight:700;font-size:14px;color:var(--ink);display:block;margin-bottom:2px">🛍️ اختاري العرض:</label>
-            <div class="offer-hint" style="margin-bottom:6px">📦 <b>علبة وحدة = 4 ماسكات = شهر كامل</b> (ماسك كل أسبوع) = <b>3600 دج</b>. السعر هو سعر العرض كامل.</div>
+            <label style="font-weight:700;font-size:14px;color:var(--ink);display:block;margin-bottom:2px">🛍️ اختاري تحضيرك:</label>
+            <div class="hero-note" style="margin-bottom:6px">🌙 <b>ماسك واحد = ليلة وحدة.</b> ما تجرّبيش منتج جديد أول مرة ليلة المناسبة — لهذا <b>عرض التحضير فيه ماسكين</b>: واحد للتجربة وواحد للّيلة الكبيرة.</div>
             <div class="order-variants-grid" id="orderVariants"></div>
-            <div class="order-upsell" id="orderUpsell"></div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
               <span style="font-size:13px;font-weight:600;color:var(--ink-soft)">الكمية:</span>
               <div style="display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:8px;padding:1px;background:#fff">
                 <button type="button" id="orderMinus" aria-label="إنقاص الكمية" style="width:30px;height:30px;border:none;border-radius:6px;background:var(--primary-soft2);font-size:16px;color:var(--primary-dark);cursor:pointer;font-weight:700">−</button>
@@ -540,10 +620,11 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
               <input id="orderPhone" name="phone" type="tel" inputmode="numeric" required placeholder="0550123456" autocomplete="tel" maxlength="14" class="order-compact-input">
               <small class="order-compact-err" id="orderPhoneErr">📞 رقم صحيح</small>
             </div>
-            <div>
+            <div class="wilaya-field">
               <label for="orderWilaya" class="order-compact-label">🏙️ الولاية</label>
-              <input id="orderWilaya" name="wilaya" required autocomplete="address-level1" placeholder="مثال: الجزائر" class="order-compact-input">
-              <small class="order-compact-err" id="orderWilayaErr">📍 مطلوبة</small>
+              <input id="orderWilaya" name="wilaya" required autocomplete="address-level1" placeholder="اكتبي ولايتك بالعربية أو بالفرنسية..." class="order-compact-input" aria-autocomplete="list" aria-controls="wilayaSuggestions">
+              <div id="wilayaSuggestions" class="wilaya-suggestions" role="listbox"></div>
+              <small class="order-compact-err" id="orderWilayaErr">📍 اختاري ولايتك من القائمة</small>
             </div>
             <div>
               <label for="orderCommune" class="order-compact-label">🏘️ البلدية</label>
@@ -553,19 +634,34 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           </div>
 
           <div style="margin-bottom:6px">
-            <label for="orderDeliveryType" class="order-compact-label">🚚 نوع التوصيل — <b>سعر ثابت لكل الولايات الـ58</b></label>
-            <select id="orderDeliveryType" class="order-compact-select">
-              <option value="home" data-fee="600">🏠 التوصيل إلى المنزل — 600 دج (نفس السعر لكل الولايات)</option>
-              <option value="office" data-fee="400">🏢 التوصيل إلى المكتب — 400 دج (نفس السعر لكل الولايات)</option>
-            </select>
+            <div class="order-compact-label">🚚 طريقة التوصيل</div>
+            <div class="shipping-options" id="shippingOptions">
+              <label class="shipping-option">
+                <input type="radio" name="shippingMode" value="home" checked>
+                <span>
+                  <strong>🏠 إلى المنزل</strong>
+                  <small id="homeShippingPrice">—</small>
+                </span>
+              </label>
+              <label class="shipping-option">
+                <input type="radio" name="shippingMode" value="office">
+                <span>
+                  <strong>🏢 إلى المكتب / Stop Desk</strong>
+                  <small id="officeShippingPrice">—</small>
+                </span>
+              </label>
+            </div>
+
+            <div id="shippingChecker" class="shipping-checker" aria-live="polite">
+              <span id="shippingCheckerText">📍 اكتبي ولايتك باش نشوفولك سعر التوصيل.</span>
+            </div>
           </div>
 
           <div style="background:var(--primary-soft2);border-radius:10px;padding:9px 13px;margin:8px 0;border:1px solid var(--line)">
             <div id="orderSummary" aria-live="polite"></div>
           </div>
 
-          <!-- Risk reversal, right where she decides. Answers the #1 unspoken
-               objection in Algerian COD beauty: "واش نضمن بلي أصلي؟"
+          <!-- Risk reversal, right where she decides.
                NOTE: the open-parcel line is commented out — enable it ONLY if
                your courier actually allows inspection before payment. -->
           <div class="order-assure">
@@ -593,8 +689,8 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 
           <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
             <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">💵 دفع عند الاستلام</span>
-            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🚚 سعر ثابت 400/600 دج — كل الولايات</span>
-            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">📦 العلبة = شهر كامل</span>
+            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🚚 السعر حسب الولاية</span>
+            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🌙 ليلة وحدة قبل المناسبة</span>
             <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🌸 للبشرة الحساسة</span>
           </div>
           <p style="text-align:center;font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4">🔒 بياناتك آمنة — نستخدمها فقط لتأكيد طلبك</p>
@@ -608,27 +704,180 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
+<!-- ================= 3. WHAT SHE ACTUALLY WINS ON THE NIGHT ================= -->
+<section class="section divider-top cv">
+  <div class="container">
+    <h2 class="section-title reveal">واش تربحي صباح المناسبة؟</h2>
+    <p class="section-text reveal">ماشي وعود — هذي بالضبط الفروقات اللي تحسّي بيها كي تحضّري بشرتك ليلة قبل.</p>
+    <div class="grid features">
+      <article class="card feature-card reveal"><div class="icon">💄</div><h3>المكياج يقعد أحسن</h3><p>على بشرة مرطّبة، الفوندوتان يتوزّع أملس وما يبانش التقشّر.</p></article>
+      <article class="card feature-card reveal"><div class="icon">💧</div><h3>ما تحسّيش بالجفاف</h3><p>ترطيب عميق يدوم — بشرتك ما تبقاش مشدودة ولا خشنة.</p></article>
+      <article class="card feature-card reveal"><div class="icon">📸</div><h3>إشراقة في الصور</h3><p>ملمس أنعم وإشراقة طبيعية تبان في تصاور المناسبة.</p></article>
+      <article class="card feature-card reveal"><div class="icon">😌</div><h3>راحة بال</h3><p>ما تقلقيش على بشرتك في اليوم الكبير — راهي محضّرة.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. WHICH EVENT IS YOURS? =================
+     The page must not read as "for brides". A bride buys once in her life;
+     a woman who ATTENDS weddings buys every summer — and she is photographed,
+     posted and looked over just the same. This grid exists so every visitor
+     finds her own occasion in under two seconds, whatever it is. -->
+<section class="section divider-top cv" id="occasions">
+  <div class="container">
+    <h2 class="section-title reveal">واش هي مناسبتك أنتِ؟ 💫</h2>
+    <p class="section-text reveal">ماشي غير العرايس — <b>كل وحدة عندها نهار تحب تكون فيه في أحسن حالة.</b></p>
+    <div class="occ-grid">
+      <div class="occ reveal"><span class="occ-em">💍</span><span><b>عرس</b><small>تاعك، ولا تاع صاحبتك وأختك</small></span></div>
+      <div class="occ reveal"><span class="occ-em">💐</span><span><b>خطوبة</b><small>ديالك ولا في العائلة</small></span></div>
+      <div class="occ reveal"><span class="occ-em">🎉</span><span><b>ليلة الحنة</b><small>الليلة اللي كامل الصور فيها</small></span></div>
+      <div class="occ reveal"><span class="occ-em">☕</span><span><b>ضيوف والخطّابة</b><small>كي تجي العائلة تشوفك</small></span></div>
+      <div class="occ reveal"><span class="occ-em">🌙</span><span><b>العيد</b><small>الفطر والأضحى والزيارات</small></span></div>
+      <div class="occ reveal"><span class="occ-em">📸</span><span><b>جلسة تصوير</b><small>صور، ريلز ولا فيديو</small></span></div>
+      <div class="occ reveal"><span class="occ-em">🎓</span><span><b>التخرّج</b><small>حفل الشهادة والصور</small></span></div>
+      <div class="occ reveal"><span class="occ-em">💼</span><span><b>مقابلة عمل</b><small>الانطباع الأول ما يتعاودش</small></span></div>
+      <div class="occ reveal"><span class="occ-em">🎂</span><span><b>عيد ميلاد</b><small>تاعك ولا تاع ولادك</small></span></div>
+      <div class="occ reveal"><span class="occ-em">👶</span><span><b>عقيقة / سبوع</b><small>مناسبة العائلة الكبيرة</small></span></div>
+      <div class="occ reveal"><span class="occ-em">✈️</span><span><b>سفر ولا عطلة</b><small>باش تكون صور العطلة أحسن</small></span></div>
+      <div class="occ reveal"><span class="occ-em">💞</span><span><b>ذكرى الزواج</b><small>ولا أي نهار خاص بيك</small></span></div>
+    </div>
+    <div class="occ-any reveal">
+      🎊 <b>ونادراً كي تكون مناسبة وحدة برك:</b> عرس صاحبتك في جوان، عرس بنت خالتك في جويلية، والعيد بعدهم…<br>
+      وحتى كي ما تكونش عندك مناسبة قريبة — <b>المناسبات ما تسبقش تعلمك.</b> ماسك كل أسبوع يخلّي بشرتك جاهزة في أي وقت.
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="btn btn-primary btn-cart reveal" data-scroll="#offers" style="max-width:420px;width:min(100%,420px)">شوفي التحضير المناسب ليك ⬇</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. THE OFFERS — discovered on scroll ================= -->
+<section class="section band divider-top" id="offers">
+  <div class="container">
+    <h2 class="section-title reveal">مناسبتك وقتاش؟ اختاري تحضيرك 🗓️</h2>
+    <p class="section-text reveal">الفرق بين العروض ماشي في الكمية — في <b>الوقت اللي باقي لك</b> و<b>شحال من مناسبة عندك</b>.</p>
+    <div class="ev-chips" id="evChips"></div>
+    <div class="offer-cards" id="offerCards"></div>
+    <div class="offer-ship reveal">🚚 <b>سعر التوصيل يزيد حسب الولاية</b> وطريقة الاستلام (المنزل أو المكتب) — يبان لك مباشرة كي تختاري ولايتك في نموذج الطلب. 💵 الدفع عند الاستلام.</div>
+  </div>
+</section>
+
 <section class="section divider-top" id="reviews">
   <div class="container">
-    <h2 class="section-title reveal">آراء حقيقية على فيسبوك</h2>
-    <p class="section-text reveal">لقطات حقيقية من تفاعل الزبونات. اضغطي للتكبير.</p>
+    <h2 class="section-title reveal">بنات درّوه قبل مناسبتهم 💬</h2>
+    <p class="section-text reveal">لقطات حقيقية من تفاعل الزبونات على فيسبوك. اضغطي للتكبير.</p>
     <div class="rev-wrap" id="revWrap"></div>
   </div>
 </section>
 
-<!-- ================= 3. TRUST / CONTENT ================= -->
-<section class="section cv">
+<!-- ================= NIGHT-BEFORE TIMELINE =================
+     Replaces any before/after slider. Two reasons:
+     1. Meta's Personal Health & Appearance policy prohibits before/after
+        imagery, and landing pages are reviewed alongside the creative.
+     2. It shows the MECHANISM instead of claiming a result — and she can
+        verify it herself the night the parcel arrives.
+     The section hides itself automatically until the photos exist.
+     Not `hidden` at rest: a display:none section has zero size, so the
+     IntersectionObserver that builds it on scroll would never fire. -->
+<section class="section divider-top" id="how-it-works">
+  <div class="container">
+    <h2 class="section-title reveal">ليلة المناسبة — ساعة بساعة 🌙</h2>
+    <p class="section-text reveal">الماسك يولّي <b>شفاف</b> كي تمتص بشرتك الكولاجين والإسانس — هكذا تشوفي بعينيك بلي خدم قبل ما ترقدي.</p>
+    <div class="tl-grid" id="tlGrid"></div>
+    <p class="footnote reveal">صور حقيقية للمنتج — النتيجة تختلف من بشرة لأخرى.</p>
+  </div>
+</section>
+
+<!-- ================= PREPARED vs NOT PREPARED ================= -->
+<section class="section band divider-top cv">
+  <div class="container">
+    <h2 class="section-title reveal">نفس اللبسة، نفس المكياج… بشرتين مختلفين</h2>
+    <p class="section-text reveal">الفرق ماشي في المكياج — في البشرة اللي تحتو.</p>
+    <div class="cmp">
+      <div class="cmp-col cmp-bad reveal">
+        <h3>😕 بشرة ما تحضّراتش</h3>
+        <ul>
+          <li><span>❌</span><span>الفوندوتان يتعلّق ويبان متقشّر</span></li>
+          <li><span>❌</span><span>إحساس بالشدّ والجفاف طول السهرة</span></li>
+          <li><span>❌</span><span>البشرة تبان باهتة في الصور والفلاش</span></li>
+          <li><span>❌</span><span>لازم تعاودي المكياج أكثر من مرة</span></li>
+          <li><span>❌</span><span>قلق وتوتر في اليوم الكبير</span></li>
+        </ul>
+      </div>
+      <div class="cmp-col cmp-good reveal">
+        <h3>✨ بشرة محضّرة بالماسك</h3>
+        <ul>
+          <li><span>✅</span><span>الفوندوتان يتوزّع أملس ويقعد أحسن</span></li>
+          <li><span>✅</span><span>ترطيب عميق وإحساس مريح</span></li>
+          <li><span>✅</span><span>إشراقة طبيعية تبان في التصاور</span></li>
+          <li><span>✅</span><span>ملمس ناعم وممتلئ</span></li>
+          <li><span>✅</span><span>تدخلي للمناسبة وأنتِ مرتاحة</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footnote reveal">مقارنة وصفية للإحساس والمظهر — النتائج تختلف من بشرة لأخرى.</p>
+    <div style="text-align:center;margin-top:20px">
+      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">حضّري بشرتك للمناسبة ⬇</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE PREP CALENDAR =================
+     The timeline proves the mask works TONIGHT. This proves the prep plan
+     works over the weeks before the event — which is what justifies 4 or 8
+     masks instead of 2. Text-only on purpose: zero extra requests on 3G.
+     Claims stay on hydration / softness / glow — the things this product
+     actually delivers. -->
+<section class="section divider-top cv" id="prep">
+  <div class="container" style="max-width:760px">
+    <h2 class="section-title reveal">روزنامة التحضير للمناسبة 🗓️</h2>
+    <p class="section-text reveal"><b>علبة وحدة = 4 ماسكات = 4 أسابيع تحضير.</b> ماسك واحد في الأسبوع، والماسك الأخير ليلة المناسبة.</p>
+
+    <ol class="rt-list">
+      <li class="rt-item reveal"><span class="rt-week">قبل<b class="lat">4</b>أسابيع</span>
+        <div><h4>ماسك 1 — البداية</h4><p>ترطيب فوري وملمس أنعم من أول ليلة، وتعرفي كيفاش تتعامل بشرتك معاه.</p></div></li>
+      <li class="rt-item reveal"><span class="rt-week">قبل<b class="lat">3</b>أسابيع</span>
+        <div><h4>ماسك 2 — الانتظام</h4><p>البشرة تولّي أنعم، والمكياج يتوزّع أحسن.</p></div></li>
+      <li class="rt-item reveal"><span class="rt-week">قبل<b class="lat">2</b>أسبوعين</span>
+        <div><h4>ماسك 3 — الإشراقة</h4><p>لون أكثر توحّداً وإشراقة أوضح.</p></div></li>
+      <li class="rt-item night reveal"><span class="rt-week">ليلة<b>💄</b>المناسبة</span>
+        <div><h4>ماسك 4 — اللمسة الأخيرة ✨</h4><p>الليلة الحاسمة: تصبّحي ببشرة مرطّبة، ناعمة وجاهزة للمكياج.</p></div></li>
+    </ol>
+
+    <div class="rt-cycle reveal">
+      ⏳ <b>عندك غير أيام؟</b> ماكش محتاجة شهر كامل — <b>ماسك للتجربة</b> قبل بأسبوع (ولا حتى قبل ب3 أيام) + <b>ماسك ليلة المناسبة</b>.
+      هذا بالضبط علاش «التحضير السريع» فيه <b>ماسكين</b> ماشي واحد: <b>ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.</b>
+    </div>
+
+    <div class="rt-rules reveal">
+      <b>باش يخدم مليح:</b>
+      <span>✔️ ماسك واحد كل أسبوع — ماشي أكثر</span>
+      <span>✔️ على بشرة نظيفة، بعد التونر</span>
+      <span>✔️ اتركيه طوال الليل (ولا 3-4 ساعات على الأقل)</span>
+      <span>✔️ رقّمي الماسكات <span class="lat">1</span>→<span class="lat">4</span> وتبّعي روزنامتك</span>
+    </div>
+
+    <p class="footnote reveal">الفرق في الانتظام، ماشي في ماسك واحد. النتائج تختلف من بشرة لأخرى.</p>
+
+    <div style="text-align:center;margin-top:18px">
+      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">ابدئي تحضيرك ⬇</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST / CONTENT ================= -->
+<section class="section band divider-top cv">
   <div class="container">
     <div class="grid guarantees">
       <div class="guarantee reveal"><div class="g-icon">💵</div><h4>الدفع عند الاستلام</h4><p>ادفعي بعد استلام طلبك</p></div>
-      <div class="guarantee reveal"><div class="g-icon">🚚</div><h4>سعر توصيل ثابت</h4><p>400 دج مكتب · 600 دج منزل — نفس السعر لكل الولايات الـ58</p></div>
-      <div class="guarantee reveal"><div class="g-icon">📦</div><h4>العلبة = شهر كامل</h4><p>4 ماسكات — ماسك كل أسبوع</p></div>
+      <div class="guarantee reveal"><div class="g-icon">🚚</div><h4>سعر واضح حسب الولاية</h4><p>اختاري ولايتك ويظهر السعر فوراً للمنزل أو المكتب</p></div>
+      <div class="guarantee reveal"><div class="g-icon">🌙</div><h4>ليلة وحدة تكفي</h4><p>حطّيه قبل ما ترقدي وصبّحي جاهزة</p></div>
       <div class="guarantee reveal"><div class="g-icon">🌸</div><h4>لطيف على البشرة</h4><p>مناسب للبشرة الحساسة</p></div>
     </div>
   </div>
 </section>
 
-<section class="section band divider-top cv">
+<section class="section divider-top cv">
   <div class="container" style="max-width:880px">
     <div class="tabs reveal">
       <div class="tab-nav">
@@ -639,16 +888,17 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
       <div class="tab-panel active" id="tab-desc">
         <p>احصلي على بشرة مشرقة ومرطّبة مع ماسك بايودانس بالكولاجين العميق. ماسك هيدروجيل غني بالكولاجين منخفض الوزن الجزيئي لتعزيز مرونة البشرة وشدّها، مع غالاكتومايسيس ونياسيناميد لتوحيد اللون والإشراقة.</p>
         <p style="margin-top:10px">يتغلغل حمض الهيالورونيك الأوليغو في عمق البشرة لترطيب مكثّف يترك بشرتك ناعمة وممتلئة، ويتحوّل الماسك إلى شفاف تدريجياً ليضمن امتصاص المكوّنات الفعّالة بالكامل.</p>
-        <h4>محتوى العلبة</h4><p>كل علبة تحتوي على <strong>4 ماسكات</strong> — ماسك واحد كل أسبوع، أي <strong>شهر كامل</strong> من الروتين.</p>
+        <h4>علاش قبل المناسبات؟</h4><p>لأن الترطيب العميق هو اللي يخلّي <strong>المكياج يتوزّع أملس</strong> ويقعد أحسن، والبشرة تبان أنعم وأكثر إشراقاً في الصور. حطّيه ليلة قبل المناسبة وارقدي بيه.</p>
+        <h4>محتوى العلبة</h4><p>كل علبة تحتوي على <strong>4 ماسكات</strong> — ماسك واحد كل أسبوع، أي <strong>4 أسابيع تحضير</strong>.</p>
         <h4>مناسب لـ</h4><p>جميع أنواع البشرة، خاصة الجافة والحساسة.</p>
       </div>
-      <div class="tab-panel" id="tab-use"><ul><li>بعد التونر أو السيروم، ضعي الماسك على بشرة نظيفة.</li><li>اتركيه طوال الليل أو لمدة 3-4 ساعات على الأقل.</li><li>اربتي على البشرة بلطف لامتصاص ما تبقّى من الإسانس.</li><li>استخدمي الأجزاء المتبقية على الرقبة ومنطقة العين.</li></ul></div>
+      <div class="tab-panel" id="tab-use"><ul><li>بعد التونر أو السيروم، ضعي الماسك على بشرة نظيفة.</li><li>اتركيه طوال الليل أو لمدة 3-4 ساعات على الأقل.</li><li>اربتي على البشرة بلطف لامتصاص ما تبقّى من الإسانس.</li><li>استخدمي الأجزاء المتبقية على الرقبة ومنطقة العين.</li><li>ليلة المناسبة: حطّيه قبل ما ترقدي، وفي الصباح ابدئي مكياجك على بشرة مرطّبة.</li></ul></div>
       <div class="tab-panel" id="tab-ing"><h4>المكوّنات الأساسية</h4><p>كولاجين منخفض الجزيئات · غالاكتومايسيس · حمض الهيالورونيك الأوليغو · نياسيناميد.</p><h4>القائمة الكاملة</h4><p class="ing-text lat">Water, Glycerin, Acrylates Copolymer, Niacinamide, Ceratonia Siliqua Gum, Chondrus Crispus Extract, Betaine, Algin, Agar, 1,2-Hexanediol, Allantoin, Galactomyces Ferment Filtrate, Adenosine, Collagen Extract, Hydrolyzed Hyaluronic Acid, Bifida Ferment Filtrate, Tocopherol.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section divider-top cv">
+<section class="section band divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">لماذا تحبه الكثير من البنات؟</h2>
     <p class="section-text reveal">تركيبة هيدروجيل تمنح ترطيباً عميقاً ومظهراً أنعم، مع إحساس مريح مناسب حتى للبشرة الحساسة.</p>
@@ -656,7 +906,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
-<section class="section band divider-top cv">
+<section class="section divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">المكوّنات الأساسية</h2>
     <p class="section-text reveal">تركيبة مدروسة تجمع بين الترطيب والشدّ والإشراقة.</p>
@@ -664,7 +914,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
-<section class="section divider-top cv">
+<section class="section band divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">لماذا <span class="lat">Biodance</span>؟</h2>
     <div class="grid why-grid">
@@ -676,10 +926,10 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
-<section class="section band divider-top cv">
+<section class="section divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">نتائج مثبتة</h2>
-    <p class="section-text reveal">نتائج بعد استخدام واحد</p>
+    <p class="section-text reveal">نتائج بعد استخدام واحد — أي بعد ليلة وحدة</p>
     <div class="grid kpi">
       <article class="card reveal"><div class="kpi-num lat">+256%</div><div class="kpi-label">ترطيب البشرة</div></article>
       <article class="card reveal"><div class="kpi-num lat">+34%</div><div class="kpi-label">مرونة البشرة</div></article>
@@ -689,70 +939,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   </div>
 </section>
 
-<!-- ================= TRANSPARENCY TIMELINE =================
-     Replaces the old before/after slider. Two reasons:
-     1. Meta's Personal Health & Appearance policy prohibits before/after
-        imagery, and landing pages are reviewed alongside the creative.
-     2. It shows the MECHANISM instead of claiming a result — and she can
-        verify it herself the night the parcel arrives, which is the exact
-        trust gap a COD buyer has.
-     The section hides itself automatically until the photos exist. -->
-<!-- Not `hidden` at rest: a display:none section has zero size, so the
-     IntersectionObserver that builds it on scroll would never fire.
-     buildTimeline() hides it if the photos turn out to be missing. -->
-<section class="section divider-top" id="how-it-works">
-  <div class="container">
-    <h2 class="section-title reveal">شوفي كيفاش يخدم الماسك 👀</h2>
-    <p class="section-text reveal">الماسك يولّي <b>شفاف</b> كي تمتص بشرتك الكولاجين والإسانس — هكذا تشوفي بعينيك بلي خدم.</p>
-    <div class="tl-grid" id="tlGrid"></div>
-    <p class="footnote reveal">صور حقيقية للمنتج — النتيجة تختلف من بشرة لأخرى.</p>
-  </div>
-</section>
-
-<!-- ================= THE ROUTINE =================
-     The timeline proves the mask works TONIGHT. This proves the routine
-     works over 30 days — which is what justifies buying 8 masks instead
-     of 4. Text-only on purpose: zero extra requests on a 3G connection.
-     Claims stay on hydration / softness / glow — the things this product
-     actually delivers. A promise it cannot keep would kill the reorder. -->
-<section class="section band divider-top cv" id="routine">
-  <div class="container" style="max-width:760px">
-    <h2 class="section-title reveal">الروتين — ماسك واحد كل أسبوع 🗓️</h2>
-    <p class="section-text reveal"><b>علبة وحدة = شهر كامل.</b> ماسك واحد في الأسبوع، تحطيه قبل ما ترقدي. هذا كل الروتين.</p>
-
-    <ol class="rt-list">
-      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">1</b></span>
-        <div><h4>ماسك 1 — البداية</h4><p>ترطيب فوري وملمس أنعم من أول ليلة.</p></div></li>
-      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">2</b></span>
-        <div><h4>ماسك 2 — الانتظام</h4><p>البشرة تولّي أنعم، والمكياج يتوزّع أحسن.</p></div></li>
-      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">3</b></span>
-        <div><h4>ماسك 3 — الإشراقة</h4><p>لون أكثر توحّداً وإشراقة أوضح.</p></div></li>
-      <li class="rt-item reveal"><span class="rt-week">الأسبوع<b class="lat">4</b></span>
-        <div><h4>ماسك 4 — نهاية الدورة</h4><p>كمّلتِ دورة تجديد كاملة — بشرة مرطّبة وناعمة.</p></div></li>
-    </ol>
-
-    <div class="rt-cycle reveal">
-      🔄 <b>علاش 3 أشهر؟</b> بشرتك تجدّد خلاياها كل <span class="lat">28</span> يوم تقريباً.
-      شهر واحد = دورة وحدة. <b>الفرق اللي يدوم يبان بعد 3 دورات</b> — لهذا أغلب البنات ياخذو 3 علب من البداية.
-    </div>
-
-    <div class="rt-rules reveal">
-      <b>باش يخدم مليح:</b>
-      <span>✔️ ماسك واحد كل أسبوع — ماشي أكثر</span>
-      <span>✔️ على بشرة نظيفة، بعد التونر</span>
-      <span>✔️ اتركيه طوال الليل</span>
-      <span>✔️ رقّمي الماسكات <span class="lat">1</span>→<span class="lat">4</span> وتبّعي تقدّمك</span>
-    </div>
-
-    <p class="footnote reveal">الفرق في الانتظام، ماشي في ماسك واحد. النتائج تختلف من بشرة لأخرى.</p>
-
-    <div style="text-align:center;margin-top:18px">
-      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">ابدئي روتينك ⬇</button>
-    </div>
-  </div>
-</section>
-
-<section class="section divider-top cv">
+<section class="section band divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">الأسئلة الشائعة</h2>
     <div class="faq-list" id="faqList"></div>
@@ -768,7 +955,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   <div class="container contact-layout">
     <div class="card reveal">
       <h2 class="section-title" style="text-align:right">عندك سؤال قبل الطلب؟</h2>
-      <p class="section-text" style="text-align:right;margin-inline:0">أرسلي استفسارك وسنرد عليك بسرعة.</p>
+      <p class="section-text" style="text-align:right;margin-inline:0">مناسبتك قريبة وتحبي تتأكدي من وقت التوصيل؟ أرسلي استفسارك وسنرد عليك بسرعة.</p>
       <div class="contact-pills" id="contactPills"></div>
     </div>
     <div class="card reveal">
@@ -781,7 +968,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
         </div>
         <button class="btn btn-secondary" style="width:100%" type="submit" id="infoSubmit">أرسل استفسارك</button>
         <div class="success-box" id="infoSuccess" role="status" aria-live="polite">تم إرساله بنجاح.</div>
-        <div class="error-box" id="infoError" role="alert" aria-live="assertive">حدث خطأ أثناء الإرسال. حاولي مرة أخرى أو توذو جودة عالية معنا عبر واتساب.</div>
+        <div class="error-box" id="infoError" role="alert" aria-live="assertive">حدث خطأ أثناء الإرسال. حاولي مرة أخرى أو توجودة عالية معنا عبر واتساب.</div>
       </form>
     </div>
   </div>
@@ -790,15 +977,15 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 <footer>
   <div class="container">
     <div class="footer-mark lat">bio<b>dance</b></div>
-    <div>سعر توصيل ثابت لكل الولايات الـ58: 400 دج مكتب · 600 دج منزل · الدفع عند الاستلام</div>
-    <div class="pay-row"><span class="pay">الدفع عند الاستلام</span><span class="pay lat">COD</span><span class="pay">مكتب 400 دج</span><span class="pay">منزل 600 دج</span><span class="pay">مجاني على علبتين+</span></div>
+    <div>🚚 التوصيل متوفر إلى 58 ولاية · اختاري ولايتك لمعرفة السعر · الدفع عند الاستلام</div>
+    <div class="pay-row"><span class="pay">الدفع عند الاستلام</span><span class="pay lat">COD</span><span class="pay">🏠 منزل</span><span class="pay">🏢 Stop Desk</span><span class="pay">🚚 58 ولاية</span></div>
     © 2025 - Biodance Algérie
     <p class="privacy">نستخدم بياناتكم (الاسم، الهاتف، العنوان) فقط لمعالجة طلبكم وتوصيله، ولا نشاركها مع أي طرف آخر باستثناء شركة التوصيل. يستخدم هذا الموقع Facebook Pixel لأغراض إحصائية وإعلانية.</p>
   </div>
 </footer>
 
 <div class="floating-bar">
-  <button class="btn btn-secondary" data-scroll="#contact">استفسار سريع</button>
+  <button class="btn btn-secondary" data-scroll="#offers">كل العروض</button>
   <button class="btn btn-primary" data-scroll="#order">اطلبي الآن</button>
 </div>
 <a class="wa-float" href="https://wa.me/213540732771" aria-label="واتساب" target="_blank" rel="noopener">✆</a>
@@ -820,8 +1007,9 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 <script>
 'use strict';
 /* =====================================================================
-   BIODANCE — mobile-first landing page
-   Optimised for low 4G / 3G Algeria.
+   BIODANCE — "THE NIGHT BEFORE" landing page
+   Positioning: the mask is what you use before an important event
+   (عرس · خطوبة · حنة · تصويرة · عيد). Optimised for low 4G / 3G Algeria.
 
    PERFORMANCE CONTRACT
    --------------------
@@ -835,56 +1023,127 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 /* ---------------- CONFIG ---------------- */
 const PRODUCT_IMAGES = ['product1.jpg','product2.jpg','product3.jpg','product4.jpg','product5.jpg','product6.jpg','product7.jpg','product8.jpg','product9.jpg','product10.jpg','product11.jpg','product12.jpg'];
 const REVIEW_IMAGES  = ['social-proof-1.jpg','social-proof-2.jpg','social-proof-3.jpg','social-proof-4.jpg','social-proof-5.jpg'];
-/* ── TRANSPARENCY TIMELINE ────────────────────────────────────────────
+/* ── NIGHT-BEFORE TIMELINE ────────────────────────────────────────────
    Drop these 4 files next to index.html and the section appears by itself.
    Shoot all four from the SAME spot, same daylight, no flash, 1:1 crop.
-   If any file is missing the whole section stays hidden — deploying before
-   you have the photos breaks nothing. */
+   If the first file is missing the whole section stays hidden — deploying
+   before you have the photos breaks nothing. */
 const MASK_TIMELINE = [
-  {src:'mask-1.jpg', time:'0 دقيقة',    title:'حطّي الماسك',   text:'هيدروجيل أبيض سميك، يلتصق مليح على ملامح الوجه.'},
-  {src:'mask-2.jpg', time:'بعد ساعة',   title:'يبدا يشفّ',     text:'الأطراف تولّي شفافة — بشرتك بدات تشرب الكولاجين.'},
-  {src:'mask-3.jpg', time:'3-4 ساعات',  title:'شفاف كامل',     text:'كي يولّي شفاف، معناها امتصّت كل الإسانس اللي فيه.'},
-  {src:'mask-4.jpg', time:'بعد النزع',  title:'بشرة مرطّبة',   text:'اربتي بلطف على الوجه — ملمس ناعم ومشدود.'}
+  {src:'mask-1.jpg', time:'الليلة · 22:00', title:'حطّيه قبل ما ترقدي', text:'هيدروجيل أبيض سميك، يلتصق مليح على ملامح الوجه.'},
+  {src:'mask-2.jpg', time:'بعد ساعة',       title:'يبدا يشفّ',          text:'الأطراف تولّي شفافة — بشرتك بدات تشرب الكولاجين.'},
+  {src:'mask-3.jpg', time:'3-4 ساعات',      title:'شفاف كامل',         text:'كي يولّي شفاف، معناها امتصّت كل الإسانس اللي فيه.'},
+  {src:'mask-4.jpg', time:'صباح المناسبة',  title:'بشرة جاهزة',        text:'اربتي بلطف — ملمس ناعم ومرطّب، والمكياج يتوزّع أحسن.'}
 ];
 
-const DELIVERY = { office:{fee:400,label:'التوصيل إلى المكتب'}, home:{fee:600,label:'التوصيل إلى المنزل'} };
+const SHIPPING = {
+  "Adrar":{home:1200,office:700},"Chlef":{home:700,office:400},"Laghouat":{home:900,office:500},
+  "Oum El Bouaghi":{home:800,office:450},"Batna":{home:800,office:450},"Béjaïa":{home:700,office:400},
+  "Biskra":{home:900,office:500},"Béchar":{home:1200,office:700},"Blida":{home:500,office:300},
+  "Bouira":{home:700,office:400},"Tamanrasset":{home:1500,office:1000},"Tébessa":{home:800,office:450},
+  "Tlemcen":{home:700,office:400},"Tiaret":{home:700,office:400},"Tizi Ouzou":{home:600,office:350},
+  "Alger":{home:500,office:300},"Djelfa":{home:900,office:500},"Jijel":{home:750,office:400},
+  "Sétif":{home:750,office:400},"Saïda":{home:800,office:450},"Skikda":{home:750,office:400},
+  "Sidi Bel Abbès":{home:700,office:400},"Annaba":{home:800,office:450},"Guelma":{home:800,office:450},
+  "Constantine":{home:800,office:450},"Médéa":{home:600,office:350},"Mostaganem":{home:700,office:400},
+  "M'Sila":{home:800,office:450},"Mascara":{home:700,office:400},"Ouargla":{home:900,office:550},
+  "Oran":{home:600,office:350},"El Bayadh":{home:1000,office:600},"Illizi":{home:1500,office:1000},
+  "Bordj Bou Arréridj":{home:700,office:400},"Boumerdès":{home:500,office:300},"El Tarf":{home:800,office:450},
+  "Tindouf":{home:1500,office:1000},"Tissemsilt":{home:750,office:400},"El Oued":{home:900,office:550},
+  "Khenchela":{home:800,office:450},"Souk Ahras":{home:800,office:450},"Tipaza":{home:500,office:300},
+  "Mila":{home:700,office:400},"Aïn Defla":{home:600,office:350},"Naâma":{home:1000,office:600},
+  "Aïn Témouchent":{home:700,office:400},"Ghardaïa":{home:900,office:550},"Relizane":{home:700,office:400},
+  "Timimoun":{home:1400,office:900},"Bordj Badji Mokhtar":{home:1400,office:900},
+  "Ouled Djellal":{home:900,office:550},"Béni Abbès":{home:1300,office:800},"In Salah":{home:1300,office:800},
+  "In Guezzam":{home:1500,office:1000},"Touggourt":{home:900,office:550},"Djanet":{home:1600,office:1100},
+  "El M'Ghair":{home:1000,office:600},"El Meniaâ":{home:1100,office:650}
+};
+
+/* Arabic name for every wilaya. She types «سطيف», not «Sétif» — without this
+   the autocomplete returns nothing and the shipping price never appears,
+   which is the single most expensive silent failure on an Arabic COD page. */
+const WILAYA_AR = {
+  "Adrar":"أدرار","Chlef":"الشلف","Laghouat":"الأغواط","Oum El Bouaghi":"أم البواقي","Batna":"باتنة",
+  "Béjaïa":"بجاية","Biskra":"بسكرة","Béchar":"بشار","Blida":"البليدة","Bouira":"البويرة",
+  "Tamanrasset":"تمنراست","Tébessa":"تبسة","Tlemcen":"تلمسان","Tiaret":"تيارت","Tizi Ouzou":"تيزي وزو",
+  "Alger":"الجزائر","Djelfa":"الجلفة","Jijel":"جيجل","Sétif":"سطيف","Saïda":"سعيدة","Skikda":"سكيكدة",
+  "Sidi Bel Abbès":"سيدي بلعباس","Annaba":"عنابة","Guelma":"قالمة","Constantine":"قسنطينة","Médéa":"المدية",
+  "Mostaganem":"مستغانم","M'Sila":"المسيلة","Mascara":"معسكر","Ouargla":"ورقلة","Oran":"وهران",
+  "El Bayadh":"البيض","Illizi":"إليزي","Bordj Bou Arréridj":"برج بوعريريج","Boumerdès":"بومرداس",
+  "El Tarf":"الطارف","Tindouf":"تندوف","Tissemsilt":"تيسمسيلت","El Oued":"الوادي","Khenchela":"خنشلة",
+  "Souk Ahras":"سوق أهراس","Tipaza":"تيبازة","Mila":"ميلة","Aïn Defla":"عين الدفلى","Naâma":"النعامة",
+  "Aïn Témouchent":"عين تموشنت","Ghardaïa":"غرداية","Relizane":"غليزان","Timimoun":"تيميمون",
+  "Bordj Badji Mokhtar":"برج باجي مختار","Ouled Djellal":"أولاد جلال","Béni Abbès":"بني عباس",
+  "In Salah":"عين صالح","In Guezzam":"عين قزام","Touggourt":"تقرت","Djanet":"جانت",
+  "El M'Ghair":"المغير","El Meniaâ":"المنيعة"
+};
+
+/* Extra spellings people actually type. Keys are normalised at boot. */
+const WILAYA_ALIASES_RAW = {
+  'algiers':'Alger','el djazair':'Alger','alger centre':'Alger','dzair':'Alger',
+  'wahran':'Oran','vgayet':'Béjaïa','bgayet':'Béjaïa','tizi':'Tizi Ouzou',
+  'bba':'Bordj Bou Arréridj','bordj':'Bordj Bou Arréridj','sba':'Sidi Bel Abbès',
+  'ain temouchent':'Aïn Témouchent','ain defla':'Aïn Defla','ain salah':'In Salah',
+  'ghardaia':'Ghardaïa','ouled jellal':'Ouled Djellal','el meghaier':"El M'Ghair",
+  'el menia':'El Meniaâ','touggourt':'Touggourt','beni abbes':'Béni Abbès',
+  'برج بوعريريج':'Bordj Bou Arréridj','بجايه':'Béjaïa','الجزائر العاصمة':'Alger','العاصمة':'Alger'
+};
+
 const MASKS_PER_BOX = 4;
 
 const CONFIG = {
   productName:'Biodance Bio-Collagen Real Deep Mask',
-  trustBadges:['العلبة = شهر كامل (4 ماسكات)','الدفع عند الاستلام','توصيل ثابت 400/600 دج لكل الولايات','مناسب للبشرة الحساسة'],
-  /* OFFER LADDER — the 2200 DA / 2-mask entry was removed on purpose: it
-     earned the least, recruited the most price-sensitive buyer (the profile
-     that refuses the parcel at delivery) and cannibalised 3600 DA sales.
-     Free delivery on 2+ boxes is the bundle trigger: it costs 600 DA and
-     moves her from a 2600 DA margin order to a 4100 DA one. */
-  /* Named as PROGRAMS, not quantities. «علبتان» is a warehouse label;
-     «شهر كامل» is an outcome. Same product, same price — but the reason
-     to buy more stops being "save money" and becomes "this is the amount you
-     actually need to see a difference". The trial carries an anti-guarantee:
-     disqualifying the small option converts better than pushing the big one. */
-  /* ONE MASK PER WEEK → one box (4 masks) = one full month.
-     That makes the cheapest box a complete month on its own, which would
-     kill every reason to bundle — so the ladder is anchored on the skin
-     renewal cycle instead: the epidermis turns over roughly every 28 days,
-     so one box = one cycle, and lasting change needs several cycles.
-     That is an honest reason to buy 3 months, not a discount. */
+  trustBadges:['ليلة وحدة قبل المناسبة','الدفع عند الاستلام','سعر التوصيل حسب الولاية','مناسب للبشرة الحساسة'],
+
+  /* ── THE OFFER LADDER ────────────────────────────────────────────────
+     Named by TIME LEFT BEFORE THE EVENT, not by quantity. «علبتان» is a
+     warehouse label; «مناسبتك خلال شهر» is a decision she can actually make.
+
+     The 2-mask entry is the hero on purpose, and it is NOT positioned as
+     the cheap option: it is the CORRECT option when the event is days away,
+     because you never test a new product for the first time on the night
+     that matters. One mask to try, one for the night. That single argument
+     is what stops the 2200 DA tier from being a discount and turns it into
+     a protocol — and it is why nobody buys "1 mask".
+     ────────────────────────────────────────────────────────────────── */
   offers:[
-    {id:'offer2',title:'شهر كامل (علبة — 4 ماسكات)',units:4,headline:'شهر كامل',subline:'علبة وحدة — 4 ماسكات · ماسك كل أسبوع',
-     price:3600,compareAt:4400,badge:'',freeShip:false,
-     note:'شهر = دورة تجديد وحدة. الفرق اللي يدوم يجي بعد 3 دورات',selected:true},
-    {id:'offer3',title:'شهرين (علبتان — 8 ماسكات) + توصيل مجاني',units:8,headline:'شهرين',subline:'علبتان — 8 ماسكات · ماسك كل أسبوع',
-     price:6800,compareAt:8800,badge:'الأكثر مبيعاً',freeShip:true,selected:false},
-    {id:'offer4',title:'3 أشهر (3 علب — 12 ماسك) + توصيل مجاني + هدية',units:12,headline:'3 أشهر',subline:'3 علب — 12 ماسك · ماسك كل أسبوع',
-     price:9600,compareAt:13600,badge:'النتيجة الكاملة',freeShip:true,gift:true,selected:false}
+    {id:'offer2', units:2, price:2200, compareAt:2800, badge:'',
+     headline:'التحضير السريع', title:'التحضير السريع — 2 ماسكات',
+     subline:'2 ماسكات · واحد للتجربة + واحد لليلة المناسبة',
+     when:'مناسبتك خلال أيام', selected:true,
+     note:'🌙 ما تجرّبيش منتج جديد أول مرة ليلة المناسبة',
+     heroNote:'🌙 <b>ماسك 1</b> — جرّبيه قبل بأسبوع (ولا حتى ب3 أيام) باش تعرفي كيفاش تتعامل بشرتك معاه.<br>✨ <b>ماسك 2</b> — ليلة المناسبة، وأنتِ مرتاحة.<br><b>ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.</b>',
+     bullets:['🌙 ماسك للتجربة قبل المناسبة','✨ ماسك ليلة المناسبة','💄 المكياج يقعد أحسن الصباح','💵 الدفع عند الاستلام']},
+
+    {id:'offer4', units:4, price:3500, compareAt:5600, badge:'الأكثر طلباً',
+     headline:'تحضير 4 أسابيع', title:'تحضير 4 أسابيع — علبة (4 ماسكات)',
+     subline:'علبة وحدة — 4 ماسكات · ماسك كل أسبوع',
+     when:'مناسبتك خلال شهر',
+     heroNote:'🗓️ <b>ماسك كل أسبوع</b> على مدار 4 أسابيع — والماسك الأخير <b>ليلة المناسبة</b>.<br>هذا هو التحضير الكامل: البشرة تتحسّن بالانتظام، ماشي بماسك واحد.',
+     bullets:['🗓️ روزنامة تحضير 4 أسابيع','✨ الماسك الأخير ليلة المناسبة','📦 علبة كاملة أصلية','💵 الدفع عند الاستلام']},
+
+    /* NOT "the bride's protocol". A bride buys once in her life; a woman who
+       goes to weddings buys every season — and the honest reason to take 8
+       masks is not «you are getting married», it is «you have three events
+       this summer». That argument covers the bride too. */
+    {id:'offer8', units:8, price:6500, compareAt:11200, badge:'الأوفر',
+     headline:'موسم المناسبات', title:'موسم المناسبات — علبتان (8 ماسكات)',
+     subline:'علبتان — 8 ماسكات · لأكثر من مناسبة، ولا تقسميهم',
+     when:'عندك أكثر من مناسبة',
+     heroNote:'🎊 <b>المناسبات ما تجيش وحدة وحدة</b> — عرس صاحبتك، عرس بنت خالتك، والعيد بعدهم.<br>8 ماسكات = <b>شهرين تحضير كاملين</b> ولا تحضير لكل مناسبة. ولا قسّميهم مع أختك ولا صاحبتك. 💍 ومثالي للعروسة.',
+     bullets:['🎊 يكفي لموسم كامل من المناسبات','💍 التحضير الكامل للعروسة','👯 تقدري تقسميهم مع أختك ولا صاحبتك','💵 الدفع عند الاستلام']}
   ],
-  badgedOffers:['offer3','offer4'],
-  /* One-tap upgrade shown when she has a single box selected. */
-  upsell:{from:'offer2',to:'offer3'},
-  /* Post-order bump on the thank-you screen: pure margin, zero ad cost. */
-  bump:{targetOffer:'offer3',compareAt:3600,units:4,label:'علبة إضافية (4 ماسكات)'},
-  /* Post-purchase club: the list you send the day-25 reorder message to. */
-  clubJoinText:'السلام عليكم 🌸 نحب ننضم لنادي بايودانس — نصائح للروتين وعروض العضوات.',
+
+  /* Event-timing chips above the offer cards. Same 3 answers, phrased as
+     her question instead of our SKU. */
+  eventPicker:[
+    {label:'🗓️ مناسبتي خلال أيام', offer:'offer2'},
+    {label:'🗓️ مناسبتي خلال شهر', offer:'offer4'},
+    {label:'🎊 عندي أكثر من مناسبة', offer:'offer8'}
+  ],
+
+  /* Post-purchase club: the list you message before her next event. */
+  clubJoinText:'السلام عليكم 🌸 نحب ننضم لنادي بايودانس — نصائح لتحضير البشرة قبل المناسبات وعروض العضوات.',
+
   /* `img` is optional on every card below. Add the file and the card becomes
      a photo card; leave it missing (or let it 404) and it falls back to the
      emoji exactly as before — so the page never looks broken. */
@@ -906,7 +1165,7 @@ const CONFIG = {
     endpoint:'https://script.google.com/macros/s/AKfycbyf9e03fDCOrevcxji92LNEUPDlgn2MZWXaMrbk47QZoa0xsEIDk7XOWgCZHgSVvpKGVw/exec',
     secret:'CHANGEZ-MOI-phrase-secrete-2026'
   },
-  pixelId:'1351942426554008',            // Biodancecharaf
+  pixelId:'1351942426554008',
   submitCooldownMs:46000,
   /* 'inline'  = instant in-page thank-you screen (fastest, recommended)
      'redirect'= go to THANKYOU_URL. Still fast (the POST survives the
@@ -1095,7 +1354,6 @@ function buildProductGallery(urls){
                  && window.matchMedia('(pointer:fine)').matches
                  && !NET.slow;
 
-  // Append slides 2..N next to the pre-rendered LCP slide.
   track.insertAdjacentHTML('beforeend', pgUrls.slice(1).map((u,i) =>
     '<div class="pg-slide"><img src="'+escapeHTML(u)+'" alt="صورة المنتج '+(i+2)+'" width="800" height="800" loading="lazy" decoding="async"></div>').join(''));
 
@@ -1116,7 +1374,6 @@ function buildProductGallery(urls){
     [...track.children].forEach((s,k) => s.classList.toggle('active', k === pgIndex));
     [...strip.children].forEach((t,k) => t.classList.toggle('active', k === pgIndex));
     $('#pgCounter').textContent = (pgIndex+1) + ' / ' + pgUrls.length;
-    // Only pre-fetch the neighbour on a healthy connection.
     if (!NET.slow){ const u = pgUrls[(pgIndex+1) % pgUrls.length]; if (u) new Image().src = u; }
   };
 
@@ -1128,8 +1385,7 @@ function buildProductGallery(urls){
     if (e.key === 'ArrowLeft'){  e.preventDefault(); update(pgIndex+1); }
   });
 
-  // Swipe — move/up listeners are attached only while dragging, so we do
-  // not run a global pointermove handler for the whole session.
+  // Swipe — move/up listeners are attached only while dragging.
   let sx = 0, moved = 0, drag = false;
   const move = e => { if (!drag) return; moved = e.clientX - sx; track.style.transform = 'translateX(calc(' + (pgIndex*100) + '% + ' + (-moved) + 'px))'; };
   const up = () => {
@@ -1149,7 +1405,6 @@ function buildProductGallery(urls){
 
   main.addEventListener('click', e => { if (Math.abs(moved) < 6 && !e.target.closest('.pg-nav')) openLightbox(pgUrls, pgIndex); });
 
-  // Hover-zoom origin: pointer devices only. Never bound on touch.
   if (window.matchMedia('(hover:hover)').matches){
     main.addEventListener('mousemove', e => {
       const r = main.getBoundingClientRect();
@@ -1162,7 +1417,7 @@ function buildProductGallery(urls){
   applyImgFallback($('#pg'));
 }
 
-/* ---------------- TRANSPARENCY TIMELINE (built on scroll) ----------------
+/* ---------------- NIGHT-BEFORE TIMELINE (built on scroll) ----------------
    Shows the mechanism, not a result claim. Probes the first frame: if the
    photos are not uploaded yet the whole section stays hidden rather than
    rendering broken placeholders. */
@@ -1218,43 +1473,99 @@ let selectedOfferId = (CONFIG.offers.find(o => o.selected) || CONFIG.offers[0]).
 let selectedQty = 1;
 
 function getOffer(){ return CONFIG.offers.find(o => o.id === selectedOfferId) || CONFIG.offers[0]; }
+function hasBadge(o){ return !!(o && o.badge); }
 function discountPct(o){ return o.compareAt > o.price ? Math.round((o.compareAt - o.price) / o.compareAt * 100) : 0; }
 function unitPrice(o){ return Math.round(o.price / o.units); }
-function getDeliveryKey(){ const s = $('#orderDeliveryType'); const k = s ? s.value : 'home'; return DELIVERY[k] ? k : 'home'; }
-function getDelivery(){ return DELIVERY[getDeliveryKey()]; }
-function hasBadge(o){ return o.badge && CONFIG.badgedOffers.includes(o.id); }
 
+/* =====================================================================
+   WILAYA MATCHING
+   Strips Latin diacritics AND Arabic harakat, unifies alef/ta-marbuta/
+   alef-maqsura, drops apostrophes. Applied to BOTH sides of every
+   comparison, so «bejaia», «Béjaïa», «بجايه» and «بجاية» all land on the
+   same key — and the shipping price actually appears.
+   ===================================================================== */
+function normalizeWilaya(text){
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f\u0610-\u061a\u064b-\u065f\u0670]/g,'')
+    .replace(/\u0640/g,'')
+    .replace(/[ة]/g,'ه')
+    .replace(/[ى]/g,'ي')
+    .replace(/[’'`´]/g,'')
+    .replace(/[-_]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+const WILAYA_ALIASES = {};
+const WILAYA_ALT = {};   // canonical -> [normalised alternative spellings]
+Object.keys(WILAYA_ALIASES_RAW).forEach(k => {
+  const norm = normalizeWilaya(k), target = WILAYA_ALIASES_RAW[k];
+  WILAYA_ALIASES[norm] = target;
+  (WILAYA_ALT[target] = WILAYA_ALT[target] || []).push(norm);
+});
+const WILAYA_AR_INDEX = {};
+Object.keys(SHIPPING).forEach(k => { const ar = WILAYA_AR[k]; if (ar) WILAYA_AR_INDEX[normalizeWilaya(ar)] = k; });
+
+function resolveWilaya(raw){
+  const key = normalizeWilaya(raw);
+  if (!key) return '';
+  if (WILAYA_AR_INDEX[key]) return WILAYA_AR_INDEX[key];
+  if (WILAYA_ALIASES[key]) return WILAYA_ALIASES[key];
+  return Object.keys(SHIPPING).find(w => normalizeWilaya(w) === key) || '';
+}
+function wilayaLabel(key){ return WILAYA_AR[key] || key; }
+function wilayaMatches(key, q){
+  if (normalizeWilaya(key).includes(q)) return true;
+  if (normalizeWilaya(WILAYA_AR[key] || '').includes(q)) return true;
+  // Alias spellings must surface in the dropdown too, not only in
+  // resolveWilaya() — otherwise «wahran» silently returns "no wilaya found"
+  // and she never sees a shipping price.
+  return (WILAYA_ALT[key] || []).some(a => a.includes(q));
+}
+
+function getSelectedWilaya(){
+  const input = $('#orderWilaya');
+  return resolveWilaya(input ? input.value : '');
+}
+function getDeliveryKey(){
+  const checked = document.querySelector('input[name="shippingMode"]:checked');
+  const k = checked ? checked.value : 'home';
+  return k === 'office' ? 'office' : 'home';
+}
+function getDelivery(){
+  const wilaya = getSelectedWilaya();
+  const mode = getDeliveryKey();
+  const prices = SHIPPING[wilaya];
+  const label = mode === 'home' ? 'التوصيل إلى المنزل' : 'التوصيل إلى المكتب / Stop Desk';
+  if (!prices) return {fee:0, label, mode, wilaya, known:false};
+  return {fee:Number(prices[mode] || 0), label, mode, wilaya, known:true};
+}
 function computeTotals(){
   const offer = getOffer(), del = getDelivery();
   const productTotal = offer.price * selectedQty;
   const units = offer.units * selectedQty;
-  const freeShip = !!offer.freeShip;
-  const deliveryFee = freeShip ? 0 : del.fee;
-  return { offer, del, productTotal, deliveryFee, freeShip, listDeliveryFee: del.fee,
-           grandTotal: productTotal + deliveryFee,
-           units, boxes: Math.round(units / MASKS_PER_BOX * 10) / 10 };
+  const deliveryFee = del.known ? del.fee : 0;
+  return {
+    offer, del, productTotal, deliveryFee,
+    grandTotal: productTotal + deliveryFee,
+    units, boxes: Math.round(units / MASKS_PER_BOX * 10) / 10
+  };
+}
+
+/* Saving measured against the 2-mask entry unit price — i.e. what she would
+   pay buying the same number of masks two at a time. Honest and checkable. */
+function bundleSaving(o){
+  const base = CONFIG.offers.find(x => x.units === 2);
+  if (!base || !o || o.units <= base.units) return 0;
+  return Math.max(0, Math.round(o.units * (base.price / base.units)) - o.price);
 }
 
 /* ---------------- RENDER ---------------- */
 function renderBasic(){
   $('#trustBadges').innerHTML = CONFIG.trustBadges.map(b => '<span class="badge">✓ '+escapeHTML(b)+'</span>').join('');
   $('#contactPills').innerHTML = '<span class="pill">'+escapeHTML(CONFIG.contactChannels.whatsapp)+'</span><span class="pill">'+escapeHTML(CONFIG.contactChannels.phone)+'</span>';
-}
-function renderBoxEquation(){
-  const el = $('#boxEquation'); if (!el) return;
-  const ref = CONFIG.offers.find(o => o.units === MASKS_PER_BOX) || CONFIG.offers[1];
-  el.innerHTML = '<span class="be-part"><b class="be-top lat">1</b><span class="be-sub">علبة</span></span><span class="be-eq">=</span>'
-    + '<span class="be-part"><b class="be-top lat">'+MASKS_PER_BOX+'</b><span class="be-sub">ماسكات</span></span><span class="be-eq">=</span>'
-    + '<span class="be-part"><b class="be-top lat">'+ref.price.toLocaleString('fr-FR')+'</b><span class="be-sub">دج للعلبة</span></span>';
-}
-/* Saving vs. buying the same number of masks one box at a time, delivery
-   included — the number that actually makes the bundle obvious. */
-function bundleSaving(o){
-  const base = CONFIG.offers.find(x => x.units === MASKS_PER_BOX);
-  if (!base || o.units <= MASKS_PER_BOX) return 0;
-  const boxes = o.units / MASKS_PER_BOX;
-  const alone = base.price * boxes + (o.freeShip ? DELIVERY.home.fee : 0);
-  return Math.max(0, alone - o.price);
 }
 
 function renderOrderVariants(){
@@ -1267,8 +1578,7 @@ function renderOrderVariants(){
         + '<div class="ov-left">'
           + '<span class="ov-units">'+escapeHTML(o.headline)+'</span>'
           + '<span class="ov-boxes">'+escapeHTML(o.subline)+'</span>'
-          + (o.freeShip ? '<span class="ov-ship">🚚 توصيل مجاني</span>' : '')
-          + (o.gift ? '<span class="ov-ship ov-gift">🎁 + هدية</span>' : '')
+          + '<span class="ov-ship">🗓️ '+escapeHTML(o.when)+'</span>'
         + '</div>'
         + '<div class="ov-right">'
           + '<span class="ov-price lat">'+money(o.price)+'</span>'
@@ -1276,37 +1586,56 @@ function renderOrderVariants(){
         + '</div>'
       + '</div>'
       + (save > 0 ? '<span class="ov-save">💰 توفري <b class="lat">'+money(save)+'</b></span>' : '')
-      + (o.note ? '<span class="ov-note">⚠️ '+escapeHTML(o.note)+'</span>' : '')
+      + (o.note ? '<span class="ov-note">'+escapeHTML(o.note)+'</span>' : '')
       + '<span class="ov-check">✓</span></div>';
   }).join('');
-  renderUpsellNudge();
 }
 
-/* The in-form order bump. Far more effective than hoping she compares the
-   grid herself: one tap, priced as the delta, with the saving spelled out. */
-function renderUpsellNudge(){
-  const box = $('#orderUpsell'); if (!box) return;
-  const from = CONFIG.offers.find(o => o.id === CONFIG.upsell.from);
-  const to   = CONFIG.offers.find(o => o.id === CONFIG.upsell.to);
-  if (!from || !to || selectedOfferId !== from.id || selectedQty !== 1){ box.classList.remove('show'); return; }
-  const delta = to.price - from.price;
-  const save  = bundleSaving(to);
-  box.innerHTML = '<div class="up-txt">➕ <b>زيدي علبة ثانية بـ<span class="lat">'+money(delta)+'</span> فقط</b>'
-    + '<br><span class="up-sub">+ 🚚 توصيل مجاني — توفري <b class="lat">'+money(save)+'</b></span></div>'
-    + '<button type="button" class="up-btn" id="orderUpsellBtn">زيدها ✓</button>';
-  box.classList.add('show');
+/* Big offer cards further down the page — the "scroll and discover the
+   rest of the ladder" moment. Framed by time-to-event, not by quantity. */
+function renderOfferCards(){
+  const c = $('#offerCards'); if (!c) return;
+  c.innerHTML = CONFIG.offers.map(o => {
+    const save = bundleSaving(o), d = discountPct(o);
+    return '<article class="offer-card reveal'+(o.badge==='الأكثر طلباً'?' featured':'')+(o.id===selectedOfferId?' chosen':'')+'">'
+      + (hasBadge(o) ? '<span class="oc-badge">⭐ '+escapeHTML(o.badge)+'</span>' : '')
+      + '<span class="oc-when">🗓️ '+escapeHTML(o.when)+'</span>'
+      + '<h3>'+escapeHTML(o.headline)+'</h3>'
+      + '<p class="oc-sub">'+escapeHTML(o.subline)+'</p>'
+      + '<div><span class="oc-price lat">'+money(o.price)+'</span>'
+      + (o.compareAt > o.price ? '<span class="oc-was lat">'+money(o.compareAt)+'</span>' : '') + '</div>'
+      + '<span class="oc-unit lat">'+money(unitPrice(o))+' للماسك الواحد'+(d>0?' · -'+d+'%':'')+'</span>'
+      + (save > 0 ? '<span class="oc-save">💰 توفري <b class="lat">'+money(save)+'</b> مقارنة بشراء ماسكين ماسكين</span>' : '')
+      /* One span per bullet on purpose: splitting off the leading emoji by
+         code units breaks any emoji with a variation selector (🗓️ → 🗓 + ️). */
+      + '<ul>' + (o.bullets||[]).map(b => '<li><span>'+escapeHTML(b)+'</span></li>').join('') + '</ul>'
+      + '<button type="button" class="oc-btn" data-offer="'+o.id+'" data-scroll="#order">'
+      + (o.id===selectedOfferId ? '✓ مختار — أكملي الطلب' : 'اختاري هذا') + '</button>'
+      + '</article>';
+  }).join('');
+  observeReveals();
 }
+
+function renderEventChips(){
+  const c = $('#evChips'); if (!c) return;
+  c.innerHTML = (CONFIG.eventPicker||[]).map(e =>
+    '<button type="button" class="ev-chip'+(e.offer===selectedOfferId?' active':'')+'" data-offer="'+e.offer+'">'+escapeHTML(e.label)+'</button>').join('');
+}
+
 function selectOffer(id){
-  if (id === selectedOfferId) return;
+  if (!CONFIG.offers.some(o => o.id === id) || id === selectedOfferId) return;
   selectedOfferId = id; selectedQty = 1;
   const s = getOffer();
   loadPixel();
-  track('AddToCart', {value:s.price, currency:'DZD', content_name:s.title});
+  track('AddToCart', {value:s.price, currency:'DZD', content_name:s.title, content_ids:[s.id], content_type:'product'});
 }
-function syncAll(){ syncHero(); renderOrderVariants(); renderOrderSummary(); }
+function syncAll(){
+  syncHero(); renderOrderVariants(); renderOfferCards(); renderEventChips(); renderOrderSummary();
+}
 
-/* The hero is now a summary, not a second picker: it mirrors whatever is
-   selected in the order form but has no controls of its own. */
+/* The hero mirrors whatever is selected in the order form but has no
+   controls of its own — she must never be asked to choose twice on one
+   screen. On load it shows the 2-mask / 2200 DA offer. */
 function syncHero(){
   const o = getOffer(), d = discountPct(o);
   const set = (id,t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
@@ -1315,28 +1644,31 @@ function syncHero(){
   set('heroDiscount', d > 0 ? '-'+d+'%' : '');
   set('galleryDiscount', d > 0 ? '-'+d+'%' : '');
   const what = $('#heroPriceWhat');
-  if (what) what.innerHTML = '👈 هذا سعر <b>'+escapeHTML(o.headline)+'</b> — '+escapeHTML(o.subline)
+  if (what) what.innerHTML = '👈 سعر <b>'+escapeHTML(o.headline)+'</b> — '+escapeHTML(o.subline)
     + ' <span class="pw-unit lat">('+money(unitPrice(o))+' للماسك الواحد)</span>';
+  // heroNote is authored in CONFIG (trusted), so its <b> tags are intentional.
+  const note = $('#heroNote');
+  if (note) note.innerHTML = o.heroNote || '';
 }
 
 function renderOrderSummary(){
   const t = computeTotals();
   const el = $('#orderSummary');
   if (el){
+    const shippingLine = t.del.known
+      ? '<div class="sum-line"><span>🚚 '+escapeHTML(t.del.label)+'</span><span class="sum-val lat">'+money(t.deliveryFee)+'</span></div>'
+      : '<div class="sum-line"><span>🚚 التوصيل</span><span class="sum-val" style="color:var(--muted)">اختاري ولايتك</span></div>';
     el.innerHTML =
       '<div class="sum-line"><span>🧾 '+escapeHTML(t.offer.headline)+(selectedQty>1?' × '+selectedQty:'')+' ('+t.units+' ماسك)</span><span class="sum-val lat">'+money(t.productTotal)+'</span></div>'
-      + (t.freeShip
-          ? '<div class="sum-line"><span>🚚 '+escapeHTML(t.del.label)+'</span><span class="sum-val"><s class="lat sum-strike">'+money(t.listDeliveryFee)+'</s> <b class="sum-free">مجاناً ✨</b></span></div>'
-          : '<div class="sum-line"><span>🚚 '+escapeHTML(t.del.label)+' — سعر ثابت لكل الولايات</span><span class="sum-val lat">'+money(t.deliveryFee)+'</span></div>')
-      + (t.offer.gift ? '<div class="sum-line"><span>🎁 هدية مجانية</span><span class="sum-val sum-free">مرفقة ✨</span></div>' : '')
+      + shippingLine
       + '<div class="sum-line total"><span>المبلغ الإجمالي عند الاستلام</span><span class="sum-val lat">'+money(t.grandTotal)+'</span></div>';
   }
   const q = $('#orderQtyNum'); if (q) q.textContent = String(selectedQty);
+  updateShippingUI();
 }
 
 /* Photo card with an emoji safety net. A photo out-sells an emoji every
-   time, but a 404 must never leave a hole in the page — so the emoji stays
-   underneath and the <img> simply removes itself if it fails to load. */
+   time, but a 404 must never leave a hole in the page. */
 function cardMedia(item){
   if (!item.img) return '<div class="icon">'+escapeHTML(item.icon || '✨')+'</div>';
   return '<div class="fc-media"><div class="icon fc-fallback">'+escapeHTML(item.icon || '✨')+'</div>'
@@ -1362,14 +1694,106 @@ function renderCardGrid(sel, items, cls){
 function renderBenefits(){ renderCardGrid('#benefitsGrid', CONFIG.benefits, 'feature-card'); }
 function renderIngredients(){ renderCardGrid('#ingGrid', CONFIG.ingredients, 'ing-card'); }
 
+/* ---------------- SHIPPING UI ---------------- */
+function updateShippingUI(){
+  const wilaya = getSelectedWilaya();
+  const checker = $('#shippingChecker');
+  const text = $('#shippingCheckerText');
+  const home = $('#homeShippingPrice');
+  const office = $('#officeShippingPrice');
+  const prices = SHIPPING[wilaya];
+  if (!checker || !text) return;
+
+  if (!prices){
+    checker.classList.remove('ready');
+    text.innerHTML = '📍 <b>اكتبي ولايتك</b> باش يظهرلك سعر التوصيل مباشرة.';
+    if (home) home.textContent = '—';
+    if (office) office.textContent = '—';
+    return;
+  }
+  if (home) home.textContent = money(prices.home);
+  if (office) office.textContent = money(prices.office);
+
+  const mode = getDeliveryKey();
+  checker.classList.add('ready');
+  text.innerHTML = '📍 <b>'+escapeHTML(wilayaLabel(wilaya))+'</b> — '
+    + (mode === 'home' ? '🏠 المنزل' : '🏢 المكتب / Stop Desk')
+    + ' : <strong>'+money(prices[mode])+'</strong>';
+}
+
+function showWilayaSuggestions(){
+  const input = $('#orderWilaya'), box = $('#wilayaSuggestions');
+  if (!input || !box) return;
+  const q = normalizeWilaya(input.value);
+  if (!q){ box.innerHTML = ''; box.classList.remove('show'); return; }
+
+  const matches = Object.keys(SHIPPING).filter(w => wilayaMatches(w, q)).slice(0,8);
+  if (!matches.length){
+    box.innerHTML = '<div class="wilaya-suggestion" style="cursor:default;color:var(--muted)">ما لقيناش الولاية — جرّبي تكتبيها بالعربية أو بالفرنسية.</div>';
+    box.classList.add('show');
+    return;
+  }
+  box.innerHTML = matches.map(w =>
+    '<button type="button" class="wilaya-suggestion" role="option" data-wilaya="'+escapeHTML(w)+'">'
+      + escapeHTML(wilayaLabel(w)) + '<span class="ws-lat lat">'+escapeHTML(w)+'</span>'
+    + '</button>').join('');
+  box.classList.add('show');
+}
+
+function selectWilaya(key){
+  const input = $('#orderWilaya'), box = $('#wilayaSuggestions');
+  if (!input) return;
+  input.value = wilayaLabel(key);          // she sees Arabic, we keep the key
+  if (box){ box.innerHTML = ''; box.classList.remove('show'); }
+  updateShippingUI(); renderOrderSummary(); captureDraft();
+}
+
+function bindShippingUI(){
+  const input = $('#orderWilaya'), box = $('#wilayaSuggestions');
+  if (input){
+    input.addEventListener('input', () => {
+      _completed = false; _userEdited = true;
+      showWilayaSuggestions(); updateShippingUI(); renderOrderSummary();
+    });
+    input.addEventListener('focus', () => { warmBackend(); loadPixel(); showWilayaSuggestions(); });
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        const resolved = getSelectedWilaya();
+        if (resolved) input.value = wilayaLabel(resolved);
+        updateShippingUI(); renderOrderSummary();
+        if (window.__bdSave) window.__bdSave.flush();
+      }, 150);
+    });
+  }
+  if (box){
+    box.addEventListener('mousedown', e => { if (e.target.closest('[data-wilaya]')) e.preventDefault(); });
+    box.addEventListener('click', e => {
+      const btn = e.target.closest('[data-wilaya]');
+      if (btn) selectWilaya(btn.dataset.wilaya);
+    });
+  }
+  document.querySelectorAll('input[name="shippingMode"]').forEach(r => {
+    r.addEventListener('change', () => { updateShippingUI(); renderOrderSummary(); captureDraft(); });
+  });
+  document.addEventListener('click', e => {
+    if (!input || !box) return;
+    if (!input.contains(e.target) && !box.contains(e.target)) box.classList.remove('show');
+  });
+}
+
+/* ---------------- FAQ (event-focused) ---------------- */
 function renderFAQ(){
   const faq = [
-    {q:'كم يكلّف التوصيل؟', a:'السعر ثابت لكل الولايات الـ58، بدون أي فرق بين ولاية وأخرى: 400 دج إلى المكتب و600 دج إلى المنزل. وإذا طلبتِ علبتين فما فوق يكون التوصيل مجاني تماماً. لا توجد أي رسوم إضافية عند الاستلام.'},
-    {q:'كم ماسك في العلبة؟', a:'كل علبة فيها 4 ماسكات = شهر كامل (ماسك واحد كل أسبوع). علبتان = شهرين، و3 علب = 3 أشهر.'},
-    {q:'هل يناسب البشرة الحساسة؟', a:'نعم، مناسب للبشرة الحساسة.'},
-    {q:'كم مدة الاستخدام؟', a:'ماسك واحد كل أسبوع، تخليه 3-4 ساعات أو طوال الليل.'},
-    {q:'ما الفوائد المتوقعة؟', a:'ترطيب، إشراقة، ملمس ناعم.'},
-    {q:'كيف أدفع؟', a:'الدفع عند الاستلام داخل الجزائر — تدفعين ثمن المنتج + التوصيل عند وصول الطلب.'}
+    {q:'مناسبتي قريبة — يوصلني في الوقت؟', a:'التوصيل عادةً من 2 إلى 5 أيام حسب الولاية. إذا مناسبتك قريبة بزاف، اطلبي اليوم وحطّي رقمك صحيح باش نتصلو بيك بسرعة ونأكّدو الطلب.'},
+    {q:'نديره ليلة المناسبة ولا قبلها؟', a:'الاثنين. الأحسن: ماسك للتجربة قبل بأسبوع (ولا 3 أيام) باش تعرفي كيفاش تتعامل بشرتك معاه، وماسك ليلة المناسبة. ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.'},
+    {q:'نقدر نرقد بيه؟', a:'نعم، وهذا هو الاستعمال الأمثل — حطّيه على بشرة نظيفة بعد التونر واتركيه طوال الليل (أو 3-4 ساعات على الأقل).'},
+    {q:'واش يخلّي المكياج يقعد أحسن؟', a:'على بشرة مرطّبة، الفوندوتان يتوزّع أملس وما يبانش التقشّر. هذا هو السبب الأساسي اللي البنات يستعملوه ليلة قبل المناسبة.'},
+    {q:'كم ماسك في العلبة؟', a:'كل علبة فيها 4 ماسكات = 4 أسابيع تحضير (ماسك كل أسبوع). عرض «التحضير السريع» فيه 2 ماسكات، و«موسم المناسبات» فيه علبتان = 8 ماسكات.'},
+    {q:'أنا ماشي عروسة — يصلحلي؟', a:'طبعاً. أغلب اللي يشريوه ماشي عرايس: بنات رايحات لعرس ولا خطوبة، ولا عندهم عيد، تصويرة، تخرّج، مقابلة عمل، ولا غير ضيوف جايين. أي نهار تحبي تكوني فيه في أحسن حالة — هذا وقتو.'},
+    {q:'عندي أكثر من مناسبة هذا الصيف؟', a:'هذا بالضبط علاش عرض «موسم المناسبات» (8 ماسكات) موجود. المناسبات في الجزائر ما تجيش وحدة وحدة — عرس صاحبتك، عرس العائلة، والعيد. وتقدري تقسميهم مع أختك ولا صاحبتك.'},
+    {q:'كم يكلّف التوصيل؟', a:'سعر التوصيل يختلف حسب الولاية وطريقة الاستلام (المنزل أو المكتب). اكتبي ولايتك في نموذج الطلب وسيظهر لك السعر مباشرة قبل ما تأكّدي.'},
+    {q:'هل يناسب البشرة الحساسة؟', a:'نعم، مناسب للبشرة الحساسة. إذا عندك بشرة حساسة بزاف، جرّبيه قبل بأسبوع من المناسبة — وهذا بالضبط سبب وجود ماسك التجربة في العرض.'},
+    {q:'كيف أدفع؟', a:'الدفع عند الاستلام داخل الجزائر — تدفعين ثمن المنتج + التوصيل عند وصول الطلب في يدك.'}
   ];
   const list = $('#faqList');
   list.innerHTML = faq.map((f,i) =>
@@ -1397,19 +1821,20 @@ function bindOrderControls(){
     const card = e.target.closest('.order-variant-card'); if (!card) return;
     selectOffer(card.dataset.id); syncAll(); captureDraft();
   });
-  const up = $('#orderUpsell');
-  if (up) up.addEventListener('click', e => {
-    if (!e.target.closest('#orderUpsellBtn')) return;
-    selectOffer(CONFIG.upsell.to);
-    selectedQty = 1;
-    syncAll(); captureDraft();
-    trackEvent('upsell_accepted', {to: CONFIG.upsell.to});
-    $('#orderVariants').scrollIntoView({block:'center', behavior:'smooth'});
+  // Big offer cards + event chips further down the page.
+  ['#offerCards','#evChips'].forEach(sel => {
+    const el = $(sel);
+    if (el) el.addEventListener('click', e => {
+      const b = e.target.closest('[data-offer]'); if (!b) return;
+      selectOffer(b.dataset.offer); syncAll(); captureDraft();
+      trackEvent('offer_picked_from_list', {offer:b.dataset.offer});
+      if (!b.hasAttribute('data-scroll')) $('#order').scrollIntoView({behavior:'smooth'});
+    });
   });
-  const minus = $('#orderMinus'), plus = $('#orderPlus'), del = $('#orderDeliveryType');
+  const minus = $('#orderMinus'), plus = $('#orderPlus');
   if (minus) minus.addEventListener('click', () => { selectedQty = Math.max(1, selectedQty-1); syncAll(); captureDraft(); });
   if (plus)  plus.addEventListener('click',  () => { selectedQty = Math.min(10, selectedQty+1); syncAll(); captureDraft(); });
-  if (del)   del.addEventListener('change', () => { renderOrderSummary(); captureDraft(); });
+  // Shipping radios are bound in bindShippingUI().
 }
 
 /* =====================================================================
@@ -1466,7 +1891,7 @@ function readOrderFields(){
   const g = id => { const el = document.getElementById(id); return el ? String(el.value || '').trim() : ''; };
   return { name:g('orderFullName'), phone:g('orderPhone'), wilaya:g('orderWilaya'), commune:g('orderCommune') };
 }
-function isDraftComplete(f){ return f.name.length >= 3 && isValidAlgerianPhone(f.phone) && f.wilaya.length >= 2 && f.commune.length >= 2; }
+function isDraftComplete(f){ return f.name.length >= 3 && isValidAlgerianPhone(f.phone) && !!resolveWilaya(f.wilaya) && f.commune.length >= 2; }
 function draftStatusFor(f){
   if (![f.name,f.phone,f.wilaya,f.commune].some(v => v.length > 0)) return S.STARTED;
   return isDraftComplete(f) ? S.READY : S.PARTIAL;
@@ -1481,7 +1906,7 @@ function captureDraft(){
   const d = saveDraft(next);
   if (f.name.length >= 3) trackOnce('name_completed');
   if (isValidAlgerianPhone(f.phone)) trackOnce('phone_completed');
-  if (f.wilaya.length >= 2) trackOnce('wilaya_completed');
+  if (resolveWilaya(f.wilaya)) trackOnce('wilaya_completed');
   if (!locked && next.status === S.READY) trackOnce('form_ready');
   return d;
 }
@@ -1492,8 +1917,7 @@ function restoreForm(d){
   set('orderFullName', d.name); set('orderPhone', d.phone); set('orderWilaya', d.wilaya); set('orderCommune', d.commune);
   if (d.variant && CONFIG.offers.some(o => o.id === d.variant)) selectedOfferId = d.variant;
   if (typeof d.quantity === 'number' && d.quantity >= 1 && d.quantity <= 10) selectedQty = d.quantity;
-  const sel = $('#orderDeliveryType');
-  if (sel && d.deliveryType && DELIVERY[d.deliveryType]) sel.value = d.deliveryType;
+  document.querySelectorAll('input[name="shippingMode"]').forEach(r => { r.checked = (r.value === (d.deliveryType || 'home')); });
   safeCall('restore:render', syncAll);
   return restored;
 }
@@ -1506,19 +1930,16 @@ function showError(box, msg, sticky){
   if (box._hideT) clearTimeout(box._hideT);
   if (!sticky) box._hideT = setTimeout(() => { box.style.display = 'none'; }, 8000);
 }
-function whatsappOrderLink(ref, opts){
-  const o = opts || {};
+function whatsappOrderLink(ref){
   const f = readOrderFields(), t = computeTotals();
-  const total = (typeof o.total === 'number') ? o.total : t.grandTotal;
   const lines = ['السلام عليكم، نحب نأكّد طلبي:',
     '📦 ' + t.offer.title,
     selectedQty > 1 ? '🔢 الكمية: ' + selectedQty : '',
-    o.bumped ? '➕ ' + CONFIG.bump.label + (typeof o.bumpDelta === 'number' ? ' (' + o.bumpDelta + ' دج)' : '') : '',
-    '🚚 ' + ((t.freeShip || o.freeShip) ? 'توصيل مجاني ✨' : t.del.label),
-    '💰 المجموع: ' + total + ' دج',
+    '🚚 ' + t.del.label + ' — ' + t.deliveryFee + ' دج',
+    '💰 المجموع: ' + t.grandTotal + ' دج',
     f.name ? '👤 ' + f.name : '', f.phone ? '📱 ' + f.phone : '',
     (f.wilaya || f.commune) ? '📍 ' + f.wilaya + ' / ' + f.commune : '',
-    (ref || (draft && draft.orderRef)) ? '🔖 ' + (ref || draft.orderRef) : '',
+    (ref || (draft && draft.orderRef)) ? '🔖 ' + (ref || draft.orderRef) : ''
   ].filter(Boolean);
   return 'https://wa.me/' + ZLL.WHATSAPP + '?text=' + encodeURIComponent(lines.join('\n'));
 }
@@ -1550,7 +1971,8 @@ function classifyError(err){
 function buildOrderPayload(ctx){
   return {
     secret: CONFIG.sheet.secret, ref: ctx.ref,
-    name: ctx.f.name, phone: ctx.phone, wilaya: ctx.f.wilaya, commune: ctx.f.commune,
+    name: ctx.f.name, phone: ctx.phone,
+    wilaya: ctx.f.wilaya, wilayaLatin: ctx.wilayaKey, commune: ctx.f.commune,
     delivery: ctx.t.del.label, deliveryType: ctx.deliveryKey, deliveryFee: ctx.t.deliveryFee,
     offer: ctx.t.offer.title, qty: ctx.qty, units: ctx.t.units, boxes: ctx.t.boxes,
     productTotal: ctx.t.productTotal, total: ctx.t.grandTotal, grandTotal: ctx.t.grandTotal,
@@ -1581,7 +2003,7 @@ async function postOrder(payload){
     clearTimeout(timer);
     const status = res.status;
     let text = ''; try { text = await res.text(); } catch(e){}
-    if (!res.ok) return { ok:false, type: status >= 600 ? E.SERVER : E.CLIENT, status };
+    if (!res.ok) return { ok:false, type: status >= 500 ? E.SERVER : E.CLIENT, status };
     let data = null; try { data = JSON.parse(text); } catch(e){}
     if (data && data.ok === true)  return { ok:true, status, data };
     if (data && data.ok === false) return { ok:false, type:E.SERVER, status, message:String(data.error||'') };
@@ -1594,10 +2016,7 @@ async function postOrder(payload){
   }
 }
 
-/* ---------------- EMAILJS — background alert channel only ----------------
-   It used to sit on the critical path: at submit time it downloaded the SDK
-   from a third origin and then called a fourth one. That alone was 3-6 s on
-   3G. It now runs strictly AFTER the customer already sees the thank-you. */
+/* ---------------- EMAILJS — background alert channel only ---------------- */
 let _emailjsPromise = null;
 function emailjsReady(){ return !!(window.emailjs && typeof window.emailjs.send === 'function'); }
 function ensureEmailJs(timeoutMs){
@@ -1646,8 +2065,9 @@ function sendOrderEmail(ctx, sheetFailed){
   const details = '\nNouvelle commande [' + ctx.ref + ']'
     + (sheetFailed ? '\n⚠️ ATTENTION : écriture Google Sheet ÉCHOUÉE — à ajouter manuellement.' : '')
     + '\nNom: ' + ctx.f.name + '\nTél: ' + ctx.phone
-    + '\nWilaya: ' + ctx.f.wilaya + '\nCommune: ' + ctx.f.commune
-    + '\nLivraison: ' + t.del.label + ' (' + t.deliveryFee + ' DA - tarif fixe)'
+    + '\nWilaya: ' + ctx.f.wilaya + (ctx.wilayaKey ? ' (' + ctx.wilayaKey + ')' : '')
+    + '\nCommune: ' + ctx.f.commune
+    + '\nLivraison: ' + t.del.label + ' (' + t.deliveryFee + ' DA - selon la wilaya)'
     + '\nOffre: ' + t.offer.title + '\nQuantité: ' + ctx.qty + ' (' + t.units + ' masques / ' + t.boxes + ' boîtes)'
     + '\nProduit: ' + t.productTotal + ' DA\nLivraison: ' + t.deliveryFee + ' DA'
     + '\nTOTAL À ENCAISSER: ' + t.grandTotal + ' DA';
@@ -1666,7 +2086,8 @@ async function sendRecoveryAlert(ctx, info){
     'Quantity: ' + ctx.qty + ' (' + t.units + ' masques / ' + t.boxes + ' boîtes)',
     'Delivery: ' + t.del.label + ' (' + t.deliveryFee + ' DA)', 'Order total: ' + t.grandTotal + ' DA', '',
     'Customer name: ' + (ctx.f.name || '-'), 'Phone: ' + (ctx.phone || '-'),
-    'Wilaya: ' + (ctx.f.wilaya || '-'), 'Commune: ' + (ctx.f.commune || '-'), '',
+    'Wilaya: ' + (ctx.f.wilaya || '-') + (ctx.wilayaKey ? ' (' + ctx.wilayaKey + ')' : ''),
+    'Commune: ' + (ctx.f.commune || '-'), '',
     'Failure type: ' + (info.type || E.UNKNOWN), 'HTTP status: ' + (info.httpStatus || 'n/a'),
     'Attempt #: ' + (draft ? draft.attempts : 1), 'Network: ' + NET.effectiveType,
     'Online: ' + (navigator.onLine === false ? 'no' : 'yes'),
@@ -1696,7 +2117,7 @@ function validateOrderForm(){
   let ok = true;
   [['orderFullName','orderNameErr',   v => v.trim().length >= 3],
    ['orderPhone',   'orderPhoneErr',  v => isValidAlgerianPhone(v)],
-   ['orderWilaya',  'orderWilayaErr', v => v.trim().length >= 2],
+   ['orderWilaya',  'orderWilayaErr', v => !!resolveWilaya(v)],
    ['orderCommune', 'orderCommuneErr',v => v.trim().length >= 2]].forEach(p => {
     const input = document.getElementById(p[0]), err = document.getElementById(p[1]);
     if (!input) return;
@@ -1730,7 +2151,7 @@ function markSubmitted(key){ lsSet(key || 'bd_last_submit', String(Date.now()));
 function recoveryMessage(type){
   if (type === E.OFFLINE)   return '📴 <b>انقطع الاتصال بالإنترنت.</b> معلوماتك محفوظة تلقائياً — أعيدي المحاولة كي يرجع الاتصال.';
   if (type === E.TIMEOUT)   return '⏳ <b>الاتصال بطيء.</b> معلوماتك محفوظة تلقائياً. أعيدي المحاولة، أو أرسلي الطلب عبر واتساب.';
-  if (type === E.AMBIGUOUS) return '⚠️ <b>ما قدرناش نتأكدو واش الطلب تسجّل.</b> معلوماتك محفوظة. باش نتجنبو طلب مضاعف: توذو جودة عالية معنا عبر واتساب — ولا أعيدي الإرسال بنفس الرقم المرجعي (ما يخلقش طلب جديد).';
+  if (type === E.AMBIGUOUS) return '⚠️ <b>ما قدرناش نتأكدو واش الطلب تسجّل.</b> معلوماتك محفوظة. باش نتجنبو طلب مضاعف: توجودة عالية معنا عبر واتساب — ولا أعيدي الإرسال بنفس الرقم المرجعي (ما يخلقش طلب جديد).';
   return '❌ <b>ما تقدرناش نسجّلو الطلب.</b> معلوماتك محفوظة ولن تضيع — أعيدي المحاولة، أو أتمّي الطلب عبر واتساب.';
 }
 
@@ -1745,12 +2166,11 @@ function recoveryMessage(type){
    ===================================================================== */
 let _submitting = false;
 let _pendingCtx = null, _pendingPayload = null;
-/* Kept after confirmation too — the thank-you bump reuses her details. */
-let _pendingPayloadBase = null;
 
 function buildCtx(){
   const f = readOrderFields();
-  return { f, phone: normalizePhone(f.phone), t: computeTotals(), qty: selectedQty, deliveryKey: getDeliveryKey(), ref:'' };
+  return { f, phone: normalizePhone(f.phone), t: computeTotals(), qty: selectedQty,
+           deliveryKey: getDeliveryKey(), wilayaKey: getSelectedWilaya(), ref:'' };
 }
 
 function submitOrder(isRetry){
@@ -1811,7 +2231,7 @@ function submitOrderInner(isRetry){
   lsSet(ZLL.PENDING_KEY, JSON.stringify({ref:ctx.ref, draftId:draft?draft.draftId:'', status:S.SUBMITTING, ts:Date.now(), total:ctx.t.grandTotal}));
 
   const payload = buildOrderPayload(ctx);
-  _pendingCtx = ctx; _pendingPayload = payload; _pendingPayloadBase = payload;
+  _pendingCtx = ctx; _pendingPayload = payload;
   trackEvent('submit_started');
 
   /* 6 ── fire the request but DO NOT await it (keepalive: it survives even
@@ -1840,48 +2260,18 @@ function submitOrderInner(isRetry){
 }
 
 let _doneState = null;
-let _bumpBoxHTML = null;   // pristine markup, restored when she starts a new order
-
-/* ---------------- POST-ORDER BUMP ----------------
-   The bump is an UPGRADE to the 2-month programme, not a loose extra box.
-   Its price is the DELTA to that programme, so a bumped order always lands on
-   exactly the same total as choosing شهرين up front. That fixes two bugs:
-   she stops paying delivery on an order that now holds 2 boxes (which the page
-   promises is free in nine places), and there is no longer a cheaper back door
-   around your own bundle. The delta differs by delivery choice — 2700 from
-   home, 2900 from office — but the destination is identical either way. */
-function bumpTarget(){ return CONFIG.offers.find(o => o.id === CONFIG.bump.targetOffer) || null; }
-function bumpDelta(ctx){
-  const target = bumpTarget();
-  if (!target || !ctx) return 0;
-  return Math.max(0, target.price - ctx.t.grandTotal);
-}
-function bumpIsEligible(ctx){
-  const d = bumpDelta(ctx);
-  // Only worth offering when upgrading beats paying for another box outright.
-  return !!bumpTarget() && !ctx.t.offer.freeShip && ctx.qty === 1 && d > 0 && d < CONFIG.bump.compareAt;
-}
-function bumpedTotal(s){
-  const target = bumpTarget();
-  if (!s) return 0;
-  return (s.bumped && target) ? target.price : s.ctx.t.grandTotal;
-}
 
 function renderDoneSummary(){
   const s = _doneState; if (!s) return;
   const t = s.ctx.t;
-  const total = bumpedTotal(s);
-  const freeShip = t.freeShip || s.bumped;      // 2 boxes now → delivery is free
   $('#doneSummary').innerHTML =
-      '<div class="sum-line"><span>📦 المنتج</span><span class="sum-val">'+escapeHTML(s.bumped && bumpTarget() ? bumpTarget().headline : t.offer.headline)+(s.ctx.qty>1?' × '+s.ctx.qty:'')+'</span></div>'
-    + (s.bumped ? '<div class="sum-line"><span>➕ إضافة</span><span class="sum-val">'+escapeHTML(CONFIG.bump.label)+'</span></div>' : '')
+      '<div class="sum-line"><span>📦 التحضير</span><span class="sum-val">'+escapeHTML(t.offer.headline)+(s.ctx.qty>1?' × '+s.ctx.qty:'')+' ('+t.units+' ماسك)</span></div>'
     + '<div class="sum-line"><span>👤 الاسم</span><span class="sum-val">'+escapeHTML(s.ctx.f.name)+'</span></div>'
     + '<div class="sum-line"><span>📍 العنوان</span><span class="sum-val">'+escapeHTML(s.ctx.f.wilaya)+' / '+escapeHTML(s.ctx.f.commune)+'</span></div>'
-    + '<div class="sum-line"><span>🚚 التوصيل</span><span class="sum-val">'+(freeShip
-        ? '<s class="lat sum-strike">'+money(t.listDeliveryFee)+'</s> <b class="sum-free">مجاناً ✨</b>'
-        : '<span class="lat">'+escapeHTML(t.del.label)+' — '+money(t.deliveryFee)+'</span>')+'</span></div>'
-    + '<div class="sum-line total"><span>المبلغ عند الاستلام</span><span class="sum-val lat">'+money(total)+'</span></div>';
-  $('#doneWa').href = whatsappOrderLink(s.ctx.ref, {bumped:s.bumped, total:total, bumpDelta:bumpDelta(s.ctx), freeShip:freeShip});
+    + '<div class="sum-line"><span>🚚 التوصيل</span><span class="sum-val lat">'+escapeHTML(t.del.label)+' — '+money(t.deliveryFee)+'</span></div>'
+    + '<div class="sum-line total"><span>المبلغ عند الاستلام</span><span class="sum-val lat">'+money(t.grandTotal)+'</span></div>';
+
+  $('#doneWa').href = whatsappOrderLink(s.ctx.ref);
   const club = $('#doneClub');
   if (club) club.href = 'https://wa.me/' + ZLL.WHATSAPP + '?text=' + encodeURIComponent(CONFIG.clubJoinText);
 }
@@ -1889,7 +2279,7 @@ function renderDoneSummary(){
 /* ---------------- RETURNING CUSTOMER ----------------
    If she has ordered before on this device, offer a one-tap repeat instead
    of making her retype four fields. Retention is cheaper than acquisition,
-   and this is the landing spot for the day-25 WhatsApp reorder message. */
+   and this is the landing spot for the "next event" WhatsApp message. */
 function lastOrder(){
   try {
     const orders = JSON.parse(lsGet('bd_orders') || '[]');
@@ -1907,9 +2297,9 @@ function offerReorder(){
   if (f.name || f.phone || f.wilaya || f.commune) return;   // she is already typing
   const box = $('#orderReorder'), msg = $('#orderReorderMsg');
   if (!box || !msg) return;
-  const days = Math.max(0, Math.round((Date.now() - new Date(last.ts).getTime()) / 86800000));
+  const days = Math.max(0, Math.round((Date.now() - new Date(last.ts).getTime()) / 86400000));
   msg.innerHTML = '🌸 <b>مرحبا بيك مرة أخرى، ' + escapeHTML(String(last.name).split(' ')[0]) + '!</b><br>'
-    + 'آخر طلب ليك كان من <b class="lat">' + days + '</b> يوم. نعاودو نفس المعلومات؟';
+    + 'آخر طلب ليك كان من <b class="lat">' + days + '</b> يوم. مناسبة جديدة؟ نعاودو نفس المعلومات؟';
   box.classList.add('show');
   trackEvent('reorder_shown', {days_since: days});
 }
@@ -1919,8 +2309,7 @@ function applyReorder(){
   const set = (id,v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
   set('orderFullName', last.name); set('orderPhone', last.phone);
   set('orderWilaya', last.wilaya); set('orderCommune', last.commune);
-  const sel = $('#orderDeliveryType');
-  if (sel && last.deliveryType && DELIVERY[last.deliveryType]) sel.value = last.deliveryType;
+  document.querySelectorAll('input[name="shippingMode"]').forEach(r => { r.checked = (r.value === (last.deliveryType || 'home')); });
   if (last.offer && CONFIG.offers.some(o => o.id === last.offer)) selectedOfferId = last.offer;
   selectedQty = 1;
   _userEdited = true; _completed = false;
@@ -1934,78 +2323,13 @@ function applyReorder(){
 
 function showSuccessScreen(ctx){
   _completed = true;
-  _doneState = {ctx:ctx, bumped:false};
+  _doneState = {ctx:ctx};
   $('#doneRef').textContent = ctx.ref;
   renderDoneSummary();
-
-  // Order bump: only offered when she has NOT already taken a multi-box deal.
-  const bumpBox = $('#doneBump');
-  if (bumpBox){
-    if (_bumpBoxHTML && !$('#bumpPrice')) bumpBox.innerHTML = _bumpBoxHTML;   // safety net
-    const eligible = bumpIsEligible(ctx);
-    bumpBox.hidden = !eligible;
-    bumpBox.classList.remove('done');
-    if (eligible){
-      const p = $('#bumpPrice'), w = $('#bumpWas'), b = $('#doneBumpBtn');
-      if (p) p.textContent = money(bumpDelta(ctx));
-      if (w) w.textContent = money(CONFIG.bump.compareAt);
-      if (b){ b.disabled = false; b.textContent = 'نعم، زيدها لطلبي ✓'; }
-      trackEvent('bump_shown');
-    }
-  }
-
   $('#orderFormWrap').style.display = 'none';
   $('#orderDone').classList.add('show');
   safeCall('scroll-done', () => $('#orderDone').scrollIntoView({block:'center', behavior:'smooth'}));
   safeCall('history', () => history.pushState({bd:'done'}, '', '#done'));
-}
-
-/* The bump is written as its OWN row, keyed <REF>-BUMP. That keeps it
-   idempotent under the existing backend dedupe with zero new server logic,
-   and the row text points back at the parent order. */
-async function acceptBump(){
-  const s = _doneState;
-  if (!s || s.bumped || !_pendingPayloadBase) return;
-  const delta = bumpDelta(s.ctx), target = bumpTarget();
-  if (!delta || !target) return;
-  s.bumped = true;
-  const btn = $('#doneBumpBtn');
-  if (btn){ btn.disabled = true; btn.textContent = '⏳ جارٍ الإضافة…'; }
-
-  // The row carries the DELTA, so parent + bump sums to exactly the 2-month
-  // programme price — the delivery she no longer owes is already inside it.
-  const bumpRef = s.ctx.ref + '-BUMP';
-  const payload = Object.assign({}, _pendingPayloadBase, {
-    ref: bumpRef, idempotencyKey: bumpRef,
-    offer: '➕ ترقية لـ' + target.headline + ' (+' + CONFIG.bump.label + ') — على الطلب ' + s.ctx.ref,
-    qty: 1, units: CONFIG.bump.units, boxes: 1,
-    productTotal: delta, total: delta, grandTotal: delta,
-    deliveryFee: 0, delivery: 'توصيل مجاني — مع الطلب ' + s.ctx.ref,
-    type: 'bump', parentRef: s.ctx.ref, newOrderTotal: target.price
-  });
-
-  renderDoneSummary();
-  track('Purchase', {value:delta, currency:'DZD', content_name:CONFIG.bump.label,
-                     content_type:'product', num_items:1}, bumpRef);
-  trackEvent('bump_accepted', {value:delta});
-
-  const res = await postOrder(payload);
-  const box = $('#doneBump');
-  if (res.ok){
-    if (box){
-      box.classList.add('done');
-      box.innerHTML = '<h3>✅ تمّت الترقية لـ'+escapeHTML(target.headline)+'</h3><p>زدنا <b>'+escapeHTML(CONFIG.bump.label)+'</b> بـ<b class="bump-price lat">'+money(delta)+'</b> — و<b>التوصيل ولّى مجاني</b>. المجموع: <b class="bump-price lat">'+money(target.price)+'</b>.</p>';
-    }
-    safeCall('bump-email', () => { sendOrderEmail({f:s.ctx.f, phone:s.ctx.phone, ref:bumpRef,
-      qty:1, t:{offer:{title:'ترقية لـ'+target.headline+' (+'+CONFIG.bump.label+')', id:'bump'},
-      del:{label:'توصيل مجاني — مع الطلب '+s.ctx.ref},
-      deliveryFee:0, productTotal:delta, grandTotal:delta,
-      units:CONFIG.bump.units, boxes:1}}, false).catch(()=>{}); });
-  } else if (btn){
-    // Never lose it silently: she still gets it via the WhatsApp message.
-    if (box) box.classList.add('done');
-    if (box) box.innerHTML = '<h3>✅ تمّت الإضافة لطلبك</h3><p>أكّدي عبر واتساب باش نضمنو الإضافة.</p>';
-  }
 }
 
 const ACK_SPINNER = '<span class="zll-spinner" style="display:inline-block;border-color:rgba(0,0,0,.15);border-top-color:var(--primary)"></span> ';
@@ -2035,8 +2359,6 @@ function markConfirmed(ctx, channel){
   lsSet(ZLL.DONE_KEY, JSON.stringify({ref:ctx.ref, ts:Date.now()}));
   safeCall('journal', () => {
     const orders = JSON.parse(lsGet('bd_orders') || '[]');
-    // wilaya/commune/deliveryType are stored so a returning customer can
-    // reorder in one tap — this is what the day-25 message lands on.
     orders.push({ref:ctx.ref, ts:new Date().toISOString(), name:ctx.f.name, phone:ctx.phone,
       wilaya:ctx.f.wilaya, commune:ctx.f.commune, deliveryType:ctx.deliveryKey,
       offer:ctx.t.offer.id, qty:ctx.qty, total:ctx.t.grandTotal, channel});
@@ -2076,7 +2398,7 @@ async function finalizeOrder(firstAttempt, ctx, payload){
     setAck('pending', ACK_SPINNER + 'جارٍ إعادة المحاولة… (' + (i+1) + '/' + ZLL.RETRY_DELAYS.length + ')');
     await sleep(ZLL.RETRY_DELAYS[i]);
     if (navigator.onLine === false) await waitForOnline(60000);
-    safeCall('bump', () => saveDraft({attempts:((draft && draft.attempts)||1)+1}));
+    safeCall('attempt-count', () => saveDraft({attempts:((draft && draft.attempts)||1)+1}));
     payload.attempt = (draft && draft.attempts) || 1;
     res = await postOrder(payload);
     if (res.ok){ markConfirmed(ctx, 'sheet-retry'); emailP.catch(()=>{}); return; }
@@ -2113,10 +2435,9 @@ async function retryDelivery(){
   markUnconfirmed(ctx, res);
 }
 
-/* Last-ditch delivery when keepalive is unavailable (older Safari): if the
-   page is being closed with an unconfirmed order, beacon it out. The backend
-   dedupes on idempotencyKey, so a duplicate row is impossible to lose but
-   trivial to merge — always cheaper than a lost lead. */
+/* Last-ditch delivery when keepalive is unavailable (older Safari). The
+   backend dedupes on idempotencyKey, so a duplicate row is impossible to
+   lose but trivial to merge — always cheaper than a lost lead. */
 function beaconIfPending(){
   if (SUPPORTS_KEEPALIVE || !_pendingPayload) return;
   safeCall('beacon', () => {
@@ -2137,7 +2458,7 @@ function checkInterruptedSubmit(){
   showRecovery((interrupted
       ? '⚠️ <b>طلبك السابق ما كملش الإرسال</b> (رقم <b class="lat">'+escapeHTML(p.ref)+'</b>). يمكن يكون وصل ويمكن لا.'
       : '💾 <b>عندك طلب محفوظ</b> (رقم <b class="lat">'+escapeHTML(p.ref)+'</b>) ما تسجّلش.')
-    + ' معلوماتك محفوظة — أعيدي الإرسال (نفس الرقم المرجعي، ما يخلقش طلب مضاعف) ولا توذو جودة عالية معنا عبر واتساب.');
+    + ' معلوماتك محفوظة — أعيدي الإرسال (نفس الرقم المرجعي، ما يخلقش طلب مضاعف) ولا توجودة عالية معنا عبر واتساب.');
   const r = $('#orderRetry'); if (r) r.textContent = '🔄 إعادة الإرسال بنفس الرقم المرجعي';
 }
 
@@ -2173,16 +2494,6 @@ function bindOrderForm(){
   const doneRetry = $('#doneRetry');
   if (doneRetry) doneRetry.addEventListener('click', retryDelivery);
 
-  /* Delegated, and the pristine markup is stashed: accepting a bump replaces
-     the box's innerHTML, which would otherwise destroy #bumpPrice and the
-     button — so a SECOND order from the same session would throw inside
-     showSuccessScreen and drop her on the recovery panel instead. */
-  const bumpBox = $('#doneBump');
-  if (bumpBox){
-    _bumpBoxHTML = bumpBox.innerHTML;
-    bumpBox.addEventListener('click', e => { if (e.target.closest('#doneBumpBtn')) acceptBump(); });
-  }
-
   const reBtn = $('#orderReorderBtn');
   if (reBtn) reBtn.addEventListener('click', applyReorder);
 
@@ -2196,8 +2507,7 @@ function bindOrderForm(){
   const wa = $('#doneWa');
   if (wa) wa.addEventListener('click', () => {
     const s = _doneState;
-    const value = bumpedTotal(s);
-    trackEvent('OrderConfirmed', {value:value, currency:'DZD', bumped: s && s.bumped ? 1 : 0});
+    trackEvent('OrderConfirmed', {value: s ? s.ctx.t.grandTotal : 0, currency:'DZD'});
     safeCall('wa-confirmed', () => { if (s) lsSet('bd_wa_confirmed', s.ctx.ref); });
   });
   const back = $('#doneBack');
@@ -2205,18 +2515,13 @@ function bindOrderForm(){
     $('#orderDone').classList.remove('show');
     $('#orderFormWrap').style.display = '';
     _completed = false; _userEdited = true;
-    _pendingCtx = _pendingPayload = _pendingPayloadBase = null;
+    _pendingCtx = _pendingPayload = null;
     _doneState = null;
-    const bb = $('#doneBump');
-    if (bb){
-      bb.hidden = true;
-      bb.classList.remove('done');
-      if (_bumpBoxHTML) bb.innerHTML = _bumpBoxHTML;   // undo the "تمّت الترقية" replacement
-    }
     ['orderFullName','orderPhone','orderWilaya','orderCommune'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     draft = blankDraft(); saveDraft();
     setAck('pending', 'جارٍ تأكيد تسجيل الطلب…');
     $('#doneWa').classList.remove('urge');
+    safeCall('reset-render', syncAll);
     $('#orderFormWrap').scrollIntoView({block:'start', behavior:'smooth'});
   });
 }
@@ -2268,8 +2573,8 @@ function bindScroll(){
     if (t) t.scrollIntoView({behavior:'smooth'});
     if (b.dataset.scroll !== '#order') return;
     warmBackend(); loadPixel();
-    // With the hero picker gone, this CTA is the first real buying signal in
-    // the funnel — Meta needs it to keep optimising for purchasers.
+    // With no picker in the hero, this CTA is the first real buying signal —
+    // Meta needs it to keep optimising for purchasers.
     if (!_addedToCart){
       _addedToCart = true;
       const o = getOffer();
@@ -2304,16 +2609,18 @@ function init(){
   safeCall('renderOrderSummary', renderOrderSummary);
   safeCall('syncHero', syncHero);
   safeCall('bindOrderControls', bindOrderControls);
+  safeCall('bindShippingUI', bindShippingUI);
   safeCall('zllInit', zllInit);
   safeCall('bindScroll', bindScroll);
 
   /* Cheap above-the-fold decoration. */
-  safeCall('renderBoxEquation', renderBoxEquation);
   safeCall('renderBasic', renderBasic);
   safeCall('hero-fallback', () => applyImgFallback($('#pgTrack')));   // LCP image only
 
   /* Everything else waits for an idle frame — it must not delay first input. */
   idle(() => {
+    safeCall('renderEventChips', renderEventChips);
+    safeCall('renderOfferCards', renderOfferCards);
     safeCall('renderBenefits', renderBenefits);
     safeCall('renderIngredients', renderIngredients);
     safeCall('renderFAQ', renderFAQ);
@@ -2329,8 +2636,7 @@ function init(){
 
   safeCall('viewcontent', () => track('ViewContent', {value:getOffer().price, currency:'DZD', content_name:CONFIG.productName, content_type:'product'}));
 
-  /* Third-party JS + webfont: only once the page has fully settled, and never
-     while the connection is throttled unless the visitor shows intent. */
+  /* Third-party JS + webfont: only once the page has fully settled. */
   const settle = () => {
     idle(() => {
       loadFont();
