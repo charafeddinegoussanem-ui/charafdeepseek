@@ -28,6 +28,24 @@
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Biodance Bio-Collagen Real Deep Mask","description":"ماسك هيدروجيل بالكولاجين للتحضير قبل المناسبات — ترطيب عميق وإشراقة فورية من ليلة وحدة","image":"https://skinyorabiodencedz.vercel.app/product1.jpg","brand":{"@type":"Brand","name":"Biodance"},"offers":{"@type":"AggregateOffer","priceCurrency":"DZD","lowPrice":"2200","highPrice":"6500","offerCount":"3","availability":"https://schema.org/InStock"},"shippingDetails":{"@type":"OfferShippingDetails","shippingDestination":{"@type":"DefinedRegion","addressCountry":"DZ"}}}</script>
 
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4017555235205716');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4017555235205716&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <script>document.documentElement.classList.add('js');</script>
 
 <style>
@@ -968,7 +986,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
         </div>
         <button class="btn btn-secondary" style="width:100%" type="submit" id="infoSubmit">أرسل استفسارك</button>
         <div class="success-box" id="infoSuccess" role="status" aria-live="polite">تم إرساله بنجاح.</div>
-        <div class="error-box" id="infoError" role="alert" aria-live="assertive">حدث خطأ أثناء الإرسال. حاولي مرة أخرى أو توجودة عالية معنا عبر واتساب.</div>
+        <div class="error-box" id="infoError" role="alert" aria-live="assertive">حدث خطأ أثناء الإرسال. حاولي مرة أخرى أو تواصلي معنا عبر واتساب.</div>
       </form>
     </div>
   </div>
@@ -1000,8 +1018,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 
 <noscript>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap">
-<!-- Meta Pixel 1351942426554008 — JS-disabled fallback -->
-<img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1351942426554008&ev=PageView&noscript=1">
+<!-- Le fallback pixel <noscript> est dans le bloc Meta Pixel Code du <head>. -->
 </noscript>
 
 <script>
@@ -1165,7 +1182,9 @@ const CONFIG = {
     endpoint:'https://script.google.com/macros/s/AKfycbyf9e03fDCOrevcxji92LNEUPDlgn2MZWXaMrbk47QZoa0xsEIDk7XOWgCZHgSVvpKGVw/exec',
     secret:'CHANGEZ-MOI-phrase-secrete-2026'
   },
-  pixelId:'1351942426554008',
+  /* Pas de pixelId ici : le pixel est installé UNIQUEMENT par le bloc
+     "Meta Pixel Code" standard dans le <head>. Pour changer d'ID, modifier
+     ce bloc — c'est le seul endroit. */
   submitCooldownMs:46000,
   /* 'inline'  = instant in-page thank-you screen (fastest, recommended)
      'redirect'= go to THANKYOU_URL. Still fast (the POST survives the
@@ -1236,26 +1255,13 @@ function newId(prefix){
 }
 
 /* =====================================================================
-   META PIXEL — stub queues events immediately, the 60 KB script is only
-   fetched when the visitor shows real intent (or the page has fully
-   settled). It must never compete with the hero image on a 3G pipe.
+   META PIXEL
+   The pixel is installed by the standard Meta snippet in <head> — it
+   init()s pixel 4017555235205716 and fires PageView by itself.
+   Nothing here loads or initialises it; the helpers below only fire
+   EVENTS (AddToCart / ViewContent / InitiateCheckout / Purchase and the
+   custom funnel events) on whatever pixel that snippet installed.
    ===================================================================== */
-safeCall('pixel-stub', function(){
-  !function(f,b,e,v,n,t,s){ if(f.fbq) return;
-    n = f.fbq = function(){ n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
-    if(!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [] }(window);
-  fbq('init', CONFIG.pixelId);
-  fbq('track', 'PageView');
-});
-
-let _pixelLoaded = false;
-function loadPixel(){
-  if (_pixelLoaded) return;
-  _pixelLoaded = true;
-  const s = document.createElement('script');
-  s.async = true; s.src = 'https://connect.facebook.net/en_US/fbevents.js';
-  document.head.appendChild(s);
-}
 function track(ev, params, id){
   safeCall('track:'+ev, () => { if (typeof fbq === 'function') id ? fbq('track',ev,params,{eventID:id}) : fbq('track',ev,params); });
 }
@@ -1626,7 +1632,6 @@ function selectOffer(id){
   if (!CONFIG.offers.some(o => o.id === id) || id === selectedOfferId) return;
   selectedOfferId = id; selectedQty = 1;
   const s = getOffer();
-  loadPixel();
   track('AddToCart', {value:s.price, currency:'DZD', content_name:s.title, content_ids:[s.id], content_type:'product'});
 }
 function syncAll(){
@@ -1755,7 +1760,7 @@ function bindShippingUI(){
       _completed = false; _userEdited = true;
       showWilayaSuggestions(); updateShippingUI(); renderOrderSummary();
     });
-    input.addEventListener('focus', () => { warmBackend(); loadPixel(); showWilayaSuggestions(); });
+    input.addEventListener('focus', () => { warmBackend(); showWilayaSuggestions(); });
     input.addEventListener('blur', () => {
       setTimeout(() => {
         const resolved = getSelectedWilaya();
@@ -2151,7 +2156,7 @@ function markSubmitted(key){ lsSet(key || 'bd_last_submit', String(Date.now()));
 function recoveryMessage(type){
   if (type === E.OFFLINE)   return '📴 <b>انقطع الاتصال بالإنترنت.</b> معلوماتك محفوظة تلقائياً — أعيدي المحاولة كي يرجع الاتصال.';
   if (type === E.TIMEOUT)   return '⏳ <b>الاتصال بطيء.</b> معلوماتك محفوظة تلقائياً. أعيدي المحاولة، أو أرسلي الطلب عبر واتساب.';
-  if (type === E.AMBIGUOUS) return '⚠️ <b>ما قدرناش نتأكدو واش الطلب تسجّل.</b> معلوماتك محفوظة. باش نتجنبو طلب مضاعف: توجودة عالية معنا عبر واتساب — ولا أعيدي الإرسال بنفس الرقم المرجعي (ما يخلقش طلب جديد).';
+  if (type === E.AMBIGUOUS) return '⚠️ <b>ما قدرناش نتأكدو واش الطلب تسجّل.</b> معلوماتك محفوظة. باش نتجنبو طلب مضاعف: تواصلي معنا عبر واتساب — ولا أعيدي الإرسال بنفس الرقم المرجعي (ما يخلقش طلب جديد).';
   return '❌ <b>ما تقدرناش نسجّلو الطلب.</b> معلوماتك محفوظة ولن تضيع — أعيدي المحاولة، أو أتمّي الطلب عبر واتساب.';
 }
 
@@ -2192,7 +2197,6 @@ function submitOrderInner(isRetry){
   _submitting = true;
   hideRecovery();
   if (errorBox) errorBox.style.display = 'none';
-  loadPixel();
   trackEvent(isRetry ? 'retry_clicked' : 'submit_clicked');
 
   /* 1 ── persist BEFORE anything else. Data never depends on the network. */
@@ -2316,7 +2320,7 @@ function applyReorder(){
   safeCall('reorder-render', syncAll);
   safeCall('reorder-save', captureDraft);
   showNote('orderReorder', false);
-  loadPixel(); warmBackend();
+  warmBackend();
   trackEvent('reorder_applied', {offer: last.offer || ''});
   $('#orderSubmit').scrollIntoView({block:'center', behavior:'smooth'});
 }
@@ -2458,7 +2462,7 @@ function checkInterruptedSubmit(){
   showRecovery((interrupted
       ? '⚠️ <b>طلبك السابق ما كملش الإرسال</b> (رقم <b class="lat">'+escapeHTML(p.ref)+'</b>). يمكن يكون وصل ويمكن لا.'
       : '💾 <b>عندك طلب محفوظ</b> (رقم <b class="lat">'+escapeHTML(p.ref)+'</b>) ما تسجّلش.')
-    + ' معلوماتك محفوظة — أعيدي الإرسال (نفس الرقم المرجعي، ما يخلقش طلب مضاعف) ولا توجودة عالية معنا عبر واتساب.');
+    + ' معلوماتك محفوظة — أعيدي الإرسال (نفس الرقم المرجعي، ما يخلقش طلب مضاعف) ولا تواصلي معنا عبر واتساب.');
   const r = $('#orderRetry'); if (r) r.textContent = '🔄 إعادة الإرسال بنفس الرقم المرجعي';
 }
 
@@ -2472,7 +2476,7 @@ function bindAutosave(){
     el.addEventListener('change', save);
     el.addEventListener('blur', () => save.flush());
     // First real contact with the form = warm the backend + arm the pixel.
-    el.addEventListener('focus', () => { warmBackend(); loadPixel(); }, {once:true});
+    el.addEventListener('focus', () => { warmBackend(); }, {once:true});
   });
   const flush = () => { safeCall('flush', () => save.flush()); beaconIfPending(); };
   window.addEventListener('pagehide', flush);
@@ -2572,7 +2576,7 @@ function bindScroll(){
     const t = document.querySelector(b.dataset.scroll);
     if (t) t.scrollIntoView({behavior:'smooth'});
     if (b.dataset.scroll !== '#order') return;
-    warmBackend(); loadPixel();
+    warmBackend();
     // With no picker in the hero, this CTA is the first real buying signal —
     // Meta needs it to keep optimising for purchasers.
     if (!_addedToCart){
@@ -2636,21 +2640,10 @@ function init(){
 
   safeCall('viewcontent', () => track('ViewContent', {value:getOffer().price, currency:'DZD', content_name:CONFIG.productName, content_type:'product'}));
 
-  /* Third-party JS + webfont: only once the page has fully settled. */
-  const settle = () => {
-    idle(() => {
-      loadFont();
-      // The pixel ALWAYS loads — deferring it must not cost you PageViews on
-      // the 3G traffic this page is built for. It just waits until the hero
-      // has finished downloading, and waits longer when the pipe is narrow.
-      setTimeout(loadPixel, NET.slow ? 4000 : 1200);
-    });
-  };
+  /* Webfont only — the Meta pixel is loaded by its own snippet in <head>. */
+  const settle = () => { idle(loadFont); };
   if (document.readyState === 'complete') settle();
   else window.addEventListener('load', settle, {once:true});
-
-  // Any real intent arms the pixel immediately, whatever the connection.
-  ['pointerdown','keydown'].forEach(ev => document.addEventListener(ev, loadPixel, {once:true, passive:true}));
 }
 
 function loadFont(){
