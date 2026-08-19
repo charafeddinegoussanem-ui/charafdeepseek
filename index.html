@@ -6,11 +6,6 @@
 <meta name="theme-color" content="#e24a8b">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://connect.facebook.net;connect-src 'self' https://api.emailjs.com https://www.facebook.com https://script.google.com https://script.googleusercontent.com;img-src 'self' data: https://www.facebook.com;style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;font-src 'self' data: https://fonts.gstatic.com;frame-src https://www.facebook.com;base-uri 'self';form-action 'self' https://www.facebook.com;">
 
-<!-- ============================================================
-     CRITICAL PATH — only 2 things are allowed to compete for the
-     first 600 KB of a 3G pipe: the LCP image, and the order backend.
-     No render-blocking CSS, no render-blocking font, no 3rd-party JS.
-     ============================================================ -->
 <link rel="preload" as="image" href="product1.jpg" fetchpriority="high">
 <link rel="dns-prefetch" href="//script.google.com">
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -49,15 +44,25 @@ src="https://www.facebook.com/tr?id=4017555235205716&ev=PageView&noscript=1"
 <script>document.documentElement.classList.add('js');</script>
 
 <style>
-/* ============================================================
-   FONTS — zero render-blocking requests.
-   Tajawal is loaded by JS after `load` (and skipped on Save-Data
-   / 2g). Until then the system Arabic face renders instantly.
-   ============================================================ */
+/* =====================================================================
+   BIODANCE — short, photo-first landing page
+   ---------------------------------------------------------------------
+   LAYOUT BUDGET (mobile, 375x812)
+   The previous build ran 19.6 screens tall and shrank the product photo
+   to 203px to win fold space. That is backwards: on a cosmetics page the
+   photo IS the argument, and length is what kills scroll-through.
+   So this build inverts both:
+     · the product photo is a FULL 1:1 square again — no max-height cap;
+     · every photo on the page is kept (product, benefits, ingredients,
+       night-before timeline, customer screenshots);
+     · the cutting happened in TEXT — whole prose sections that repeated
+       what the photos and the order form already say.
+   Rule going forward: cut paragraphs, never pixels of product.
+   ===================================================================== */
 :root{
 --primary:#e24a8b;--primary-dark:#c2356f;--primary-soft:#fdeaf3;--primary-soft2:#fbf4f7;
 --ink:#2b2630;--ink-soft:#56505b;--bg:#fff;--bg-soft:#fbf4f7;--line:#f0e2ea;--muted:#8a8190;
---star:#f5a623;--success:#1e9e6a;--radius:10px;--radius-lg:16px;--pill:999px;
+--success:#1e9e6a;--radius:10px;--radius-lg:16px;--pill:999px;
 --shadow:0 1px 2px rgba(43,38,48,.05),0 12px 32px rgba(194,53,111,.07);--max:1180px;
 --font-ar:"Tajawal","Segoe UI",system-ui,-apple-system,"Noto Naskh Arabic","Geeza Pro",Tahoma,Arial,sans-serif;
 --font-lat:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif
@@ -66,54 +71,48 @@ src="https://www.facebook.com/tr?id=4017555235205716&ev=PageView&noscript=1"
 html{scroll-behavior:smooth}
 html,body{overflow-x:clip}
 body{font-family:var(--font-ar);background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
+/* Latin / numeric runs. `direction:ltr;unicode-bidi:isolate` stops the RTL
+   paragraph from reordering bidi-NEUTRAL characters — without it the browser
+   paints «دج 3 200» and «43%-». Must wrap the NUMBER ONLY, never an Arabic
+   phrase, or the phrase itself gets laid out left-to-right. */
 .lat{font-family:var(--font-lat);direction:ltr;unicode-bidi:isolate}
-/* ^ THE price-rendering fix. Without `direction:ltr;unicode-bidi:isolate`
-   the surrounding RTL paragraph reorders bidi-NEUTRAL characters, and the
-   browser paints «دج 3 200» instead of «3 200 DA» and «43%-» instead of
-   «-43%». The sign and the currency are neutral, so they drift to whichever
-   edge the paragraph direction dictates. Isolating the run pins them.
-   Rule: `.lat` must wrap the NUMBER ONLY — never an Arabic phrase, or the
-   phrase itself gets laid out left-to-right. */
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 button,input,select,textarea{font:inherit}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--primary-dark);outline-offset:2px}
 .container{width:min(calc(100% - 32px),var(--max));margin-inline:auto}
-.section{padding:60px 0}
-/* Skip layout+paint for off-screen blocks — big win on low-end Android.
-   Never applied to scroll-anchor targets so jump links stay pixel-accurate. */
-.cv{content-visibility:auto;contain-intrinsic-size:auto 760px}
+.section{padding:44px 0}
+.cv{content-visibility:auto;contain-intrinsic-size:auto 700px}
 .band{background:var(--bg-soft)}
 .divider-top{border-top:1px solid var(--line)}
-.section-title{font-size:clamp(23px,3.4vw,34px);font-weight:800;margin-bottom:8px;text-align:center}
-.section-text{color:var(--muted);margin-bottom:30px;text-align:center;max-width:60ch;margin-inline:auto}
-.grid{display:grid;gap:18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:22px}
-.btn{border:none;cursor:pointer;border-radius:var(--radius);padding:14px 22px;font-weight:700;font-size:15px;transition:.2s}
+.section-title{font-size:clamp(21px,3.2vw,30px);font-weight:800;margin-bottom:6px;text-align:center}
+.section-text{color:var(--muted);margin-bottom:22px;text-align:center;max-width:60ch;margin-inline:auto;font-size:14.5px}
+.sub-title{text-align:center;font-size:15px;font-weight:800;color:var(--primary-dark);margin:26px 0 14px}
+.grid{display:grid;gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:18px}
+.btn{border:none;cursor:pointer;border-radius:var(--radius);padding:13px 20px;font-weight:700;font-size:15px;transition:.2s}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:var(--primary-dark)}
 .btn-secondary{background:#fff;color:var(--primary-dark);border:1.5px solid var(--primary)}
 .btn-secondary:hover{background:var(--primary-soft)}
 .btn:disabled{opacity:.55;cursor:not-allowed}
-.promo{background:var(--primary);color:#fff;text-align:center;font-size:13.5px;padding:8px 12px;font-weight:600;line-height:1.5}
+.footnote{text-align:center;color:var(--muted);font-size:11.5px;margin-top:10px}
+.promo{background:var(--primary);color:#fff;text-align:center;font-size:12.5px;padding:6px 12px;font-weight:600;line-height:1.45}
 .promo b{font-weight:800}
-.header{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid var(--line);padding:12px 0}
+/* Header is logo + CTA only. The 8-button quicknav it used to carry made
+   the sticky bar 108px tall on every single scroll frame — on a page this
+   short there is nothing left to navigate to. */
+.header{position:sticky;top:0;z-index:70;background:#fff;border-bottom:1px solid var(--line);padding:9px 0}
 .header-wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.logo{font-family:var(--font-lat);font-weight:800;font-size:22px;letter-spacing:-.03em;color:var(--ink)}
+.logo{font-family:var(--font-lat);font-weight:800;font-size:21px;letter-spacing:-.03em;color:var(--ink)}
 .logo b{color:var(--primary)}
 .header .top-cta{background:var(--primary);color:#fff;border:none;padding:9px 18px;border-radius:var(--pill);font-weight:700;cursor:pointer;font-size:13.5px}
 .header .top-cta:hover{background:var(--primary-dark)}
-.quicknav{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.quicknav::-webkit-scrollbar{display:none}
-.quicknav button{flex:0 0 auto;background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-weight:600;font-size:13.5px;padding:8px 16px;border-radius:var(--pill);cursor:pointer}
-.quicknav button:hover{background:var(--primary-soft);color:var(--primary-dark)}
-[id]{scroll-margin-top:128px}
-.breadcrumb{color:var(--muted);font-size:13px;padding:10px 0 0}
-.breadcrumb span{color:var(--primary-dark)}
+[id]{scroll-margin-top:70px}
 
 /* ---------- PRODUCT / GALLERY ---------- */
-.product{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;padding-top:18px}
-.gallery{position:sticky;top:84px}
+.product{display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:start;padding-top:16px}
+.gallery{position:sticky;top:74px}
 .pg-main{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:var(--primary-soft2);aspect-ratio:1/1;border:1px solid var(--line);touch-action:pan-y}
 .pg-track{display:flex;height:100%;transition:transform .35s ease}
 .pg-track.dragging{transition:none;will-change:transform}
@@ -125,206 +124,92 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .pg-nav.next{inset-inline-start:12px}
 .pg-counter{position:absolute;bottom:12px;inset-inline-start:12px;z-index:3;background:rgba(43,38,48,.75);color:#fff;font-size:13px;padding:4px 12px;border-radius:var(--pill)}
 .gallery-badge{position:absolute;top:14px;inset-inline-end:14px;z-index:3;background:var(--primary);color:#fff;font-family:var(--font-lat);font-weight:700;font-size:14px;padding:6px 12px;border-radius:var(--pill)}
-/* Permanent "what you get" sticker on the main product photo. The number of
-   masks must be readable straight from the image, before any text is read. */
 .gallery-box{position:absolute;bottom:12px;inset-inline-end:12px;z-index:3;background:rgba(255,255,255,.96);border:1.5px solid var(--primary);color:var(--primary-dark);font-size:12.5px;font-weight:800;padding:5px 12px;border-radius:var(--pill);line-height:1.6}
 .pg-thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:12px}
 .pg-thumb{border:1.5px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;background:#fff;padding:0;aspect-ratio:1/1}
 .pg-thumb.active{border-color:var(--primary)}
 .pg-thumb img{width:100%;height:100%;object-fit:cover}
-/* Mobile uses dots, NOT thumbnails: the thumb strip downloaded all 12
-   full-size product JPEGs immediately just to show them at 60px. */
-.pg-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-.pg-dot{width:8px;height:8px;border-radius:50%;background:var(--line);border:none;padding:0;cursor:pointer}
+.pg-dots{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.pg-dot{width:8px;height:8px;border-radius:50%;background:var(--line);border:none;padding:0;cursor:pointer;position:relative}
+.pg-dot::after{content:"";position:absolute;inset:-16px -6px}
 .pg-dot.active{background:var(--primary);width:20px;border-radius:var(--pill)}
 
-/* ---------- BUY BOX / EVENT HERO ---------- */
+/* ---------- BUY BOX ---------- */
 .buybox .vendor{display:inline-block;color:var(--primary-dark);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.buybox h1{font-size:clamp(24px,3.6vw,34px);line-height:1.25;font-weight:800;margin-bottom:8px}
+.buybox h1{font-size:clamp(23px,3.5vw,32px);line-height:1.25;font-weight:800;margin-bottom:8px}
 .ev-tag{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .ev-tag span{background:var(--primary-soft);color:var(--primary-dark);font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:var(--pill)}
-.hero-kicker{font-size:clamp(15px,2.4vw,17px);font-weight:700;color:var(--ink-soft);margin-bottom:12px;line-height:1.65}
+.hero-kicker{font-size:15px;font-weight:700;color:var(--ink-soft);margin-bottom:12px;line-height:1.65}
 .hero-kicker b{color:var(--primary-dark)}
-
-/* ============================================================
-   THE BOX EXPLAINER  ·  «علبة وحدة = 4 ماسكات = 4 استعمالات»
-   ------------------------------------------------------------
-   This is THE anti-confusion component. A woman who is not used to
-   buying online must be able to see, WITHOUT reading a sentence,
-   that one parcel contains four individually wrapped masks and that
-   each mask is used once. It is rendered identically in the hero, in
-   the order form and in the "what's in the parcel" section — the same
-   picture and the same words, three times, so there is nothing left
-   to interpret.
-   ============================================================ */
-.bx{background:#fff;border:2px dashed var(--primary);border-radius:14px;padding:11px 11px 10px;margin-bottom:12px}
+/* The anti-confusion block: «علبة وحدة = 4 ماسكات = 4 استعمالات».
+   Kept in the hero and repeated once at the parcel section — the two
+   places a buyer decides. Everywhere else it was noise. */
+.bx{background:#fff;border:2px dashed var(--primary);border-radius:14px;padding:10px 11px 9px;margin-bottom:12px}
 .bx-head{font-size:14.5px;font-weight:800;color:var(--ink);text-align:center;line-height:1.6;margin-bottom:5px}
 .bx-head b{color:var(--primary-dark)}
 .bx-foot{text-align:center;font-size:12.5px;font-weight:700;color:var(--ink-soft);line-height:1.7}
 .bx-foot b{color:var(--primary-dark)}
-.bx.bx-lg{max-width:560px;margin-inline:auto}
-.bx.bx-lg .bx-head{font-size:16px}
-.bx.bx-lg .bx-foot{font-size:13.5px}
-
-/* The night-before strip: the mechanism in 3 beats. */
-.box-equation{display:flex;align-items:stretch;flex-wrap:nowrap;gap:4px;background:var(--primary-soft);border:1px solid #f6cfe0;border-radius:var(--radius-lg);padding:10px;margin-bottom:14px}
-.box-equation .be-part{flex:1 1 0;min-width:0;text-align:center;line-height:1.3}
-.box-equation .be-top{display:block;font-size:20px}
-.box-equation .be-sub{display:block;font-size:11.5px;font-weight:700;color:var(--ink-soft)}
-.box-equation .be-eq{display:grid;place-items:center;font-size:16px;font-weight:800;color:var(--primary);flex:0 0 auto}
-
-/* What the price actually buys — boxed, directly under the number, so the
-   price and the quantity can never be read apart from each other. */
 .price-what{font-size:14px;font-weight:800;color:var(--ink);background:var(--primary-soft);border:1px solid #f6cfe0;border-radius:10px;padding:9px 12px;margin:0 0 12px;line-height:1.8;text-align:center}
 .price-what b{color:var(--primary-dark)}
 .price-what .pw-unit{color:var(--ink-soft);font-weight:700;font-size:12.5px}
-.hero-note{background:var(--primary-soft2);border:1px dashed #edd3e0;border-radius:var(--radius);padding:9px 12px;font-size:13px;color:var(--ink-soft);line-height:1.75;margin-bottom:12px}
-.hero-note b{color:var(--primary-dark)}
 .price-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-.price-now{font-size:30px;font-weight:800;color:var(--primary-dark)}
+.price-now{font-size:29px;font-weight:800;color:var(--primary-dark)}
 .price-was{text-decoration:line-through;color:var(--muted);font-size:17px}
 .discount-badge{background:var(--primary-soft);color:var(--primary-dark);font-family:var(--font-lat);font-weight:700;font-size:13px;padding:3px 10px;border-radius:var(--pill)}
-.availability{color:var(--success);font-weight:700;font-size:14px;margin-bottom:14px}
-.buy-desc{color:var(--ink-soft);margin-bottom:18px}
-.ship-note{background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:var(--radius);padding:9px 14px;font-size:13.5px;color:var(--ink-soft);margin-bottom:14px;line-height:1.6}
+.availability{color:var(--success);font-weight:700;font-size:14px;margin-bottom:12px}
+.ship-note{background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:var(--radius);padding:9px 14px;font-size:13px;color:var(--ink-soft);margin-bottom:12px;line-height:1.6}
 .ship-note b{color:var(--primary-dark)}
-.btn-cart{width:100%;font-size:16px;padding:16px;border-radius:var(--pill)}
-.trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn-cart{width:100%;font-size:16px;padding:15px;border-radius:var(--pill)}
+.trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .trust-row .badge{background:var(--primary-soft2);border:1px solid var(--line);color:var(--ink-soft);font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:var(--pill)}
 
-/* ---------- CONTENT BLOCKS ---------- */
-.guarantees{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.guarantee{text-align:center;padding:18px 12px}
-.guarantee .g-icon{font-size:26px;margin-bottom:8px}
-.guarantee h4{font-size:14.5px;font-weight:700;margin-bottom:3px}
-.guarantee p{font-size:12.5px;color:var(--muted)}
-.tab-nav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
-.tab-btn{background:none;border:none;padding:12px 18px;font-weight:700;font-size:15.5px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
-.tab-btn.active{color:var(--primary-dark);border-bottom-color:var(--primary)}
-.tab-panel{display:none;color:var(--ink-soft)}
-.tab-panel.active{display:block}
-.tab-panel h4{color:var(--ink);margin:14px 0 6px;font-size:16px}
-.tab-panel ul{padding-inline-start:20px}
-.tab-panel li{margin-bottom:6px}
-.ing-text{font-size:13.5px;line-height:1.9;color:var(--muted)}
-.features{grid-template-columns:repeat(4,1fr)}
-.feature-card{text-align:center}
-.feature-card h3{font-size:15.5px;font-weight:700;margin-bottom:6px}
-.feature-card p{color:var(--muted);font-size:13.5px}
-.icon{width:54px;height:54px;border-radius:50%;background:var(--primary-soft);display:grid;place-items:center;font-size:24px;margin:0 auto 14px}
-.ing-grid{grid-template-columns:repeat(4,1fr)}
-.ing-card{text-align:center}
-.ing-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.ing-card p{color:var(--muted);font-size:13px}
-.kpi{grid-template-columns:repeat(3,1fr)}
-.kpi .card{text-align:center}
-.kpi-num{font-family:var(--font-lat);font-weight:800;font-size:38px;color:var(--primary-dark)}
-.kpi-label{color:var(--muted);font-size:14px;margin-top:4px}
-.footnote{text-align:center;color:var(--muted);font-size:11.5px;margin-top:10px}
-.why-grid{grid-template-columns:repeat(2,1fr);gap:16px;max-width:840px;margin-inline:auto}
-.why-item{display:flex;gap:14px;align-items:flex-start}
-.why-item .w-ic{font-size:26px;line-height:1}
-.why-item h4{font-size:16.5px;font-weight:700;margin-bottom:3px}
-.why-item p{color:var(--muted);font-size:13.5px}
-
-/* ---------- WHAT'S IN THE PARCEL ---------- */
-.pk-eq{max-width:820px;margin-inline:auto;background:#fff;border:2px dashed var(--primary);border-radius:var(--radius-lg);padding:16px 14px;text-align:center}
+/* ---------- WHAT'S IN THE PARCEL (compressed) ---------- */
+.pk-eq{max-width:820px;margin-inline:auto;background:#fff;border:2px dashed var(--primary);border-radius:var(--radius-lg);padding:15px 14px;text-align:center}
 .pk-eq .pe-line{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;font-size:clamp(15px,3.6vw,21px);font-weight:800;color:var(--ink);line-height:1.5}
 .pk-eq .pe-line b{color:var(--primary-dark)}
 .pk-eq .pe-line .pe-op{color:var(--primary);font-weight:800}
-.pk-eq .pe-sub{margin-top:9px;font-size:13px;color:var(--ink-soft);font-weight:600;line-height:1.8}
+.pk-eq .pe-sub{margin-top:8px;font-size:13px;color:var(--ink-soft);font-weight:600;line-height:1.8}
 .pk-eq .pe-sub b{color:var(--primary-dark)}
-.pk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin-inline:auto}
-.pk{text-align:center;padding:20px 14px}
-.pk .pk-ic{font-size:30px;margin-bottom:8px;line-height:1}
-.pk h3{font-size:16px;font-weight:800;margin-bottom:5px}
-.pk p{font-size:13px;color:var(--muted);line-height:1.75}
-.pk-no{max-width:900px;margin:18px auto 0;text-align:center;background:#fff8e6;border:1px solid #f0dca8;border-radius:12px;padding:12px 15px;font-size:13.5px;color:#6b5312;line-height:1.8}
+/* The 4-week plan, reduced from a whole section to one strip: the box IS
+   the routine, so it only needs to be shown once, next to the box. */
+.wk{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-width:820px;margin:14px auto 0}
+.wk-i{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 4px;text-align:center;line-height:1.4}
+.wk-i b{display:block;font-family:var(--font-lat);font-size:17px;font-weight:800;color:var(--primary-dark)}
+.wk-i span{display:block;font-size:10.5px;font-weight:700;color:var(--ink-soft);margin-top:2px}
+.wk-i.night{border-color:var(--primary);background:var(--primary-soft)}
+.pk-no{max-width:820px;margin:14px auto 0;text-align:center;background:#fff8e6;border:1px solid #f0dca8;border-radius:12px;padding:11px 15px;font-size:13.5px;color:#6b5312;line-height:1.8}
 .pk-no b{color:#8a5400}
 
-/* ---------- OCCASIONS GRID ----------
-   Every woman must find HER event in this list within two seconds. A page
-   that only names weddings sells only to brides. */
-.occ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin-inline:auto}
-.occ{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;line-height:1.4}
-.occ .occ-em{font-size:21px;flex:none}
-.occ b{display:block;font-size:13.5px;font-weight:800;color:var(--ink)}
-.occ small{display:block;font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.5}
-.occ-any{max-width:940px;margin:18px auto 0;text-align:center;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:12px 15px;font-size:13.5px;color:var(--ink-soft);line-height:1.8}
-.occ-any b{color:var(--primary-dark)}
-
-/* ---------- THE TWO CHOICES ----------
-   Exactly two, and the second one is literally "the same box, twice".
-   Any third variant re-introduces the arithmetic that was costing us
-   orders in the first place. */
-.pick-help{max-width:760px;margin:0 auto 20px;background:#fff;border:1px dashed var(--primary);border-radius:12px;padding:12px 15px;text-align:center;font-size:13.5px;color:var(--ink-soft);line-height:1.85}
-.pick-help b{color:var(--primary-dark)}
-.offer-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-items:stretch;max-width:760px;margin-inline:auto}
-.offer-card{position:relative;background:#fff;border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:22px 16px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column}
-.offer-card.featured{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft),var(--shadow)}
-.offer-card.chosen{border-color:var(--primary);background:linear-gradient(180deg,#fff9fc,#fff)}
-.offer-card .oc-badge{position:absolute;top:-10px;inset-inline-start:16px;background:var(--primary);color:#fff;font-size:10.5px;font-weight:800;padding:3px 12px;border-radius:var(--pill);line-height:1.7}
-.offer-card .oc-when{display:inline-block;background:var(--primary-soft);color:var(--primary-dark);font-size:11.5px;font-weight:800;padding:4px 11px;border-radius:var(--pill);margin-bottom:9px}
-.offer-card h3{font-size:20px;font-weight:800;margin-bottom:3px;line-height:1.3}
-.offer-card .oc-sub{font-size:13px;color:var(--ink-soft);font-weight:700;margin-bottom:12px;line-height:1.6}
-.offer-card .oc-price{font-size:28px;font-weight:800;color:var(--primary-dark);line-height:1.15}
-.offer-card .oc-was{text-decoration:line-through;color:var(--muted);font-size:14px;margin-inline-start:8px;font-weight:600}
-.offer-card .oc-unit{display:block;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:9px}
-.offer-card .oc-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:var(--pill);margin-bottom:11px}
-.offer-card ul{list-style:none;display:grid;gap:7px;margin-bottom:15px;font-size:13px;color:var(--ink-soft);line-height:1.6}
-.offer-card li{display:flex;gap:7px;align-items:flex-start}
-.offer-card .oc-btn{margin-top:auto;width:100%;border:none;border-radius:var(--pill);padding:13px;font-weight:800;font-size:15px;cursor:pointer;background:var(--primary);color:#fff}
-.offer-card .oc-btn:hover{background:var(--primary-dark)}
-.offer-card:not(.featured) .oc-btn{background:#fff;color:var(--primary-dark);border:1.5px solid var(--primary)}
-.offer-card:not(.featured) .oc-btn:hover{background:var(--primary-soft)}
-.offer-ship{max-width:760px;margin:16px auto 0;text-align:center;font-size:13px;color:var(--ink-soft);background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 14px;line-height:1.7}
-.offer-ship b{color:var(--primary-dark)}
-
-/* ---------- PREPARED vs NOT PREPARED ---------- */
-.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:880px;margin-inline:auto}
-.cmp-col{border-radius:var(--radius-lg);padding:18px 16px 15px;border:1px solid var(--line);background:#fff}
-.cmp-col h3{font-size:16.5px;font-weight:800;margin-bottom:12px;text-align:center}
-.cmp-col ul{list-style:none;display:grid;gap:9px}
-.cmp-col li{font-size:13.5px;line-height:1.6;display:flex;gap:8px;align-items:flex-start}
-.cmp-bad{background:#faf7f8;border-color:#eadfe4}
-.cmp-bad h3{color:var(--ink-soft)}
-.cmp-good{background:#f4fbf7;border-color:#cdeadc}
-.cmp-good h3{color:#12683f}
-
-/* ---------- TRANSPARENCY TIMELINE ---------- */
-.tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin-inline:auto}
-.tl-step{margin:0;cursor:zoom-in}
-.tl-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);background:var(--primary-soft2);aspect-ratio:1/1}
-.tl-media img{width:100%;height:100%;object-fit:cover;display:block}
-.tl-time{position:absolute;bottom:8px;inset-inline-start:8px;background:rgba(43,38,48,.78);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:var(--pill)}
-.tl-num{position:absolute;top:8px;inset-inline-end:8px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
-.tl-step figcaption{padding:10px 2px 0;text-align:center}
-.tl-step h3{font-size:15px;font-weight:800;margin-bottom:3px}
-.tl-step p{font-size:12.5px;color:var(--muted);line-height:1.6}
-
-/* ---------- PREP CALENDAR ---------- */
-.rt-list{list-style:none;display:grid;gap:10px;margin:0 0 18px}
-.rt-item{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.rt-week{flex:0 0 auto;display:grid;place-items:center;width:60px;min-height:60px;border-radius:12px;background:var(--primary-soft);color:var(--primary-dark);font-size:10px;font-weight:700;line-height:1.3;text-align:center}
-.rt-week b{display:block;font-size:19px;font-weight:800}
-.rt-item.night{border-color:var(--primary);background:linear-gradient(180deg,#fff9fc,#fff)}
-.rt-item.night .rt-week{background:var(--primary);color:#fff}
-.rt-item h4{font-size:15px;font-weight:800;margin-bottom:2px}
-.rt-item p{font-size:13px;color:var(--muted);line-height:1.6}
-.rt-cycle{background:#fff8e6;border:1px solid #f0dca8;border-radius:12px;padding:11px 14px;font-size:13px;color:#6b5312;line-height:1.75;margin-bottom:12px}
-.rt-cycle b{color:#8a5400}
-.rt-rules{background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:11px 14px;font-size:13px;color:var(--ink-soft);line-height:1.9}
-.rt-rules b{display:block;color:var(--primary-dark);margin-bottom:3px}
-.rt-rules span{display:block}
-
-/* ---------- PHOTO CARDS (benefits / ingredients) ---------- */
-.fc-media{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;margin-bottom:12px;background:var(--primary-soft)}
+/* ---------- PHOTO CARD GRIDS (benefits + ingredients) ---------- */
+.features{grid-template-columns:repeat(4,1fr)}
+.feature-card{text-align:center;padding:14px}
+.feature-card h3{font-size:15px;font-weight:700;margin-bottom:5px}
+.feature-card p{color:var(--muted);font-size:13px;line-height:1.6}
+.icon{width:54px;height:54px;border-radius:50%;background:var(--primary-soft);display:grid;place-items:center;font-size:24px;margin:0 auto 12px}
+.fc-media{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;margin-bottom:10px;background:var(--primary-soft)}
 .fc-media img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
 .fc-media .fc-fallback{position:absolute;inset:0;width:100%;height:100%;border-radius:0;margin:0;z-index:0}
 .fc-media.no-photo{aspect-ratio:auto;background:none;overflow:visible}
 .fc-media.no-photo .fc-fallback{position:static;width:54px;height:54px;border-radius:50%;margin:0 auto}
 
-/* ---------- REVIEWS ---------- */
+/* ---------- STATS (why + proven results, merged) ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:900px;margin-inline:auto}
+.stat{text-align:center;padding:16px 10px}
+.stat b{display:block;font-family:var(--font-lat);font-weight:800;font-size:28px;color:var(--primary-dark);line-height:1.2;direction:ltr;unicode-bidi:isolate}
+.stat span{display:block;color:var(--ink-soft);font-size:13px;font-weight:700;margin-top:4px;line-height:1.5}
+
+/* ---------- NIGHT-BEFORE TIMELINE (photos) ---------- */
+.tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1000px;margin-inline:auto}
+.tl-step{margin:0;cursor:zoom-in}
+.tl-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);background:var(--primary-soft2);aspect-ratio:1/1}
+.tl-media img{width:100%;height:100%;object-fit:cover;display:block}
+.tl-time{position:absolute;bottom:8px;inset-inline-start:8px;background:rgba(43,38,48,.78);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:var(--pill)}
+.tl-num{position:absolute;top:8px;inset-inline-end:8px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
+.tl-step figcaption{padding:9px 2px 0;text-align:center}
+.tl-step h3{font-size:14.5px;font-weight:800;margin-bottom:3px}
+.tl-step p{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ---------- REVIEWS (photos) ---------- */
 .rev-wrap{position:relative;max-width:1000px;margin-inline:auto;min-height:200px}
 .rev-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;-webkit-overflow-scrolling:touch}
 .rev-track::-webkit-scrollbar{display:none}
@@ -334,28 +219,88 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .rev-nav.prev{inset-inline-end:-8px}
 .rev-nav.next{inset-inline-start:-8px}
 
-/* ---------- FAQ / CONTACT ---------- */
+/* ---------- TABS / FAQ ---------- */
+.tab-nav{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:16px;flex-wrap:wrap}
+.tab-btn{background:none;border:none;padding:11px 16px;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab-btn.active{color:var(--primary-dark);border-bottom-color:var(--primary)}
+.tab-panel{display:none;color:var(--ink-soft);font-size:14.5px}
+.tab-panel.active{display:block}
+.tab-panel h4{color:var(--ink);margin:12px 0 5px;font-size:15.5px}
+.tab-panel ul{padding-inline-start:20px}
+.tab-panel li{margin-bottom:5px}
+.ing-text{font-size:13px;line-height:1.85;color:var(--muted)}
 .faq-list{display:grid;gap:0;border-top:1px solid var(--line);max-width:760px;margin-inline:auto}
-.faq-item{border-bottom:1px solid var(--line);padding:18px 0}
-.faq-q{width:100%;display:flex;justify-content:space-between;gap:16px;background:none;border:none;font-weight:700;font-size:16.5px;cursor:pointer;text-align:right;padding:0;color:var(--ink)}
+.faq-item{border-bottom:1px solid var(--line);padding:15px 0}
+.faq-q{width:100%;display:flex;justify-content:space-between;gap:16px;background:none;border:none;font-weight:700;font-size:15.5px;cursor:pointer;text-align:right;padding:7px 0;color:var(--ink);min-height:44px;align-items:center}
 .faq-q span:last-child{color:var(--primary)}
-.faq-a{display:none;margin-top:12px;color:var(--muted)}
+.faq-a{display:none;margin-top:10px;color:var(--muted);font-size:14px}
 .faq-item.active .faq-a{display:block}
-.contact-pills{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-.pill{background:var(--primary-soft);border:1px solid var(--line);padding:8px 16px;border-radius:var(--pill);font-weight:700;color:var(--primary-dark);font-size:14px}
-.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;max-width:980px;margin-inline:auto}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:grid;gap:6px}
-.field.full{grid-column:1/-1}
-.field label{font-size:14px;font-weight:600;color:var(--ink-soft)}
-input,select,textarea{width:100%;padding:13px 14px;border-radius:var(--radius);border:1px solid var(--line);background:#fff;outline:none;font-size:16px;color:var(--ink)}
-input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(226,74,139,.15)}
-.success-box{display:none;margin-top:14px;padding:13px 16px;background:#e7f6ee;color:#146c49;border-radius:var(--radius);font-size:14px}
-.error-box{display:none;margin-top:14px;padding:13px 16px;background:#fbe9e7;color:#b03a2e;border-radius:var(--radius);font-size:14px}
+
+/* ---------- ORDER SECTION ---------- */
 .order-card{max-width:720px;margin-inline:auto}
-/* display:none is what password managers and browser autofill actually
-   respect — a clipped honeypot silently blocks real customers. */
 .hp-field{display:none!important}
+.order-variants-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.order-variant-card{border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s;background:#fff;position:relative}
+.order-variant-card:hover{border-color:var(--primary)}
+.order-variant-card.active{border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 1px var(--primary)}
+.order-variant-card .ov-main{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.order-variant-card .ov-left{min-width:0}
+.order-variant-card .ov-right{text-align:center;flex:0 0 auto}
+.order-variant-card .ov-units{font-weight:800;font-size:16px;display:block;color:var(--ink);line-height:1.3}
+.order-variant-card .ov-boxes{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:700;line-height:1.55}
+.order-variant-card .ov-price{font-weight:800;font-size:19px;color:var(--primary-dark);display:block;line-height:1.2}
+.order-variant-card .ov-unit{display:block;font-size:10.5px;color:var(--muted);font-weight:600;line-height:1.5}
+.order-variant-card .ov-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11px;font-weight:800;padding:2px 9px;border-radius:var(--pill);margin-top:6px}
+.order-variant-card .ov-badge{position:absolute;top:-8px;inset-inline-start:12px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:1px 9px;border-radius:var(--pill);line-height:1.7}
+.order-variant-card .ov-check{position:absolute;top:-6px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
+.order-variant-card.active .ov-check{display:flex}
+.order-assure{background:#f4fbf7;border:1px solid #cdeadc;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:12.5px;color:#1c6b4b;line-height:1.65}
+.order-assure b{color:#12683f}
+.order-assure .oa-row{display:flex;gap:7px;align-items:flex-start}
+.order-assure .oa-row+.oa-row{margin-top:4px}
+input:not([type=radio]):not([type=checkbox]),select,textarea{width:100%;padding:13px 14px;border-radius:var(--radius);border:1px solid var(--line);background:#fff;outline:none;font-size:16px;color:var(--ink)}
+input:not([type=radio]):not([type=checkbox]):focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(226,74,139,.15)}
+input[type=radio],input[type=checkbox]{width:auto;padding:0;border:0;background:none}
+.error-box{display:none;margin-top:14px;padding:13px 16px;background:#fbe9e7;color:#b03a2e;border-radius:var(--radius);font-size:14px}
+.order-compact-input{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;transition:.2s;color:var(--ink)}
+.order-compact-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(226,74,139,.12)}
+.order-compact-input.error{border-color:#c0392b}
+.order-compact-label{display:block;font-weight:600;font-size:13px;color:var(--ink-soft);margin-bottom:2px}
+.order-compact-err{font-size:11px;color:#c0392b;display:none;margin-top:2px}
+.order-compact-err.visible{display:block}
+.order-compact-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sum-line{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--ink-soft);padding:2px 0}
+.sum-line .sum-val{font-weight:700;color:var(--ink);white-space:nowrap}
+.sum-line.total{border-top:1px dashed var(--line);margin-top:6px;padding-top:7px;font-size:15px}
+.sum-line.total .sum-val{color:var(--primary-dark);font-size:19px;font-weight:800}
+.sum-line.total span:first-child{font-weight:700;color:var(--ink)}
+
+/* ---------- WILAYA / SHIPPING ---------- */
+.wilaya-field{position:relative}
+.wilaya-suggestions{display:none;position:absolute;top:100%;inset-inline:0;z-index:100;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:4px;overflow:hidden;box-shadow:0 12px 30px rgba(43,38,48,.12);max-height:230px;overflow-y:auto}
+.wilaya-suggestions.show{display:block}
+.wilaya-suggestion{width:100%;display:block;border:0;border-bottom:1px solid #f3e9ee;background:#fff;color:var(--ink);padding:10px 12px;text-align:right;cursor:pointer;font-size:14px}
+.wilaya-suggestion:last-child{border-bottom:0}
+.wilaya-suggestion .ws-lat{color:var(--muted);font-size:12px;margin-inline-start:6px;direction:ltr;unicode-bidi:isolate}
+.wilaya-suggestion:hover,.wilaya-suggestion:focus{background:var(--primary-soft);color:var(--primary-dark)}
+.shipping-options{display:grid;grid-template-columns:1fr;gap:7px;margin-top:4px}
+.shipping-option{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;transition:border-color .15s,background .15s;min-height:52px}
+.shipping-option:hover{border-color:var(--primary)}
+/* `.is-checked` is set by JS so the highlight also works on the older
+   Android WebViews that ship without :has() — on those the customer
+   otherwise gets no feedback at all about which option is selected. */
+.shipping-option.is-checked,.shipping-option:has(input:checked){border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 1px rgba(226,74,139,.18)}
+.shipping-option input[type=radio]{flex:0 0 auto;width:19px;height:19px;margin:0;accent-color:var(--primary);cursor:pointer}
+.so-body{flex:1 1 auto;min-width:0}
+.so-body strong{display:block;font-size:13.5px;font-weight:800;line-height:1.45;color:var(--ink)}
+.so-body em{display:block;font-style:normal;font-size:11px;font-weight:600;color:var(--muted);line-height:1.5;margin-top:1px}
+.so-price{flex:0 0 auto;text-align:center;line-height:1.25}
+.so-price small{display:block;color:var(--primary-dark);font-weight:800;font-size:16px}
+.so-price small.pending{color:var(--muted);font-size:11.5px;font-weight:700}
+.so-save{display:none;background:#e7f6ee;color:#146c49;font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:var(--pill);margin-top:3px;white-space:nowrap}
+.shipping-checker{margin-top:7px;padding:8px 11px;border-radius:10px;background:var(--primary-soft2);border:1px dashed #e7b7cd;color:var(--ink-soft);font-size:12.5px;line-height:1.55}
+.shipping-checker.ready{background:#f4fbf7;border-color:#cdeadc;color:#1c6b4b}
+.shipping-checker strong{color:var(--primary-dark)}
 
 /* ---------- ZERO LEAD LOSS ---------- */
 .zll-note{display:none;margin:8px 0;padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.55}
@@ -375,32 +320,33 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0
 .bd-done{display:none;text-align:center;padding:6px 2px 4px}
 .bd-done.show{display:block;animation:bdIn .28s ease}
 @keyframes bdIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.bd-check{width:78px;height:78px;border-radius:50%;margin:4px auto 14px;display:grid;place-items:center;font-size:38px;color:#fff;background:radial-gradient(circle at 30% 25%,#3fd68f,var(--success));box-shadow:0 14px 30px -12px rgba(30,158,106,.7)}
-.bd-done h2{font-size:clamp(21px,4.4vw,26px);font-weight:800;margin-bottom:6px}
-.bd-lead{color:var(--ink-soft);font-size:15px;margin-bottom:14px}
-.bd-ref{font-size:13px;color:var(--muted);margin-bottom:12px}
+.bd-check{width:72px;height:72px;border-radius:50%;margin:4px auto 12px;display:grid;place-items:center;font-size:36px;color:#fff;background:radial-gradient(circle at 30% 25%,#3fd68f,var(--success));box-shadow:0 14px 30px -12px rgba(30,158,106,.7)}
+.bd-done h2{font-size:clamp(20px,4.4vw,25px);font-weight:800;margin-bottom:6px}
+.bd-lead{color:var(--ink-soft);font-size:14.5px;margin-bottom:12px}
+.bd-ref{font-size:13px;color:var(--muted);margin-bottom:10px}
 .bd-ref b{color:var(--primary-dark)}
 .bd-sum{background:var(--primary-soft2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;text-align:start;margin-bottom:12px}
-.bd-ack{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:700;border-radius:var(--pill);padding:8px 14px;margin-bottom:14px;line-height:1.5}
+.bd-ack{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:700;border-radius:var(--pill);padding:8px 14px;margin-bottom:12px;line-height:1.5}
 .bd-ack.pending{background:#f4f1f6;color:var(--ink-soft)}
 .bd-ack.ok{background:#e7f6ee;color:#146c49}
 .bd-ack.warn{background:#fff4e5;color:#8a5400;border:1px solid #f3dcb5}
-.bd-wa{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:#25d366;color:#053d1c;font-weight:800;font-size:16.5px;border-radius:var(--pill);padding:15px;box-shadow:0 12px 26px -12px rgba(37,211,102,.8)}
+.bd-wa{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:#25d366;color:#053d1c;font-weight:800;font-size:16px;border-radius:var(--pill);padding:14px;box-shadow:0 12px 26px -12px rgba(37,211,102,.8)}
 .bd-wa.urge{animation:bdPulse 2s infinite}
 @keyframes bdPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}70%{box-shadow:0 0 0 14px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
-.bd-steps{list-style:none;text-align:start;font-size:13.5px;color:var(--ink-soft);margin:16px 0 4px}
-.bd-steps li{display:flex;gap:9px;align-items:center;padding:5px 0}
+.bd-steps{list-style:none;text-align:start;font-size:13.5px;color:var(--ink-soft);margin:14px 0 4px}
+.bd-steps li{display:flex;gap:9px;align-items:center;padding:4px 0}
 .bd-steps .n{width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-size:11.5px;font-weight:800;display:grid;place-items:center;flex:none}
-.bd-club{display:block;margin-top:14px;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink-soft);line-height:1.6}
+.bd-club{display:block;margin-top:12px;background:var(--primary-soft2);border:1px dashed var(--primary);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink-soft);line-height:1.6}
 .bd-club b{color:var(--primary-dark)}
 .bd-reorder{background:#eef6ff;border:1px solid #c9def5;color:#14507f}
 .bd-reorder b{color:#0d3d63}
-.bd-back{background:none;border:none;color:var(--primary-dark);font-weight:700;font-size:13.5px;cursor:pointer;margin-top:12px;text-decoration:underline}
+.bd-back{background:none;border:none;color:var(--primary-dark);font-weight:700;font-size:13.5px;cursor:pointer;margin-top:10px;text-decoration:underline}
 
 /* ---------- FLOATING / LIGHTBOX ---------- */
-.floating-bar{position:fixed;bottom:14px;inset-inline:14px;display:flex;gap:10px;z-index:80}
+.floating-bar{position:fixed;bottom:14px;inset-inline:14px;display:flex;gap:10px;z-index:80;transition:transform .25s ease,opacity .2s ease}
+.floating-bar.hide{transform:translateY(160%);opacity:0;pointer-events:none}
 .floating-bar .btn{flex:1;box-shadow:var(--shadow)}
-.wa-float{position:fixed;inset-inline-start:14px;bottom:84px;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-size:26px;box-shadow:0 8px 20px rgba(0,0,0,.2);z-index:79}
+.wa-float{position:fixed;inset-inline-start:14px;bottom:80px;width:52px;height:52px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-size:25px;box-shadow:0 8px 20px rgba(0,0,0,.2);z-index:79}
 .lightbox{position:fixed;inset:0;background:rgba(20,15,22,.9);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
 .lightbox.open{display:flex}
 .lightbox img{max-width:92vw;max-height:86vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -409,7 +355,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0
 .lb-prev{inset-inline-end:14px;top:50%;transform:translateY(-50%)}
 .lb-next{inset-inline-start:14px;top:50%;transform:translateY(-50%)}
 .lb-counter{position:absolute;bottom:18px;inset-inline-start:50%;transform:translateX(50%);color:#fff;font-size:14px}
-html.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+html.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 html.js .reveal.show{opacity:1;transform:none}
 html.slow .reveal,html.slow .reveal.show{opacity:1;transform:none;transition:none}
 @media(prefers-reduced-motion:reduce){
@@ -418,161 +364,73 @@ html.js .reveal{opacity:1;transform:none;transition:none}
 .pg-track{transition:none}
 .zll-spinner,.bd-wa.urge,.bd-done.show{animation:none}
 }
-footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:40px 0 120px;color:var(--muted);text-align:center;font-size:13.5px}
-footer .footer-mark{font-family:var(--font-lat);font-weight:800;color:var(--ink);font-size:20px;margin-bottom:8px}
+footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:30px 0 110px;color:var(--muted);text-align:center;font-size:13px}
+footer .footer-mark{font-family:var(--font-lat);font-weight:800;color:var(--ink);font-size:19px;margin-bottom:6px}
 footer .footer-mark b{color:var(--primary)}
-footer .pay-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+footer .f-contact{margin:8px 0;font-size:13.5px;color:var(--ink-soft);font-weight:700}
+footer .f-contact a{color:var(--primary-dark);text-decoration:underline}
+footer .pay-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}
 footer .pay{background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 10px;font-size:11.5px;font-weight:700;color:var(--ink-soft)}
-footer .privacy{margin-top:10px;font-size:12px;max-width:640px;margin-inline:auto;line-height:1.7}
-
-/* ---------- ORDER SECTION ---------- */
-.order-variants-grid{display:grid;grid-template-columns:1fr;gap:8px}
-.order-variant-card{border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s;background:#fff;position:relative}
-.order-variant-card:hover{border-color:var(--primary)}
-.order-variant-card.active{border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 1px var(--primary)}
-.order-variant-card .ov-main{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.order-variant-card .ov-left{min-width:0}
-.order-variant-card .ov-right{text-align:center;flex:0 0 auto}
-.order-variant-card .ov-units{font-weight:800;font-size:16px;display:block;color:var(--ink);line-height:1.3}
-.order-variant-card .ov-boxes{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:700;line-height:1.55}
-.order-variant-card .ov-ship{display:inline-block;font-size:11.5px;font-weight:800;color:var(--primary-dark);margin-top:2px}
-.order-variant-card .ov-price{font-weight:800;font-size:19px;color:var(--primary-dark);display:block;line-height:1.2}
-.order-variant-card .ov-unit{display:block;font-size:10.5px;color:var(--muted);font-weight:600;line-height:1.5}
-.order-variant-card .ov-save{display:inline-block;background:#e7f6ee;color:#146c49;font-size:11px;font-weight:800;padding:2px 9px;border-radius:var(--pill);margin-top:6px}
-.order-variant-card .ov-note{display:block;font-size:10.5px;font-weight:700;color:#a06a1e;background:#fff8e6;border:1px solid #f0dca8;border-radius:8px;padding:3px 8px;margin-top:6px;line-height:1.55}
-.order-variant-card .ov-badge{position:absolute;top:-8px;inset-inline-start:12px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:1px 9px;border-radius:var(--pill);line-height:1.7}
-.order-variant-card .ov-check{position:absolute;top:-6px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
-.order-variant-card.active .ov-check{display:flex}
-
-/* Authenticity / risk-reversal block above the submit button */
-.order-assure{background:#f4fbf7;border:1px solid #cdeadc;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:12.5px;color:#1c6b4b;line-height:1.65}
-.order-assure b{color:#12683f}
-.order-assure .oa-row{display:flex;gap:7px;align-items:flex-start}
-.order-assure .oa-row+.oa-row{margin-top:4px}
-
-.order-compact-input{width:100%;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:#faf8f9;font-size:16px;transition:.2s;color:var(--ink)}
-.order-compact-input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(226,74,139,.12)}
-.order-compact-input.error{border-color:#c0392b}
-.order-compact-label{display:block;font-weight:600;font-size:13px;color:var(--ink-soft);margin-bottom:2px}
-.order-compact-err{font-size:11px;color:#c0392b;display:none;margin-top:2px}
-.order-compact-err.visible{display:block}
-.order-compact-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sum-line{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;color:var(--ink-soft);padding:2px 0}
-.sum-line .sum-val{font-weight:700;color:var(--ink);white-space:nowrap}
-.sum-line.total{border-top:1px dashed var(--line);margin-top:6px;padding-top:7px;font-size:15px}
-.sum-line.total .sum-val{color:var(--primary-dark);font-size:19px;font-weight:800}
-.sum-line.total span:first-child{font-weight:700;color:var(--ink)}
-
-/* ---------- DYNAMIC WILAYA / SHIPPING ---------- */
-.wilaya-field{position:relative}
-.wilaya-suggestions{display:none;position:absolute;top:100%;inset-inline:0;z-index:100;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:4px;overflow:hidden;box-shadow:0 12px 30px rgba(43,38,48,.12);max-height:230px;overflow-y:auto}
-.wilaya-suggestions.show{display:block}
-.wilaya-suggestion{width:100%;display:block;border:0;border-bottom:1px solid #f3e9ee;background:#fff;color:var(--ink);padding:10px 12px;text-align:right;cursor:pointer;font-size:14px}
-.wilaya-suggestion:last-child{border-bottom:0}
-.wilaya-suggestion .ws-lat{color:var(--muted);font-size:12px;margin-inline-start:6px;direction:ltr;unicode-bidi:isolate}
-.wilaya-suggestion:hover,.wilaya-suggestion:focus{background:var(--primary-soft);color:var(--primary-dark)}
-.shipping-options{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px}
-.shipping-option{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:.18s}
-.shipping-option:has(input:checked){border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 1px rgba(226,74,139,.08)}
-.shipping-option input{accent-color:var(--primary);flex:none}
-.shipping-option span{min-width:0}
-.shipping-option strong{display:block;font-size:12px;line-height:1.4}
-.shipping-option small{display:block;color:var(--primary-dark);font-weight:800;font-size:13px;line-height:1.35;margin-top:2px}
-.shipping-checker{margin-top:7px;padding:8px 11px;border-radius:10px;background:var(--primary-soft2);border:1px dashed #e7b7cd;color:var(--ink-soft);font-size:12.5px;line-height:1.55}
-.shipping-checker.ready{background:#f4fbf7;border-color:#cdeadc;color:#1c6b4b}
-.shipping-checker strong{color:var(--primary-dark)}
+footer .privacy{margin-top:8px;font-size:11.5px;max-width:640px;margin-inline:auto;line-height:1.65}
 
 @media(max-width:900px){
-.product{grid-template-columns:1fr;gap:24px}
+.product{grid-template-columns:1fr;gap:20px}
 .gallery{position:static}
-.features,.guarantees,.ing-grid{grid-template-columns:repeat(2,1fr)}
-.why-grid,.contact-layout,.offer-cards{grid-template-columns:1fr}
-.occ-grid{grid-template-columns:repeat(2,1fr)}
+.features,.stats{grid-template-columns:repeat(2,1fr)}
 }
-/* ---------- MOBILE HERO ----------
-   The 3200 DA price AND the sentence that explains what it buys
-   («علبة وحدة = 4 ماسكات») must both be on the first screen, and they
-   must be adjacent. A price seen without the quantity is the exact
-   misreading that was burning ad spend, so on phones the buybox becomes
-   a flex column ordered: title → box picture → price → what it buys →
-   CTA. Nothing is removed, only resequenced. */
+/* ---------- MOBILE ----------
+   NO max-height on .pg-main: the product photo is a full 1:1 square.
+   The fold is won by a 65px header (no quicknav) and a single scrollable
+   row of occasion chips — not by shrinking the product. */
 @media(max-width:900px){
-.breadcrumb{display:none}
-.promo{font-size:12.5px;padding:6px 10px}
-.header{padding:8px 0}
-.quicknav{padding:7px 0;gap:6px}
-.quicknav button{padding:6px 13px;font-size:13px}
-.product{padding-top:6px;gap:12px}
-.pg-main{max-height:25vh}
-.pg-dots{margin-top:6px}
+.product{padding-top:6px;gap:10px}
 .buybox{display:flex;flex-direction:column}
 .buybox .vendor{order:0;margin-bottom:1px;font-size:12px}
-/* One scrollable row, never two: a second row of occasion chips costs
-   ~26px of the only screen where the price has to be visible. */
 .buybox .ev-tag{order:1;gap:4px;margin-bottom:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .buybox .ev-tag::-webkit-scrollbar{display:none}
 .buybox .ev-tag span{font-size:11px;padding:2px 8px;flex:0 0 auto}
-.buybox h1{order:2;font-size:clamp(20px,5.4vw,26px);margin-bottom:6px}
+.buybox h1{order:2;font-size:clamp(20px,5.4vw,26px);margin-bottom:5px}
 .buybox .bx{order:3;margin-bottom:6px;padding:8px 10px 7px}
-.buybox .bx-head{font-size:13.5px;margin-bottom:4px}
+.buybox .bx-head{font-size:13.5px}
 .buybox .bx-foot{font-size:11.5px}
-.buybox .price-row{order:4;margin-bottom:6px}
+.buybox .price-row{order:4;margin-bottom:7px}
 .buybox .price-now{font-size:27px}
-.buybox .price-what{order:5;margin-bottom:8px;padding:7px 10px;font-size:13.5px;line-height:1.7}
-.buybox #heroAddCart{order:6;margin-bottom:8px;padding:14px}
-.buybox .availability{order:7;text-align:center;margin-bottom:14px}
+.buybox .price-what{order:5;margin-bottom:9px;padding:8px 10px;font-size:13.5px;line-height:1.7}
+.buybox #heroAddCart{order:6;margin-bottom:9px}
+.buybox .availability{order:7;text-align:center;margin-bottom:10px}
 .buybox .hero-kicker{order:8}
-.buybox .box-equation{order:9}
-.buybox .hero-note{order:10}
-.buybox .buy-desc{order:11}
-.buybox .ship-note{order:12}
-.buybox .trust-row{order:13}
+.buybox .ship-note{order:9}
+.buybox .trust-row{order:10}
 }
 @media(max-width:600px){
-.section{padding:40px 0}
-.features,.guarantees,.ing-grid{grid-template-columns:1fr 1fr}
+.section{padding:30px 0}
 .tl-grid{grid-template-columns:1fr 1fr;gap:12px}
-.kpi,.form-grid,.cmp,.pk-grid{grid-template-columns:1fr}
-.pg-nav{width:44px;height:44px}
-.card{padding:18px}
+.card{padding:14px}
 .rev-item{width:78vw}
-.occ-grid{gap:8px}
-.occ{padding:9px 10px;gap:8px}
-.occ .occ-em{font-size:18px}
-.occ b{font-size:12.5px}
-.occ small{font-size:10.5px}
+.wk{gap:5px}
+.wk-i{padding:8px 2px}
+.wk-i b{font-size:15px}
+.wk-i span{font-size:9.5px}
+.stat{padding:12px 8px}
+.stat b{font-size:24px}
 .floating-bar{bottom:calc(10px + env(safe-area-inset-bottom));gap:8px}
 .floating-bar .btn{padding:11px 12px;font-size:14px}
-footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
 }
 </style>
 </head>
 <body>
 
-<div class="promo">📦 <b>علبة وحدة = 4 ماسكات = <span class="lat">3200 DA</span></b> · 💵 الدفع عند الاستلام · 🚚 التوصيل لـ58 ولاية</div>
+<div class="promo">📦 <b>علبة وحدة = 4 ماسكات = <span class="lat">3200 DA</span></b> · 💵 الدفع عند الاستلام · 🚚 58 ولاية</div>
 
 <header class="header">
   <div class="container header-wrap">
     <div class="logo lat">bio<b>dance</b></div>
     <button class="top-cta" data-scroll="#order">اطلبي الآن</button>
   </div>
-  <div class="container">
-    <nav class="quicknav" aria-label="روابط سريعة">
-      <button data-scroll="#buy">السعر</button>
-      <button data-scroll="#order">اطلبي الآن</button>
-      <button data-scroll="#whats-inside">شنو في العلبة؟</button>
-      <button data-scroll="#occasions">مناسبتك؟</button>
-      <button data-scroll="#how-it-works" id="navHowItWorks" hidden>ليلة المناسبة</button>
-      <button data-scroll="#prep">روزنامة التحضير</button>
-      <button data-scroll="#reviews">آراء البنات</button>
-      <button data-scroll="#contact">استفسار</button>
-    </nav>
-  </div>
 </header>
 
-<div class="container"><div class="breadcrumb">الرئيسية / <span>علبة ماسكات التحضير قبل المناسبة</span></div></div>
-
-<!-- ================= 1. HERO — ONE BOX, ONE PRICE ================= -->
+<!-- ================= 1. HERO ================= -->
 <section class="container product" id="buy">
   <div class="gallery">
     <div class="pg" id="pg">
@@ -582,7 +440,6 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
         <span class="pg-counter lat" id="pgCounter">1 / 12</span>
         <button class="pg-nav prev" type="button" aria-label="السابق">›</button>
         <button class="pg-nav next" type="button" aria-label="التالي">‹</button>
-        <!-- LCP image lives in the HTML, not in JS. -->
         <div class="pg-track" id="pgTrack"><div class="pg-slide active"><img src="product1.jpg" alt="علبة ماسك بايودانس بالكولاجين — 4 ماسكات" width="800" height="800" fetchpriority="high" decoding="async"></div></div>
       </div>
       <div id="pgNavStrip"></div>
@@ -594,56 +451,40 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
       <span>💍 عرس</span><span>💐 خطوبة</span><span>🎉 حنة</span><span>🌙 عيد</span><span>📸 تصويرة</span><span>☕ ضيوف</span><span>🎓 تخرّج</span><span>💼 مقابلة</span>
     </div>
     <h1>علبة ماسك بايودانس بالكولاجين — <span style="color:var(--primary-dark)">فيها 4 ماسكات</span></h1>
-    <p class="hero-kicker">حطّي ماسك قبل ما ترقدي، وفي الصباح تلقاي بشرتك <b>مرطّبة، ناعمة ومشدودة</b> — والمكياج يقعد عليها كيما تحبي. 🌙✨</p>
 
-    <!-- THE anti-confusion block. Same picture, same words, three times on
-         the page. Nothing here is decorative. -->
     <div class="bx">
       <div class="bx-head">📦 <b>علبة وحدة</b> فيها <b>4 ماسكات</b></div>
       <div class="bx-foot">= <b>4 استعمالات</b> · كل ماسك يُستعمل <b>مرة وحدة</b> برك</div>
     </div>
 
     <div class="price-row">
-      <span class="price-now lat" id="heroPrice">3 200 DA</span>
+      <span class="price-now lat" id="heroPrice">3 200 DA</span>
       <span class="price-was lat" id="heroCompare"></span>
       <span class="discount-badge lat" id="heroDiscount"></span>
     </div>
     <div class="price-what" id="heroPriceWhat"></div>
 
-    <div class="hero-note" id="heroNote"></div>
-
     <div class="availability">✓ متوفر — الدفع عند الاستلام داخل الجزائر</div>
-    <p class="buy-desc">ماسك هيدروجيل بالكولاجين منخفض الجزيئات — ترطيب عميق، إشراقة فورية وملمس أنعم وأكثر امتلاءً. <b>الطرد اللي يوصلك = علبة مغلقة فيها 4 ماسكات.</b></p>
-
-    <!-- The mechanism in 3 beats. -->
-    <div class="box-equation" id="boxEquation">
-      <span class="be-part"><b class="be-top">🌙</b><span class="be-sub">حطّي ماسك قبل ما ترقدي</span></span>
-      <span class="be-eq">→</span>
-      <span class="be-part"><b class="be-top">⏳</b><span class="be-sub">يشفّ في 3-4 ساعات</span></span>
-      <span class="be-eq">→</span>
-      <span class="be-part"><b class="be-top">✨</b><span class="be-sub">صباح المناسبة: بشرة جاهزة</span></span>
-    </div>
-
-    <div class="ship-note">⏰ <b>مناسبتك قريبة؟ اطلبي بكري.</b><br>التوصيل عادةً من <b>2 إلى 5 أيام</b> حسب الولاية — وسعر التوصيل يبان لك مباشرة كي تختاري ولايتك في نموذج الطلب.</div>
+    <p class="hero-kicker">حطّي ماسك قبل ما ترقدي، وفي الصباح تلقاي بشرتك <b>مرطّبة، ناعمة ومشدودة</b> — والمكياج يقعد عليها كيما تحبي. 🌙✨</p>
+    <div class="ship-note">⏰ <b>مناسبتك قريبة؟ اطلبي بكري.</b> التوصيل من <b>2 إلى 5 أيام</b> حسب الولاية — والسعر يبان لك كي تختاري ولايتك.</div>
     <button class="btn btn-primary btn-cart" id="heroAddCart" data-scroll="#order">اطلبي علبتك الآن ⬇ — الدفع عند الاستلام</button>
     <div class="trust-row" id="trustBadges"></div>
   </div>
 </section>
 
-<!-- ================= 2. ORDER FORM — directly under the hero ================= -->
-<section class="section band divider-top" id="order" style="padding:18px 0 26px;background:linear-gradient(180deg,#fbf4f7 0%,#fff 100%)">
+<!-- ================= 2. ORDER FORM ================= -->
+<section class="section band divider-top" id="order" style="padding:16px 0 24px;background:linear-gradient(180deg,#fbf4f7 0%,#fff 100%)">
   <div class="container" style="max-width:640px">
     <div class="card order-card" style="border-radius:16px;padding:14px 14px 18px;box-shadow:0 4px 16px rgba(226,74,139,.08);border:1px solid #f0e2ea;background:#fff">
 
-      <!-- ===== INSTANT SUCCESS SCREEN — no second page load ===== -->
+      <!-- ===== INSTANT SUCCESS SCREEN ===== -->
       <div class="bd-done" id="orderDone" role="status" aria-live="polite">
         <div class="bd-check" aria-hidden="true">✓</div>
         <h2>تم استلام طلبك بنجاح! 🎉</h2>
-        <p class="bd-lead">شكراً على ثقتك في <b class="lat">biodance</b> — نتصلو بيك قريب باش نأكّدو الطلب ونجهّزو التوصيل قبل مناسبتك.</p>
+        <p class="bd-lead">شكراً على ثقتك في <b class="lat">biodance</b> — نتصلو بيك قريب باش نأكّدو الطلب.</p>
         <div class="bd-ref">رقم الطلب: <b class="lat" id="doneRef">—</b></div>
         <div class="bd-sum" id="doneSummary"></div>
         <div class="bd-ack pending" id="doneAck"><span class="zll-spinner" style="display:inline-block;border-color:rgba(0,0,0,.15);border-top-color:var(--primary)"></span> جارٍ تأكيد تسجيل الطلب…</div>
-
         <button type="button" class="zll-btn zll-btn-retry" id="doneRetry" style="display:none;width:100%;margin-bottom:9px">🔄 إعادة المحاولة</button>
         <a class="bd-wa" id="doneWa" href="#" target="_blank" rel="noopener">📲 أكّدي طلبك الآن عبر واتساب</a>
         <ol class="bd-steps">
@@ -651,10 +492,8 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           <li><span class="n">2</span> نجهّزو الطرد ونبعثوه لولايتك 🚚</li>
           <li><span class="n">3</span> تخلّصي عند الاستلام 💵</li>
         </ol>
-        <!-- Every buyer who joins is a zero-CPA channel for the reorder
-             message before her next event. -->
         <a class="bd-club" id="doneClub" href="#" target="_blank" rel="noopener">
-          🌸 انضمّي لـ<b>نادي بايودانس</b> — نصائح لتحضير بشرتك قبل المناسبات + عروض خاصة للعضوات
+          🌸 انضمّي لـ<b>نادي بايودانس</b> — نصائح لتحضير بشرتك قبل المناسبات + عروض خاصة
         </a>
         <button type="button" class="bd-back" id="doneBack">← طلب جديد / العودة للتسوّق</button>
       </div>
@@ -662,17 +501,17 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
       <!-- ===== FORM ===== -->
       <div id="orderFormWrap">
         <div style="text-align:center;margin-bottom:10px">
-          <h2 style="font-size:clamp(20px,4vw,24px);font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em">📦 اطلبي علبتك الآن</h2>
-          <p style="font-size:14px;color:var(--ink-soft);margin:0;font-weight:600">املئي البيانات و نوصلو ليك قبل مناسبتك 🚚</p>
+          <h2 style="font-size:clamp(19px,4vw,23px);font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em">📦 اطلبي علبتك الآن</h2>
+          <p style="font-size:13.5px;color:var(--ink-soft);margin:0;font-weight:600">املئي البيانات و نوصلو ليك قبل مناسبتك 🚚</p>
         </div>
 
-        <!-- Third and last repetition of the same picture. She sees it in the
-             hero, she sees it here at the moment of decision. -->
-        <div class="bx">
-          <div class="bx-head">📦 اللي راح يوصلك: <b>علبة وحدة</b> فيها <b>4 ماسكات</b></div>
-          <div class="bx-foot">= <b>4 استعمالات</b> · السعر <b class="lat">3 200 DA</b> للعلبة + التوصيل</div>
-        </div>
-
+        <noscript>
+          <div style="background:#fff8e6;border:1px solid #f0dca8;color:#6b5312;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.8;margin-bottom:10px">
+            ⚠️ <b>باش يخدم نموذج الطلب لازم تفعّلي JavaScript.</b><br>
+            ولا اطلبي مباشرة: <a href="https://wa.me/213540732771" style="color:#8a5400;font-weight:800;text-decoration:underline">واتساب <span class="lat">0540732771</span></a>
+            · <a href="tel:0540732771" style="color:#8a5400;font-weight:800;text-decoration:underline">اتصال</a>
+          </div>
+        </noscript>
         <form id="orderForm" novalidate>
           <div class="hp-field" aria-hidden="true">
             <label for="order_website">Website</label>
@@ -683,7 +522,6 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
             ✅ تم استرجاع معلوماتك المحفوظة تلقائياً — كمّلي من وين وقفتِ.
           </div>
 
-          <!-- Returning customer: one tap refills everything from her last order. -->
           <div class="zll-note bd-reorder" id="orderReorder" role="status">
             <div id="orderReorderMsg"></div>
             <button type="button" class="zll-btn zll-btn-retry" id="orderReorderBtn" style="margin-top:7px;width:100%">🔁 نعم، عاود نفس الطلب</button>
@@ -698,63 +536,62 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
           <div class="order-compact-grid" style="margin-bottom:6px">
             <div>
               <label for="orderFullName" class="order-compact-label">👤 الاسم الكامل</label>
-              <input id="orderFullName" name="fullName" required autocomplete="name" placeholder="مثال: فاطمة" class="order-compact-input">
-              <small class="order-compact-err" id="orderNameErr">✏️ مطلوب</small>
+              <input id="orderFullName" name="fullName" required autocomplete="name" enterkeyhint="next" autocapitalize="words" maxlength="60" placeholder="مثال: فاطمة" class="order-compact-input">
+              <small class="order-compact-err" id="orderNameErr">✏️ اكتبي اسمك الكامل</small>
             </div>
             <div>
               <label for="orderPhone" class="order-compact-label">📱 رقم الهاتف</label>
-              <input id="orderPhone" name="phone" type="tel" inputmode="numeric" required placeholder="0550123456" autocomplete="tel" maxlength="14" class="order-compact-input">
-              <small class="order-compact-err" id="orderPhoneErr">📞 رقم صحيح</small>
+              <input id="orderPhone" name="phone" type="tel" inputmode="tel" required placeholder="0550123456" autocomplete="tel" enterkeyhint="next" maxlength="20" class="order-compact-input">
+              <small class="order-compact-err" id="orderPhoneErr">📞 رقم غير صحيح — مثال: 0550123456</small>
             </div>
             <div class="wilaya-field">
               <label for="orderWilaya" class="order-compact-label">🏙️ الولاية</label>
-              <input id="orderWilaya" name="wilaya" required autocomplete="address-level1" placeholder="اكتبي ولايتك بالعربية أو بالفرنسية..." class="order-compact-input" aria-autocomplete="list" aria-controls="wilayaSuggestions">
+              <input id="orderWilaya" name="wilaya" required autocomplete="address-level1" enterkeyhint="next" placeholder="اكتبي ولايتك بالعربية أو بالفرنسية..." class="order-compact-input" aria-autocomplete="list" aria-controls="wilayaSuggestions" role="combobox" aria-expanded="false">
               <div id="wilayaSuggestions" class="wilaya-suggestions" role="listbox"></div>
-              <small class="order-compact-err" id="orderWilayaErr">📍 اختاري ولايتك من القائمة</small>
+              <small class="order-compact-err" id="orderWilayaErr">📍 اختاري ولايتك من القائمة اللي تطلع</small>
             </div>
             <div>
               <label for="orderCommune" class="order-compact-label">🏘️ البلدية</label>
-              <input id="orderCommune" name="commune" required autocomplete="address-level2" placeholder="مثال: سيدي أمحمد" class="order-compact-input">
-              <small class="order-compact-err" id="orderCommuneErr">📍 مطلوبة</small>
+              <input id="orderCommune" name="commune" required autocomplete="address-level2" enterkeyhint="done" maxlength="60" placeholder="مثال: سيدي أمحمد" class="order-compact-input">
+              <small class="order-compact-err" id="orderCommuneErr">📍 اكتبي اسم البلدية</small>
             </div>
           </div>
 
           <div style="margin-bottom:6px">
             <div class="order-compact-label">🚚 طريقة التوصيل</div>
-            <div class="shipping-options" id="shippingOptions">
-              <label class="shipping-option">
+            <div class="shipping-options" id="shippingOptions" role="radiogroup" aria-label="طريقة التوصيل">
+              <label class="shipping-option is-checked">
                 <input type="radio" name="shippingMode" value="home" checked>
-                <span>
+                <span class="so-body">
                   <strong>🏠 إلى المنزل</strong>
-                  <small id="homeShippingPrice" class="lat">—</small>
+                  <em>الطرد يوصلك حتى للباب</em>
                 </span>
+                <span class="so-price"><small id="homeShippingPrice" class="lat pending">حسب ولايتك</small></span>
               </label>
               <label class="shipping-option">
                 <input type="radio" name="shippingMode" value="office">
-                <span>
-                  <strong>🏢 إلى المكتب / Stop Desk</strong>
-                  <small id="officeShippingPrice" class="lat">—</small>
+                <span class="so-body">
+                  <strong>🏢 مكتب التوصيل</strong>
+                  <em><span class="lat">Stop Desk</span> — تروحي تجبدي الطرد من المكتب</em>
+                </span>
+                <span class="so-price">
+                  <small id="officeShippingPrice" class="lat pending">حسب ولايتك</small>
+                  <span class="so-save" id="officeShippingSave"></span>
                 </span>
               </label>
             </div>
-
             <div id="shippingChecker" class="shipping-checker" aria-live="polite">
               <span id="shippingCheckerText">📍 اكتبي ولايتك باش نشوفولك سعر التوصيل.</span>
             </div>
           </div>
 
           <div style="background:var(--primary-soft2);border-radius:10px;padding:9px 13px;margin:8px 0;border:1px solid var(--line)">
-            <div id="orderSummary" aria-live="polite"></div>
+            <div id="orderSummary"></div>
           </div>
 
-          <!-- Risk reversal, right where she decides.
-               NOTE: the open-parcel line is commented out — enable it ONLY if
-               your courier actually allows inspection before payment. -->
           <div class="order-assure">
-            <div class="oa-row"><span>✅</span><span><b>منتج أصلي 100%</b> — <span class="lat">Biodance Bio-Collagen Real Deep Mask</span> الكوري الأصلي.</span></div>
-            <div class="oa-row"><span>📦</span><span><b>علبة كاملة مغلقة</b> فيها <b>4 ماسكات</b> — ماشي ماسك واحد.</span></div>
+            <div class="oa-row"><span>📦</span><span><b>علبة كاملة مغلقة</b> فيها <b>4 ماسكات</b> — منتج أصلي <span class="lat">100%</span>.</span></div>
             <div class="oa-row"><span>💵</span><span><b>ما تخلّصي والو قبل</b> — تدفعي فقط كي يوصلك الطرد في يدك.</span></div>
-            <!-- <div class="oa-row"><span>🔎</span><span><b>افتحي الطرد وتفقّدي المنتج</b> قبل ما تخلّصي.</span></div> -->
             <div class="oa-row"><span>↩️</span><span>ما عجبكش؟ <b>ترجعيه للموزّع</b> وما تخلّصي والو.</span></div>
           </div>
 
@@ -774,243 +611,103 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
             📴 انقطع الاتصال بالإنترنت. <b>معلوماتك محفوظة</b> — بمجرّد رجوع الاتصال أعيدي المحاولة.
           </div>
 
-          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
-            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">📦 العلبة فيها 4 ماسكات</span>
-            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">💵 دفع عند الاستلام</span>
-            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🚚 السعر حسب الولاية</span>
-            <span style="font-size:12px;font-weight:600;color:var(--ink-soft)">🌸 للبشرة الحساسة</span>
-          </div>
-          <p style="text-align:center;font-size:11px;color:var(--muted);margin:6px 0 0;line-height:1.4">🔒 بياناتك آمنة — نستخدمها فقط لتأكيد طلبك</p>
+          <p style="text-align:center;font-size:11px;color:var(--muted);margin:10px 0 0;line-height:1.5">🔒 بياناتك آمنة — نستخدمها فقط لتأكيد طلبك · 💬 سؤال؟ <strong class="lat" style="color:var(--primary-dark)">0540732771</strong></p>
         </form>
       </div>
-    </div>
-
-    <div style="text-align:center;margin-top:10px;font-size:13px;color:var(--ink-soft)">
-      💬 سؤال؟ <a href="#contact" style="color:var(--primary-dark);font-weight:700;text-decoration:underline">اتصل بنا</a> أو <strong style="color:var(--primary-dark)" class="lat">0540732771</strong>
     </div>
   </div>
 </section>
 
-<!-- ================= 3. WHAT'S IN THE PARCEL =================
-     A woman who has never bought skincare online does not know whether
-     "ماسك" means one sheet or one box. Every peso of CPA lost to that
-     question is lost here or nowhere, so this section answers it in
-     literal terms, with the same picture used in the hero. -->
+<!-- ================= 3. WHAT'S IN THE PARCEL (compressed) =================
+     Was a full section plus a separate 4-week "prep calendar" section
+     (1141px + 1153px). Both said the same thing — the box IS the routine —
+     so they are now one equation and one 4-step strip. -->
 <section class="section divider-top cv" id="whats-inside">
   <div class="container">
     <h2 class="section-title reveal">شنو راح يوصلك في الطرد؟ 📦</h2>
-    <p class="section-text reveal">باش ما تكونش حيرة — هذا بالضبط واش تشري.</p>
 
     <div class="pk-eq reveal">
       <div class="pe-line">
         <span>📦 <b>علبة وحدة</b></span><span class="pe-op">=</span>
         <span><b>4 ماسكات</b></span><span class="pe-op">=</span>
         <span><b>4 استعمالات</b></span><span class="pe-op">=</span>
-        <span><b class="lat">3 200 DA</b></span>
+        <span><b class="lat">3 200 DA</b></span>
       </div>
-      <div class="pe-sub">يعني <b class="lat">800 DA</b> للماسك الواحد · يزيد سعر التوصيل حسب ولايتك · 💵 الدفع عند الاستلام</div>
+      <div class="pe-sub">يعني <b class="lat">800 DA</b> للماسك الواحد · كل ماسك مغلّف وحدو ويُستعمل مرة وحدة · + التوصيل حسب ولايتك</div>
     </div>
 
-    <div class="bx bx-lg reveal" style="margin-top:18px">
-      <div class="bx-head">📦 داخل العلبة تلقاي <b>4 ماسكات</b> مغلّفين كل واحد وحدو</div>
-      <div class="bx-foot">ماسك كل أسبوع · والماسك الأخير <b>ليلة المناسبة</b> ✨</div>
-    </div>
-
-    <div class="grid pk-grid" style="margin-top:22px">
-      <article class="card pk reveal"><div class="pk-ic">📦</div><h3>علبة مغلقة أصلية</h3><p>يوصلك طرد فيه علبة <span class="lat">Biodance</span> أصلية مغلقة — ماشي ماسكات مفرّقة.</p></article>
-      <article class="card pk reveal"><div class="pk-ic">🧖‍♀️</div><h3>4 ماسكات داخلها</h3><p>كل ماسك في كيس مغلّف وحدو. تفتحي واحد كي تحتاجيه وتخلّي الباقي.</p></article>
-      <article class="card pk reveal"><div class="pk-ic">1️⃣</div><h3>كل ماسك = استعمال واحد</h3><p>يُستعمل مرة وحدة ومن بعد يترمى. 4 ماسكات = <b>4 ليالي تحضير</b>.</p></article>
+    <div class="wk reveal">
+      <div class="wk-i"><b>1</b><span>قبل 4 أسابيع</span></div>
+      <div class="wk-i"><b>2</b><span>قبل 3 أسابيع</span></div>
+      <div class="wk-i"><b>3</b><span>قبل أسبوعين</span></div>
+      <div class="wk-i night"><b>4</b><span>ليلة المناسبة ✨</span></div>
     </div>
 
     <div class="pk-no reveal">
-      ❗ <b>ما نبيعوش ماسك واحد بوحدو.</b> أصغر طلب هو <b>علبة وحدة (4 ماسكات) بـ<span class="lat">3 200 DA</span></b> + التوصيل.
-    </div>
-
-    <div style="text-align:center;margin-top:20px">
-      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">اطلبي علبتك ⬇ — <span class="lat">3 200 DA</span></button>
+      ❗ <b>ما نبيعوش ماسك واحد بوحدو.</b> أصغر طلب هو <b>علبة وحدة (4 ماسكات) بـ<span class="lat">3 200 DA</span></b> + التوصيل.<br>
+      ⏳ <b>عندك غير أيام؟</b> جرّبي ماسك قبل بأيام وخلّي الأخير ليلة المناسبة — ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.
     </div>
   </div>
 </section>
 
-<!-- ================= 4. WHAT SHE ACTUALLY WINS ON THE NIGHT ================= -->
+<!-- ================= 4. PHOTOS: benefits + ingredients =================
+     Two separate sections before (697px + 692px, each with its own heading
+     and section padding). Same 8 photo cards, one wrapper now. -->
 <section class="section band divider-top cv">
   <div class="container">
-    <h2 class="section-title reveal">واش تربحي صباح المناسبة؟</h2>
-    <p class="section-text reveal">ماشي وعود — هذي بالضبط الفروقات اللي تحسّي بيها كي تحضّري بشرتك ليلة قبل.</p>
-    <div class="grid features">
-      <article class="card feature-card reveal"><div class="icon">💄</div><h3>المكياج يقعد أحسن</h3><p>على بشرة مرطّبة، الفوندوتان يتوزّع أملس وما يبانش التقشّر.</p></article>
-      <article class="card feature-card reveal"><div class="icon">💧</div><h3>ما تحسّيش بالجفاف</h3><p>ترطيب عميق يدوم — بشرتك ما تبقاش مشدودة ولا خشنة.</p></article>
-      <article class="card feature-card reveal"><div class="icon">📸</div><h3>إشراقة في الصور</h3><p>ملمس أنعم وإشراقة طبيعية تبان في تصاور المناسبة.</p></article>
-      <article class="card feature-card reveal"><div class="icon">😌</div><h3>راحة بال</h3><p>ما تقلقيش على بشرتك في اليوم الكبير — راهي محضّرة.</p></article>
-    </div>
+    <h2 class="section-title reveal">علاش يخدم؟ 💧</h2>
+    <p class="section-text reveal">تركيبة هيدروجيل بالكولاجين — ترطيب عميق وملمس أنعم، لطيفة حتى على البشرة الحساسة.</p>
+    <div class="grid features" id="benefitsGrid"></div>
+    <h3 class="sub-title reveal">المكوّنات الأساسية</h3>
+    <div class="grid features" id="ingGrid"></div>
   </div>
 </section>
 
-<!-- ================= 5. WHICH EVENT IS YOURS? =================
-     The page must not read as "for brides". A bride buys once in her life;
-     a woman who ATTENDS weddings buys every summer — and she is photographed,
-     posted and looked over just the same. -->
-<section class="section divider-top cv" id="occasions">
-  <div class="container">
-    <h2 class="section-title reveal">واش هي مناسبتك أنتِ؟ 💫</h2>
-    <p class="section-text reveal">ماشي غير العرايس — <b>كل وحدة عندها نهار تحب تكون فيه في أحسن حالة.</b></p>
-    <div class="occ-grid">
-      <div class="occ reveal"><span class="occ-em">💍</span><span><b>عرس</b><small>تاعك، ولا تاع صاحبتك وأختك</small></span></div>
-      <div class="occ reveal"><span class="occ-em">💐</span><span><b>خطوبة</b><small>ديالك ولا في العائلة</small></span></div>
-      <div class="occ reveal"><span class="occ-em">🎉</span><span><b>ليلة الحنة</b><small>الليلة اللي كامل الصور فيها</small></span></div>
-      <div class="occ reveal"><span class="occ-em">☕</span><span><b>ضيوف والخطّابة</b><small>كي تجي العائلة تشوفك</small></span></div>
-      <div class="occ reveal"><span class="occ-em">🌙</span><span><b>العيد</b><small>الفطر والأضحى والزيارات</small></span></div>
-      <div class="occ reveal"><span class="occ-em">📸</span><span><b>جلسة تصوير</b><small>صور، ريلز ولا فيديو</small></span></div>
-      <div class="occ reveal"><span class="occ-em">🎓</span><span><b>التخرّج</b><small>حفل الشهادة والصور</small></span></div>
-      <div class="occ reveal"><span class="occ-em">💼</span><span><b>مقابلة عمل</b><small>الانطباع الأول ما يتعاودش</small></span></div>
-      <div class="occ reveal"><span class="occ-em">🎂</span><span><b>عيد ميلاد</b><small>تاعك ولا تاع ولادك</small></span></div>
-      <div class="occ reveal"><span class="occ-em">👶</span><span><b>عقيقة / سبوع</b><small>مناسبة العائلة الكبيرة</small></span></div>
-      <div class="occ reveal"><span class="occ-em">✈️</span><span><b>سفر ولا عطلة</b><small>باش تكون صور العطلة أحسن</small></span></div>
-      <div class="occ reveal"><span class="occ-em">💞</span><span><b>ذكرى الزواج</b><small>ولا أي نهار خاص بيك</small></span></div>
-    </div>
-    <div class="occ-any reveal">
-      🎊 <b>ونادراً كي تكون مناسبة وحدة برك:</b> عرس صاحبتك في جوان، عرس بنت خالتك في جويلية، والعيد بعدهم…<br>
-      وحتى كي ما تكونش عندك مناسبة قريبة — <b>المناسبات ما تسبقش تعلمك.</b> ماسك كل أسبوع يخلّي بشرتك جاهزة في أي وقت.
-    </div>
-    <div style="text-align:center;margin-top:20px">
-      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">اطلبي علبتك ⬇ — <span class="lat">3 200 DA</span></button>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6. THE PRICE — one box, or the same box twice ================= -->
-<section class="section band divider-top" id="offers">
-  <div class="container">
-    <h2 class="section-title reveal">السعر واضح: <span style="color:var(--primary-dark)">علبة وحدة بـ <span class="lat">3 200 DA</span></span> 💗</h2>
-    <p class="section-text reveal">علبة وحدة فيها <b>4 ماسكات</b> = <b>4 استعمالات</b>. ماشي اشتراك، ماشي حاجة معقّدة — شراء مرة وحدة.</p>
-
-    <div class="pick-help reveal">
-      👈 <b>ما تحيّريش:</b> أغلب البنات ياخذو <b>علبة وحدة</b>.<br>
-      خذي <b>علبتين</b> غير إذا عندك أكثر من مناسبة، ولا تحبي تقسميهم مع أختك ولا صاحبتك.
-    </div>
-
-    <div class="offer-cards" id="offerCards"></div>
-    <div class="offer-ship reveal">🚚 <b>سعر التوصيل يزيد حسب الولاية</b> وطريقة الاستلام (المنزل أو المكتب) — يبان لك مباشرة كي تختاري ولايتك في نموذج الطلب. 💵 الدفع عند الاستلام.</div>
-  </div>
-</section>
-
-<section class="section divider-top" id="reviews">
-  <div class="container">
-    <h2 class="section-title reveal">بنات درّوه قبل مناسبتهم 💬</h2>
-    <p class="section-text reveal">لقطات حقيقية من تفاعل الزبونات على فيسبوك. اضغطي للتكبير.</p>
-    <div class="rev-wrap" id="revWrap"></div>
-  </div>
-</section>
-
-<!-- ================= NIGHT-BEFORE TIMELINE =================
-     Replaces any before/after slider. Two reasons:
-     1. Meta's Personal Health & Appearance policy prohibits before/after
-        imagery, and landing pages are reviewed alongside the creative.
-     2. It shows the MECHANISM instead of claiming a result — and she can
-        verify it herself the night the parcel arrives.
-     The section hides itself automatically until the photos exist.
-     Not `hidden` at rest: a display:none section has zero size, so the
+<!-- ================= 5. NIGHT-BEFORE TIMELINE (photos) =================
+     Shows the MECHANISM instead of claiming a result — Meta's Personal
+     Health & Appearance policy prohibits before/after imagery, and landing
+     pages are reviewed alongside the creative.
+     The section hides itself automatically until the photos exist. Not
+     `hidden` at rest: a display:none section has zero size, so the
      IntersectionObserver that builds it on scroll would never fire. -->
 <section class="section divider-top" id="how-it-works">
   <div class="container">
     <h2 class="section-title reveal">ليلة المناسبة — ساعة بساعة 🌙</h2>
-    <p class="section-text reveal">الماسك يولّي <b>شفاف</b> كي تمتص بشرتك الكولاجين والإسانس — هكذا تشوفي بعينيك بلي خدم قبل ما ترقدي.</p>
+    <p class="section-text reveal">الماسك يولّي <b>شفاف</b> كي تمتص بشرتك الكولاجين — هكذا تشوفي بعينيك بلي خدم.</p>
     <div class="tl-grid" id="tlGrid"></div>
     <p class="footnote reveal">صور حقيقية للمنتج — النتيجة تختلف من بشرة لأخرى.</p>
   </div>
 </section>
 
-<!-- ================= PREPARED vs NOT PREPARED ================= -->
-<section class="section band divider-top cv">
+<!-- ================= 6. REVIEWS (photos) ================= -->
+<section class="section band divider-top" id="reviews">
   <div class="container">
-    <h2 class="section-title reveal">نفس اللبسة، نفس المكياج… بشرتين مختلفين</h2>
-    <p class="section-text reveal">الفرق ماشي في المكياج — في البشرة اللي تحتو.</p>
-    <div class="cmp">
-      <div class="cmp-col cmp-bad reveal">
-        <h3>😕 بشرة ما تحضّراتش</h3>
-        <ul>
-          <li><span>❌</span><span>الفوندوتان يتعلّق ويبان متقشّر</span></li>
-          <li><span>❌</span><span>إحساس بالشدّ والجفاف طول السهرة</span></li>
-          <li><span>❌</span><span>البشرة تبان باهتة في الصور والفلاش</span></li>
-          <li><span>❌</span><span>لازم تعاودي المكياج أكثر من مرة</span></li>
-          <li><span>❌</span><span>قلق وتوتر في اليوم الكبير</span></li>
-        </ul>
-      </div>
-      <div class="cmp-col cmp-good reveal">
-        <h3>✨ بشرة محضّرة بالماسك</h3>
-        <ul>
-          <li><span>✅</span><span>الفوندوتان يتوزّع أملس ويقعد أحسن</span></li>
-          <li><span>✅</span><span>ترطيب عميق وإحساس مريح</span></li>
-          <li><span>✅</span><span>إشراقة طبيعية تبان في التصاور</span></li>
-          <li><span>✅</span><span>ملمس ناعم وممتلئ</span></li>
-          <li><span>✅</span><span>تدخلي للمناسبة وأنتِ مرتاحة</span></li>
-        </ul>
-      </div>
-    </div>
-    <p class="footnote reveal">مقارنة وصفية للإحساس والمظهر — النتائج تختلف من بشرة لأخرى.</p>
-    <div style="text-align:center;margin-top:20px">
-      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">حضّري بشرتك للمناسبة ⬇</button>
-    </div>
+    <h2 class="section-title reveal">بنات درّوه قبل مناسبتهم 💬</h2>
+    <p class="section-text reveal">لقطات حقيقية من تفاعل الزبونات. اضغطي للتكبير.</p>
+    <div class="rev-wrap" id="revWrap"></div>
   </div>
 </section>
 
-<!-- ================= THE PREP CALENDAR =================
-     This is where the 4-mask box stops being a quantity and becomes a plan:
-     one box IS the four-week protocol, so the product and the routine are
-     the same object. Text-only on purpose: zero extra requests on 3G. -->
-<section class="section divider-top cv" id="prep">
-  <div class="container" style="max-width:760px">
-    <h2 class="section-title reveal">روزنامة التحضير للمناسبة 🗓️</h2>
-    <p class="section-text reveal"><b>علبة وحدة = 4 ماسكات = 4 أسابيع تحضير.</b> ماسك واحد في الأسبوع، والماسك الأخير ليلة المناسبة.</p>
-
-    <ol class="rt-list">
-      <li class="rt-item reveal"><span class="rt-week">قبل<b class="lat">4</b>أسابيع</span>
-        <div><h4>ماسك 1 — البداية</h4><p>ترطيب فوري وملمس أنعم من أول ليلة، وتعرفي كيفاش تتعامل بشرتك معاه.</p></div></li>
-      <li class="rt-item reveal"><span class="rt-week">قبل<b class="lat">3</b>أسابيع</span>
-        <div><h4>ماسك 2 — الانتظام</h4><p>البشرة تولّي أنعم، والمكياج يتوزّع أحسن.</p></div></li>
-      <li class="rt-item reveal"><span class="rt-week">قبل<b class="lat">2</b>أسبوعين</span>
-        <div><h4>ماسك 3 — الإشراقة</h4><p>لون أكثر توحّداً وإشراقة أوضح.</p></div></li>
-      <li class="rt-item night reveal"><span class="rt-week">ليلة<b>💄</b>المناسبة</span>
-        <div><h4>ماسك 4 — اللمسة الأخيرة ✨</h4><p>الليلة الحاسمة: تصبّحي ببشرة مرطّبة، ناعمة وجاهزة للمكياج.</p></div></li>
-    </ol>
-
-    <div class="rt-cycle reveal">
-      ⏳ <b>عندك غير أيام؟ ما تقلقيش — نفس العلبة تخدمك.</b> ماكش محتاجة شهر كامل:
-      العلبة فيها <b>4 ماسكات</b>، تقدري تستعملي <b>ماسك للتجربة</b> قبل بأيام (ولا حتى ب3 أيام)
-      و<b>ماسك ليلة المناسبة</b>، ويبقاولك زوج للمرة الجاية.<br>
-      القاعدة الوحيدة: <b>ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.</b>
-    </div>
-
-    <div class="rt-rules reveal">
-      <b>باش يخدم مليح:</b>
-      <span>✔️ ماسك واحد كل أسبوع — ماشي أكثر</span>
-      <span>✔️ على بشرة نظيفة، بعد التونر</span>
-      <span>✔️ اتركيه طوال الليل (ولا 3-4 ساعات على الأقل)</span>
-      <span>✔️ رقّمي الماسكات <span class="lat">1</span>→<span class="lat">4</span> وتبّعي روزنامتك</span>
-    </div>
-
-    <p class="footnote reveal">الفرق في الانتظام، ماشي في ماسك واحد. النتائج تختلف من بشرة لأخرى.</p>
-
-    <div style="text-align:center;margin-top:18px">
-      <button class="btn btn-primary btn-cart reveal" data-scroll="#order" style="max-width:420px;width:min(100%,420px)">ابدئي تحضيرك ⬇ — علبة بـ <span class="lat">3 200 DA</span></button>
-    </div>
-  </div>
-</section>
-
-<!-- ================= TRUST / CONTENT ================= -->
-<section class="section band divider-top cv">
-  <div class="container">
-    <div class="grid guarantees">
-      <div class="guarantee reveal"><div class="g-icon">📦</div><h4>العلبة فيها 4 ماسكات</h4><p>4 استعمالات — <span class="lat">3 200 DA</span> للعلبة</p></div>
-      <div class="guarantee reveal"><div class="g-icon">💵</div><h4>الدفع عند الاستلام</h4><p>ادفعي بعد استلام طلبك</p></div>
-      <div class="guarantee reveal"><div class="g-icon">🚚</div><h4>سعر واضح حسب الولاية</h4><p>اختاري ولايتك ويظهر السعر فوراً للمنزل أو المكتب</p></div>
-      <div class="guarantee reveal"><div class="g-icon">🌸</div><h4>لطيف على البشرة</h4><p>مناسب للبشرة الحساسة</p></div>
-    </div>
-  </div>
-</section>
-
+<!-- ================= 7. STATS (why-biodance + KPI, merged) =================
+     Was two sections of four and three cards (604px + 642px) saying the
+     same thing twice: "this formula is credible". One row of numbers now. -->
 <section class="section divider-top cv">
-  <div class="container" style="max-width:880px">
+  <div class="container">
+    <h2 class="section-title reveal">أرقام <span class="lat">Biodance</span></h2>
+    <p class="section-text reveal">نتائج بعد استخدام واحد — أي بعد ليلة وحدة.</p>
+    <div class="stats">
+      <article class="card stat reveal"><b>+256%</b><span>ترطيب البشرة</span></article>
+      <article class="card stat reveal"><b>+34%</b><span>مرونة البشرة</span></article>
+      <article class="card stat reveal"><b>-83%</b><span>حجم المسام</span></article>
+      <article class="card stat reveal"><b>243</b><span>دالتون — كولاجين منخفض الجزيئات</span></article>
+    </div>
+    <p class="footnote reveal">*أرقام مستندة إلى بيانات الشركة المصنّعة · خالٍ من <span class="lat">PEG</span> · غير مهيّج حتى بعد <span class="lat">8</span> ساعات.</p>
+  </div>
+</section>
+
+<!-- ================= 8. TABS ================= -->
+<section class="section band divider-top cv">
+  <div class="container" style="max-width:860px">
     <div class="tabs reveal">
       <div class="tab-nav">
         <button class="tab-btn active" type="button" data-tab="desc">الوصف</button>
@@ -1018,98 +715,41 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
         <button class="tab-btn" type="button" data-tab="ing">المكوّنات</button>
       </div>
       <div class="tab-panel active" id="tab-desc">
-        <h4>محتوى العلبة</h4><p><strong>كل علبة تحتوي على 4 ماسكات</strong> — كل ماسك مغلّف وحدو ويُستعمل <strong>مرة وحدة</strong>. يعني <strong>4 استعمالات</strong>: ماسك واحد كل أسبوع، أي <strong>4 أسابيع تحضير</strong>. السعر <strong><span class="lat">3 200 DA</span> للعلبة</strong> + سعر التوصيل حسب الولاية.</p>
-        <p style="margin-top:10px">احصلي على بشرة مشرقة ومرطّبة مع ماسك بايودانس بالكولاجين العميق. ماسك هيدروجيل غني بالكولاجين منخفض الوزن الجزيئي لتعزيز مرونة البشرة وشدّها، مع غالاكتومايسيس ونياسيناميد لتوحيد اللون والإشراقة.</p>
-        <p style="margin-top:10px">يتغلغل حمض الهيالورونيك الأوليغو في عمق البشرة لترطيب مكثّف يترك بشرتك ناعمة وممتلئة، ويتحوّل الماسك إلى شفاف تدريجياً ليضمن امتصاص المكوّنات الفعّالة بالكامل.</p>
-        <h4>علاش قبل المناسبات؟</h4><p>لأن الترطيب العميق هو اللي يخلّي <strong>المكياج يتوزّع أملس</strong> ويقعد أحسن، والبشرة تبان أنعم وأكثر إشراقاً في الصور. حطّي ماسك ليلة قبل المناسبة وارقدي بيه.</p>
+        <h4>محتوى العلبة</h4><p><strong>كل علبة فيها 4 ماسكات</strong> — كل ماسك مغلّف وحدو ويُستعمل <strong>مرة وحدة</strong>. يعني <strong>4 استعمالات</strong>: ماسك كل أسبوع = <strong>4 أسابيع تحضير</strong>. السعر <strong><span class="lat">3 200 DA</span> للعلبة</strong> + التوصيل حسب الولاية.</p>
+        <h4>الوصف</h4><p>ماسك هيدروجيل غني بالكولاجين منخفض الوزن الجزيئي لتعزيز مرونة البشرة وشدّها، مع غالاكتومايسيس ونياسيناميد لتوحيد اللون والإشراقة، وحمض الهيالورونيك الأوليغو لترطيب مكثّف. يتحوّل الماسك إلى شفاف تدريجياً ليضمن امتصاص المكوّنات بالكامل.</p>
         <h4>مناسب لـ</h4><p>جميع أنواع البشرة، خاصة الجافة والحساسة.</p>
       </div>
-      <div class="tab-panel" id="tab-use"><ul><li>افتحي <strong>ماسك واحد</strong> من العلبة (يبقاولك 3).</li><li>بعد التونر أو السيروم، ضعي الماسك على بشرة نظيفة.</li><li>اتركيه طوال الليل أو لمدة 3-4 ساعات على الأقل.</li><li>اربتي على البشرة بلطف لامتصاص ما تبقّى من الإسانس.</li><li>استخدمي الأجزاء المتبقية على الرقبة ومنطقة العين.</li><li>الماسك يُستعمل <strong>مرة وحدة</strong> ومن بعد يترمى — ماسك واحد كل أسبوع.</li><li>ليلة المناسبة: حطّيه قبل ما ترقدي، وفي الصباح ابدئي مكياجك على بشرة مرطّبة.</li></ul></div>
-      <div class="tab-panel" id="tab-ing"><h4>المكوّنات الأساسية</h4><p>كولاجين منخفض الجزيئات · غالاكتومايسيس · حمض الهيالورونيك الأوليغو · نياسيناميد.</p><h4>القائمة الكاملة</h4><p class="ing-text lat">Water, Glycerin, Acrylates Copolymer, Niacinamide, Ceratonia Siliqua Gum, Chondrus Crispus Extract, Betaine, Algin, Agar, 1,2-Hexanediol, Allantoin, Galactomyces Ferment Filtrate, Adenosine, Collagen Extract, Hydrolyzed Hyaluronic Acid, Bifida Ferment Filtrate, Tocopherol.</p></div>
+      <div class="tab-panel" id="tab-use"><ul>
+        <li>افتحي <strong>ماسك واحد</strong> من العلبة (يبقاولك 3).</li>
+        <li>بعد التونر أو السيروم، ضعيه على بشرة نظيفة.</li>
+        <li>اتركيه طوال الليل أو 3-4 ساعات على الأقل.</li>
+        <li>اربتي على البشرة بلطف لامتصاص ما تبقّى من الإسانس.</li>
+        <li>الماسك يُستعمل <strong>مرة وحدة</strong> ومن بعد يترمى — ماسك كل أسبوع.</li>
+        <li>ليلة المناسبة: حطّيه قبل ما ترقدي، والصباح ابدئي مكياجك على بشرة مرطّبة.</li>
+      </ul></div>
+      <div class="tab-panel" id="tab-ing"><p>كولاجين منخفض الجزيئات · غالاكتومايسيس · حمض الهيالورونيك الأوليغو · نياسيناميد.</p>
+      <h4>القائمة الكاملة</h4><p class="ing-text lat">Water, Glycerin, Acrylates Copolymer, Niacinamide, Ceratonia Siliqua Gum, Chondrus Crispus Extract, Betaine, Algin, Agar, 1,2-Hexanediol, Allantoin, Galactomyces Ferment Filtrate, Adenosine, Collagen Extract, Hydrolyzed Hyaluronic Acid, Bifida Ferment Filtrate, Tocopherol.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section band divider-top cv">
-  <div class="container">
-    <h2 class="section-title reveal">لماذا تحبه الكثير من البنات؟</h2>
-    <p class="section-text reveal">تركيبة هيدروجيل تمنح ترطيباً عميقاً ومظهراً أنعم، مع إحساس مريح مناسب حتى للبشرة الحساسة.</p>
-    <div class="grid features" id="benefitsGrid"></div>
-  </div>
-</section>
-
+<!-- ================= 9. FAQ (12 → 6) ================= -->
 <section class="section divider-top cv">
-  <div class="container">
-    <h2 class="section-title reveal">المكوّنات الأساسية</h2>
-    <p class="section-text reveal">تركيبة مدروسة تجمع بين الترطيب والشدّ والإشراقة.</p>
-    <div class="grid ing-grid" id="ingGrid"></div>
-  </div>
-</section>
-
-<section class="section band divider-top cv">
-  <div class="container">
-    <h2 class="section-title reveal">لماذا <span class="lat">Biodance</span>؟</h2>
-    <div class="grid why-grid">
-      <div class="card why-item reveal"><span class="w-ic">🚫</span><div><h4>خالٍ من <span class="lat">PEG</span></h4><p>بدون <span class="lat">PEG-100 Stearate</span> — مكوّنات طبيعية مثل <span class="lat">Algin</span> و<span class="lat">Agar</span>.</p></div></div>
-      <div class="card why-item reveal"><span class="w-ic">🧬</span><div><h4><span class="lat">243</span> دالتون</h4><p>كولاجين منخفض الوزن الجزيئي يُمتص بكفاءة أعلى بكثير في البشرة.</p></div></div>
-      <div class="card why-item reveal"><span class="w-ic">🛡️</span><div><h4>غير مهيّج</h4><p>أثبت أمانه حتى مع تطبيق يتجاوز <span class="lat">8</span> ساعات.</p></div></div>
-      <div class="card why-item reveal"><span class="w-ic">💧</span><div><h4><span class="lat">+204%</span> ترطيب</h4><p>ارتفاع ملحوظ في ترطيب البشرة بعد الاستخدام.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section divider-top cv">
-  <div class="container">
-    <h2 class="section-title reveal">نتائج مثبتة</h2>
-    <p class="section-text reveal">نتائج بعد استخدام واحد — أي بعد ليلة وحدة</p>
-    <div class="grid kpi">
-      <article class="card reveal"><div class="kpi-num lat">+256%</div><div class="kpi-label">ترطيب البشرة</div></article>
-      <article class="card reveal"><div class="kpi-num lat">+34%</div><div class="kpi-label">مرونة البشرة</div></article>
-      <article class="card reveal"><div class="kpi-num lat">-83%</div><div class="kpi-label">حجم المسام</div></article>
-    </div>
-    <p class="footnote reveal">*أرقام مستندة إلى بيانات الشركة المصنّعة.</p>
-  </div>
-</section>
-
-<section class="section band divider-top cv">
   <div class="container">
     <h2 class="section-title reveal">الأسئلة الشائعة</h2>
     <div class="faq-list" id="faqList"></div>
   </div>
 </section>
 
-<div style="text-align:center;padding:8px 0 34px">
-  <button class="btn btn-primary btn-cart" data-scroll="#order" style="max-width:420px;width:min(100% - 32px,420px)">🛒 اطلبي علبتك — 4 ماسكات بـ <span class="lat">3 200 DA</span></button>
+<div style="text-align:center;padding:6px 0 30px">
+  <button class="btn btn-primary btn-cart" data-scroll="#order" style="max-width:420px;width:min(100% - 32px,420px)">🛒 اطلبي علبتك — 4 ماسكات بـ <span class="lat">3 200 DA</span></button>
 </div>
-
-<!-- ================= LAST: INFO / CONTACT FORM ================= -->
-<section class="section divider-top" id="contact">
-  <div class="container contact-layout">
-    <div class="card reveal">
-      <h2 class="section-title" style="text-align:right">عندك سؤال قبل الطلب؟</h2>
-      <p class="section-text" style="text-align:right;margin-inline:0">مناسبتك قريبة وتحبي تتأكدي من وقت التوصيل؟ أرسلي استفسارك وسنرد عليك بسرعة.</p>
-      <div class="contact-pills" id="contactPills"></div>
-    </div>
-    <div class="card reveal">
-      <form id="infoForm">
-        <div class="hp-field" aria-hidden="true"><label for="info_website">Website</label><input type="text" id="info_website" name="website" tabindex="-1" autocomplete="off"></div>
-        <div class="form-grid">
-          <div class="field"><label for="infoName">الاسم</label><input id="infoName" name="name" required placeholder="اكتبي اسمك" autocomplete="name"></div>
-          <div class="field"><label for="infoContact">الهاتف أو البريد</label><input id="infoContact" name="contact" required placeholder="0550xxxxxx" autocomplete="tel"></div>
-          <div class="field full"><label for="infoMessage">رسالتك</label><textarea id="infoMessage" name="message" rows="5" required placeholder="سؤالك..."></textarea></div>
-        </div>
-        <button class="btn btn-secondary" style="width:100%" type="submit" id="infoSubmit">أرسل استفسارك</button>
-        <div class="success-box" id="infoSuccess" role="status" aria-live="polite">تم إرساله بنجاح.</div>
-        <div class="error-box" id="infoError" role="alert" aria-live="assertive">حدث خطأ أثناء الإرسال. حاولي مرة أخرى أو تواصلي معنا عبر واتساب.</div>
-      </form>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="container">
     <div class="footer-mark lat">bio<b>dance</b></div>
-    <div>📦 علبة وحدة = 4 ماسكات = <span class="lat">3 200 DA</span> · 🚚 التوصيل إلى 58 ولاية · اختاري ولايتك لمعرفة السعر · الدفع عند الاستلام</div>
+    <div>📦 علبة وحدة = 4 ماسكات = <span class="lat">3 200 DA</span> · 🚚 58 ولاية · الدفع عند الاستلام</div>
+    <div class="f-contact">💬 استفسار؟ <a href="https://wa.me/213540732771" target="_blank" rel="noopener">واتساب <span class="lat">0540732771</span></a> · <a href="tel:0540732771">اتصال</a></div>
     <div class="pay-row"><span class="pay">الدفع عند الاستلام</span><span class="pay lat">COD</span><span class="pay">🏠 منزل</span><span class="pay">🏢 Stop Desk</span><span class="pay">🚚 58 ولاية</span></div>
     © 2025 - Biodance Algérie
     <p class="privacy">نستخدم بياناتكم (الاسم، الهاتف، العنوان) فقط لمعالجة طلبكم وتوصيله، ولا نشاركها مع أي طرف آخر باستثناء شركة التوصيل. يستخدم هذا الموقع Facebook Pixel لأغراض إحصائية وإعلانية.</p>
@@ -1118,7 +758,7 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 
 <div class="floating-bar">
   <button class="btn btn-secondary" data-scroll="#whats-inside">شنو في العلبة؟</button>
-  <button class="btn btn-primary" data-scroll="#order">اطلبي — <span class="lat">3 200 DA</span></button>
+  <button class="btn btn-primary" data-scroll="#order">اطلبي — <span class="lat">3 200 DA</span></button>
 </div>
 <a class="wa-float" href="https://wa.me/213540732771" aria-label="واتساب" target="_blank" rel="noopener">✆</a>
 
@@ -1132,7 +772,6 @@ footer{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 
 <noscript>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap">
-<!-- Le fallback pixel <noscript> est dans le bloc Meta Pixel Code du <head>. -->
 </noscript>
 
 <script>
@@ -1252,25 +891,11 @@ const CONFIG = {
      ────────────────────────────────────────────────────────────────── */
   offers:[
     {id:'offer4', units:4, price:3200, compareAt:5600, badge:'الأكثر طلباً',
-     headline:'علبة وحدة', title:'علبة وحدة — 4 ماسكات',
-     subline:'📦 علبة وحدة = 4 ماسكات = 4 استعمالات',
-     when:'يكفيك لمناسبة', selected:true,
-     note:'✅ هذا هو المنتج: علبة مغلقة فيها 4 ماسكات — كل ماسك يُستعمل مرة وحدة',
-     heroNote:'📦 <b>العلبة فيها 4 ماسكات</b> — ماشي ماسك واحد. كل ماسك مغلّف وحدو ويُستعمل <b>مرة وحدة</b> برك.<br>🗓️ ماسك كل أسبوع = <b>4 أسابيع تحضير</b>، والماسك الأخير <b>ليلة المناسبة</b>.',
-     bullets:['📦 علبة وحدة مغلقة — فيها 4 ماسكات','🗓️ 4 استعمالات: ماسك كل أسبوع','✨ الماسك الأخير ليلة المناسبة','💵 الدفع عند الاستلام']},
-
-    /* NOT "the bride's protocol". A bride buys once in her life; a woman who
-       goes to weddings buys every season — and the honest reason to take a
-       second box is not «you are getting married», it is «you have three
-       events this summer». That argument covers the bride too. */
+     headline:'علبة وحدة', title:'علبة وحدة — 4 ماسكات', when:'يكفيك لمناسبة', selected:true},
     {id:'offer8', units:8, price:5500, compareAt:11200, badge:'الأوفر',
-     headline:'علبتين', title:'علبتين — 8 ماسكات',
-     subline:'📦📦 علبتين = 8 ماسكات = 8 استعمالات',
-     when:'عندك أكثر من مناسبة',
-     note:'📦📦 نفس العلبة بالضبط، مرّتين — ماشي منتج آخر',
-     heroNote:'📦📦 <b>علبتين = 8 ماسكات.</b> نفس العلبة، مرّتين.<br>🎊 المناسبات ما تجيش وحدة وحدة — عرس صاحبتك، عرس العائلة، والعيد بعدهم. ولا قسّميهم مع أختك ولا صاحبتك. 💍 ومثالي للعروسة.',
-     bullets:['📦📦 علبتين مغلقين — 8 ماسكات','🎊 يكفي لأكثر من مناسبة','👯 تقدري تقسميهم مع أختك ولا صاحبتك','💵 الدفع عند الاستلام']}
+     headline:'علبتين', title:'علبتين — 8 ماسكات', when:'عندك أكثر من مناسبة'}
   ],
+
 
   /* Post-purchase club: the list you message before her next event. */
   clubJoinText:'السلام عليكم 🌸 نحب ننضم لنادي بايودانس — نصائح لتحضير البشرة قبل المناسبات وعروض العضوات.',
@@ -1290,7 +915,6 @@ const CONFIG = {
     {img:'ing-3.jpg',icon:'💧',title:'حمض الهيالورونيك',text:'ترطيب يتغلغل في الطبقات العميقة'},
     {img:'ing-4.jpg',icon:'✨',title:'نياسيناميد',text:'يفتّح البشرة ويقلّل التجاعيد'}
   ],
-  contactChannels:{whatsapp:'واتساب: 213540732771+',phone:'اتصال: 0540732771'},
   emailjs:{serviceId:'service_q7wx8gn',templateId:'template_xkpm4qc',publicKey:'wI4lyiYiXT4aP6jfk'},
   sheet:{
     endpoint:'https://script.google.com/macros/s/AKfycbyf9e03fDCOrevcxji92LNEUPDlgn2MZWXaMrbk47QZoa0xsEIDk7XOWgCZHgSVvpKGVw/exec',
@@ -1351,9 +975,18 @@ function applyImgFallback(scope){
   });
 }
 
-/* Accepts 0550…, +213550…, 00213550…, 213550…, with spaces/dots/dashes. */
+/* Arabic-Indic (٠١٢٣٤٥٦٧٨٩) and Persian (۰۱۲۳۴۵۶۷۸۹) digits -> ASCII.
+   An Arabic keyboard emits these by default, so without this a real customer
+   types a perfectly valid number, is told "رقم صحيح" and leaves. */
+function toLatinDigits(v){
+  return String(v == null ? '' : v).replace(/[\u0660-\u0669\u06F0-\u06F9]/g, d => {
+    const c = d.codePointAt(0);
+    return String(c >= 0x06F0 ? c - 0x06F0 : c - 0x0660);
+  });
+}
+/* Accepts 0550…, +213550…, 00213550…, 213550…, Arabic digits, spaces/dots/dashes. */
 function normalizePhone(raw){
-  let p = String(raw == null ? '' : raw).replace(/[\s.\-()]/g,'');
+  let p = toLatinDigits(raw).replace(/[\s.\-()\u00A0\u202F]/g,'');
   p = p.replace(/^00213/,'0').replace(/^\+213/,'0').replace(/^213(?=[5-7]\d{8}$)/,'0');
   if (/^[5-7]\d{8}$/.test(p)) p = '0' + p;
   return p;
@@ -1433,6 +1066,7 @@ function openLightbox(list, i){
   lbList = list; lbIdx = Math.max(0, i);
   const lb = $('#lightbox');
   $('#lbImg').src = lbList[lbIdx];
+  $('#lbImg').alt = 'صورة ' + (lbIdx+1) + ' من ' + lbList.length;
   $('#lbCounter').textContent = (lbIdx+1) + ' / ' + lbList.length;
   $('#lbPrev').style.display = $('#lbNext').style.display = lbList.length > 1 ? 'grid' : 'none';
   lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
@@ -1447,6 +1081,7 @@ function lbMove(d){
   if (!lbList.length) return;
   lbIdx = (lbIdx + d + lbList.length) % lbList.length;
   $('#lbImg').src = lbList[lbIdx];
+  $('#lbImg').alt = 'صورة ' + (lbIdx+1) + ' من ' + lbList.length;
   $('#lbCounter').textContent = (lbIdx+1) + ' / ' + lbList.length;
 }
 function bindLightbox(){
@@ -1642,13 +1277,24 @@ Object.keys(WILAYA_ALIASES_RAW).forEach(k => {
 });
 const WILAYA_AR_INDEX = {};
 Object.keys(SHIPPING).forEach(k => { const ar = WILAYA_AR[k]; if (ar) WILAYA_AR_INDEX[normalizeWilaya(ar)] = k; });
+/* Space-insensitive index. «M'Sila» normalises to "msila" but people type
+   "m sila", and both "tizi ouzou" and "tiziouzou" happen. Without this the
+   shipping price never appears and the order simply cannot be completed. */
+const tighten = t => normalizeWilaya(t).replace(/\s/g,'');
+const WILAYA_TIGHT = {};
+Object.keys(SHIPPING).forEach(k => {
+  WILAYA_TIGHT[tighten(k)] = k;
+  const ar = WILAYA_AR[k]; if (ar) WILAYA_TIGHT[tighten(ar)] = k;
+});
+Object.keys(WILAYA_ALIASES_RAW).forEach(a => { WILAYA_TIGHT[tighten(a)] = WILAYA_ALIASES_RAW[a]; });
 
 function resolveWilaya(raw){
   const key = normalizeWilaya(raw);
   if (!key) return '';
   if (WILAYA_AR_INDEX[key]) return WILAYA_AR_INDEX[key];
   if (WILAYA_ALIASES[key]) return WILAYA_ALIASES[key];
-  return Object.keys(SHIPPING).find(w => normalizeWilaya(w) === key) || '';
+  const found = Object.keys(SHIPPING).find(w => normalizeWilaya(w) === key);
+  return found || WILAYA_TIGHT[key.replace(/\s/g,'')] || '';
 }
 function wilayaLabel(key){ return WILAYA_AR[key] || key; }
 function wilayaMatches(key, q){
@@ -1657,7 +1303,9 @@ function wilayaMatches(key, q){
   // Alias spellings must surface in the dropdown too, not only in
   // resolveWilaya() — otherwise «wahran» silently returns "no wilaya found"
   // and she never sees a shipping price.
-  return (WILAYA_ALT[key] || []).some(a => a.includes(q));
+  if ((WILAYA_ALT[key] || []).some(a => a.includes(q))) return true;
+  const qt = q.replace(/\s/g,'');
+  return tighten(key).includes(qt) || tighten(WILAYA_AR[key] || '').includes(qt);
 }
 
 function getSelectedWilaya(){
@@ -1673,7 +1321,7 @@ function getDelivery(){
   const wilaya = getSelectedWilaya();
   const mode = getDeliveryKey();
   const prices = SHIPPING[wilaya];
-  const label = mode === 'home' ? 'التوصيل إلى المنزل' : 'التوصيل إلى المكتب / Stop Desk';
+  const label = mode === 'home' ? 'التوصيل إلى المنزل' : 'التوصيل إلى المكتب (Stop Desk)';
   if (!prices) return {fee:0, label, mode, wilaya, known:false};
   return {fee:Number(prices[mode] || 0), label, mode, wilaya, known:true};
 }
@@ -1700,7 +1348,6 @@ function bundleSaving(o){
 /* ---------------- RENDER ---------------- */
 function renderBasic(){
   $('#trustBadges').innerHTML = CONFIG.trustBadges.map(b => '<span class="badge">✓ '+escapeHTML(b)+'</span>').join('');
-  $('#contactPills').innerHTML = '<span class="pill">'+escapeHTML(CONFIG.contactChannels.whatsapp)+'</span><span class="pill">'+escapeHTML(CONFIG.contactChannels.phone)+'</span>';
 }
 
 function renderOrderVariants(){
@@ -1713,7 +1360,7 @@ function renderOrderVariants(){
         + '<div class="ov-left">'
           + '<span class="ov-units">📦 '+escapeHTML(o.headline)+'</span>'
           + '<span class="ov-boxes">'+masksWord(o.units)+' = '+usesWord(o.units)+'</span>'
-          + '<span class="ov-ship">🗓️ '+escapeHTML(o.when)+'</span>'
+          + '<span class="ov-boxes" style="color:var(--primary-dark);font-weight:800">🗓️ '+escapeHTML(o.when)+'</span>'
         + '</div>'
         + '<div class="ov-right">'
           + '<span class="ov-price lat">'+money(o.price)+'</span>'
@@ -1721,33 +1368,8 @@ function renderOrderVariants(){
         + '</div>'
       + '</div>'
       + (save > 0 ? '<span class="ov-save">💰 توفري <b class="lat">'+money(save)+'</b></span>' : '')
-      + (o.note ? '<span class="ov-note">'+escapeHTML(o.note)+'</span>' : '')
       + '<span class="ov-check">✓</span></div>';
   }).join('');
-}
-
-/* Big cards further down the page. Same two choices, same wording. */
-function renderOfferCards(){
-  const c = $('#offerCards'); if (!c) return;
-  c.innerHTML = CONFIG.offers.map(o => {
-    const save = bundleSaving(o), d = discountPct(o);
-    return '<article class="offer-card reveal'+(o.badge==='الأكثر طلباً'?' featured':'')+(o.id===selectedOfferId?' chosen':'')+'">'
-      + (hasBadge(o) ? '<span class="oc-badge">⭐ '+escapeHTML(o.badge)+'</span>' : '')
-      + '<span class="oc-when">🗓️ '+escapeHTML(o.when)+'</span>'
-      + '<h3>📦 '+escapeHTML(o.headline)+'</h3>'
-      + '<p class="oc-sub">'+escapeHTML(masksWord(o.units))+' = '+escapeHTML(usesWord(o.units))+'</p>'
-      + '<div><span class="oc-price lat">'+money(o.price)+'</span>'
-      + (o.compareAt > o.price ? '<span class="oc-was lat">'+money(o.compareAt)+'</span>' : '') + '</div>'
-      + '<span class="oc-unit"><b class="lat">'+money(unitPrice(o))+'</b> للماسك الواحد'+(d>0?' · <b class="lat">-'+d+'%</b>':'')+'</span>'
-      + (save > 0 ? '<span class="oc-save">💰 توفري <b class="lat">'+money(save)+'</b> مقارنة بشراء علبة علبة</span>' : '')
-      /* One span per bullet on purpose: splitting off the leading emoji by
-         code units breaks any emoji with a variation selector (🗓️ → 🗓 + ️). */
-      + '<ul>' + (o.bullets||[]).map(b => '<li><span>'+escapeHTML(b)+'</span></li>').join('') + '</ul>'
-      + '<button type="button" class="oc-btn" data-offer="'+o.id+'" data-scroll="#order">'
-      + (o.id===selectedOfferId ? '✓ مختار — أكملي الطلب' : 'اختاري هذا') + '</button>'
-      + '</article>';
-  }).join('');
-  observeReveals();
 }
 
 function selectOffer(id){
@@ -1756,7 +1378,7 @@ function selectOffer(id){
   const s = getOffer();
   track('AddToCart', {value:s.price, currency:'DZD', content_name:s.title, content_ids:[s.id], content_type:'product'});
 }
-function syncAll(){ syncHero(); renderOrderVariants(); renderOfferCards(); renderOrderSummary(); }
+function syncAll(){ syncHero(); renderOrderVariants(); renderOrderSummary(); }
 
 /* The hero mirrors whatever is selected in the order form but has no
    controls of its own — she must never be asked to choose twice on one
@@ -1772,9 +1394,6 @@ function syncHero(){
   // The price and what it buys are rendered as ONE sentence, on purpose.
   if (what) what.innerHTML = '📦 هذا سعر <b>'+escapeHTML(o.headline)+'</b> = <b>'+escapeHTML(masksWord(o.units))+'</b> = <b>'+escapeHTML(usesWord(o.units))+'</b>'
     + '<br><span class="pw-unit"><b class="lat">'+money(unitPrice(o))+'</b> للماسك الواحد · + التوصيل حسب ولايتك</span>';
-  // heroNote is authored in CONFIG (trusted), so its <b> tags are intentional.
-  const note = $('#heroNote');
-  if (note) note.innerHTML = o.heroNote || '';
 }
 
 function renderOrderSummary(){
@@ -1817,32 +1436,54 @@ function renderCardGrid(sel, items, cls){
   bindPhotoCards(el);
 }
 function renderBenefits(){ renderCardGrid('#benefitsGrid', CONFIG.benefits, 'feature-card'); }
-function renderIngredients(){ renderCardGrid('#ingGrid', CONFIG.ingredients, 'ing-card'); }
+function renderIngredients(){ renderCardGrid('#ingGrid', CONFIG.ingredients, 'feature-card'); }
 
 /* ---------------- SHIPPING UI ---------------- */
+/* Selected-state highlight without relying on :has(). */
+function syncShippingChecked(){
+  document.querySelectorAll('.shipping-option').forEach(l => {
+    const r = l.querySelector('input[type=radio]');
+    if (r) l.classList.toggle('is-checked', r.checked);
+  });
+}
+function setShipPrice(el, value){
+  if (!el) return;
+  if (value === null){ el.textContent = 'حسب ولايتك'; el.classList.add('pending'); }
+  else { el.textContent = money(value); el.classList.remove('pending'); }
+}
 function updateShippingUI(){
   const wilaya = getSelectedWilaya();
   const checker = $('#shippingChecker');
   const text = $('#shippingCheckerText');
   const home = $('#homeShippingPrice');
   const office = $('#officeShippingPrice');
+  const save = $('#officeShippingSave');
   const prices = SHIPPING[wilaya];
+  syncShippingChecked();
   if (!checker || !text) return;
 
   if (!prices){
     checker.classList.remove('ready');
-    text.innerHTML = '📍 <b>اكتبي ولايتك</b> باش يظهرلك سعر التوصيل مباشرة.';
-    if (home) home.textContent = '—';
-    if (office) office.textContent = '—';
+    text.innerHTML = '📍 <b>اكتبي ولايتك فوق</b> وسعر التوصيل يظهر هنا مباشرة.';
+    setShipPrice(home, null); setShipPrice(office, null);
+    if (save) save.style.display = 'none';
     return;
   }
-  if (home) home.textContent = money(prices.home);
-  if (office) office.textContent = money(prices.office);
+  setShipPrice(home, prices.home);
+  setShipPrice(office, prices.office);
+
+  // Stop Desk is the cheaper option almost everywhere; saying by how much
+  // turns an unexplained pair of radio buttons into an actual decision.
+  const diff = Number(prices.home) - Number(prices.office);
+  if (save){
+    if (diff > 0){ save.innerHTML = 'أرخص بـ <span class="lat">'+money(diff)+'</span>'; save.style.display = 'block'; }
+    else save.style.display = 'none';
+  }
 
   const mode = getDeliveryKey();
   checker.classList.add('ready');
-  text.innerHTML = '📍 <b>'+escapeHTML(wilayaLabel(wilaya))+'</b> — '
-    + (mode === 'home' ? '🏠 المنزل' : '🏢 المكتب / Stop Desk')
+  text.innerHTML = '✅ <b>'+escapeHTML(wilayaLabel(wilaya))+'</b> — '
+    + (mode === 'home' ? '🏠 التوصيل للمنزل' : '🏢 مكتب التوصيل')
     + ' : <strong class="lat">'+money(prices[mode])+'</strong>';
 }
 
@@ -1898,7 +1539,7 @@ function bindShippingUI(){
     });
   }
   document.querySelectorAll('input[name="shippingMode"]').forEach(r => {
-    r.addEventListener('change', () => { updateShippingUI(); renderOrderSummary(); captureDraft(); });
+    r.addEventListener('change', () => { syncShippingChecked(); updateShippingUI(); renderOrderSummary(); captureDraft(); });
   });
   document.addEventListener('click', e => {
     if (!input || !box) return;
@@ -1914,18 +1555,13 @@ function bindShippingUI(){
 function renderFAQ(){
   const faq = [
     {q:'شحال من ماسك في العلبة؟ وشحال السعر؟', a:'العلبة الوحدة فيها 4 ماسكات، والسعر 3200 DA للعلبة — يعني 800 DA للماسك الواحد. يزيد سعر التوصيل حسب ولايتك، ويبان لك في نموذج الطلب قبل ما تأكّدي.'},
-    {q:'يعني نشري ماسك واحد ولا علبة كاملة؟', a:'علبة كاملة. ما نبيعوش ماسك واحد بوحدو. الطرد اللي يوصلك = علبة مغلقة أصلية فيها 4 ماسكات، كل ماسك مغلّف وحدو.'},
-    {q:'الماسك يتعاود يُستعمل؟', a:'لا. كل ماسك يُستعمل مرة وحدة برك ومن بعد يترمى. لهذا العلبة فيها 4 ماسكات = 4 استعمالات = 4 ليالي تحضير.'},
-    {q:'مناسبتي قريبة — يوصلني في الوقت؟', a:'التوصيل عادةً من 2 إلى 5 أيام حسب الولاية. إذا مناسبتك قريبة بزاف، اطلبي اليوم وحطّي رقمك صحيح باش نتصلو بيك بسرعة ونأكّدو الطلب.'},
-    {q:'نديره ليلة المناسبة ولا قبلها؟', a:'الاثنين — وعندك 4 ماسكات في العلبة باش تديري الزوج. جرّبي ماسك قبل بأسبوع (ولا حتى ب3 أيام) باش تعرفي كيفاش تتعامل بشرتك معاه، وخلّي الماسك الأخير ليلة المناسبة. ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.'},
-    {q:'نقدر نرقد بيه؟', a:'نعم، وهذا هو الاستعمال الأمثل — حطّيه على بشرة نظيفة بعد التونر واتركيه طوال الليل (أو 3-4 ساعات على الأقل).'},
-    {q:'واش يخلّي المكياج يقعد أحسن؟', a:'على بشرة مرطّبة، الفوندوتان يتوزّع أملس وما يبانش التقشّر. هذا هو السبب الأساسي اللي البنات يستعملوه ليلة قبل المناسبة.'},
-    {q:'أنا ماشي عروسة — يصلحلي؟', a:'طبعاً. أغلب اللي يشريوه ماشي عرايس: بنات رايحات لعرس ولا خطوبة، ولا عندهم عيد، تصويرة، تخرّج، مقابلة عمل، ولا غير ضيوف جايين. أي نهار تحبي تكوني فيه في أحسن حالة — هذا وقتو.'},
-    {q:'عندي أكثر من مناسبة هذا الصيف؟', a:'خذي علبتين (8 ماسكات) بـ5500 DA — توفري 900 DA مقارنة بشراء علبة علبة. وتقدري تقسميهم مع أختك ولا صاحبتك.'},
-    {q:'كم يكلّف التوصيل؟', a:'سعر التوصيل يختلف حسب الولاية وطريقة الاستلام (المنزل أو المكتب). اكتبي ولايتك في نموذج الطلب وسيظهر لك السعر مباشرة قبل ما تأكّدي.'},
+    {q:'يعني نشري ماسك واحد ولا علبة كاملة؟', a:'علبة كاملة. ما نبيعوش ماسك واحد بوحدو. الطرد اللي يوصلك = علبة مغلقة أصلية فيها 4 ماسكات، كل ماسك مغلّف وحدو ويُستعمل مرة وحدة برك.'},
+    {q:'نديره ليلة المناسبة ولا قبلها؟', a:'الاثنين — وعندك 4 ماسكات باش تديري الزوج. جرّبي ماسك قبل بأسبوع (ولا ب3 أيام) باش تعرفي كيفاش تتعامل بشرتك معاه، وخلّي الماسك الأخير ليلة المناسبة. ما تجرّبيش منتج جديد أول مرة ليلة المناسبة.'},
+    {q:'مناسبتي قريبة — يوصلني في الوقت؟ وشحال التوصيل؟', a:'التوصيل عادةً من 2 إلى 5 أيام حسب الولاية، والسعر يختلف حسب الولاية وطريقة الاستلام (المنزل أو المكتب). اكتبي ولايتك في نموذج الطلب ويظهر لك السعر مباشرة قبل ما تأكّدي.'},
     {q:'هل يناسب البشرة الحساسة؟', a:'نعم، مناسب للبشرة الحساسة. إذا عندك بشرة حساسة بزاف، جرّبي ماسك قبل بأسبوع من المناسبة — وعندك 4 ماسكات في العلبة، ما تحتاجيش تشري زيادة باش تجرّبي.'},
     {q:'كيف أدفع؟', a:'الدفع عند الاستلام داخل الجزائر — تدفعين 3200 DA ثمن العلبة + سعر التوصيل، كي يوصلك الطرد في يدك.'}
   ];
+
   const list = $('#faqList');
   list.innerHTML = faq.map((f,i) =>
     '<div class="faq-item '+(i===0?'active':'')+'"><button class="faq-q" type="button" aria-expanded="'+(i===0)+'"><span>'+escapeHTML(f.q)+'</span><span aria-hidden="true">'+(i===0?'−':'+')+'</span></button><div class="faq-a">'+escapeHTML(f.a)+'</div></div>').join('');
@@ -1960,12 +1596,6 @@ function bindOrderControls(){
       selectOffer(card.dataset.id); syncAll(); captureDraft();
     });
   }
-  const cards = $('#offerCards');
-  if (cards) cards.addEventListener('click', e => {
-    const b = e.target.closest('[data-offer]'); if (!b) return;
-    selectOffer(b.dataset.offer); syncAll(); captureDraft();
-    trackEvent('offer_picked_from_list', {offer:b.dataset.offer});
-  });
   // Shipping radios are bound in bindShippingUI().
 }
 
@@ -2023,6 +1653,12 @@ function readOrderFields(){
   const g = id => { const el = document.getElementById(id); return el ? String(el.value || '').trim() : ''; };
   return { name:g('orderFullName'), phone:g('orderPhone'), wilaya:g('orderWilaya'), commune:g('orderCommune') };
 }
+/* Identity of the order being placed. Two submissions with the same phone,
+   pack and commune are a double-tap; anything else is a different order. */
+function orderSignature(){
+  const f = readOrderFields();
+  return normalizePhone(f.phone) + '|' + selectedOfferId + '|' + normalizeWilaya(f.commune);
+}
 function isDraftComplete(f){ return f.name.length >= 3 && isValidAlgerianPhone(f.phone) && !!resolveWilaya(f.wilaya) && f.commune.length >= 2; }
 function draftStatusFor(f){
   if (![f.name,f.phone,f.wilaya,f.commune].some(v => v.length > 0)) return S.STARTED;
@@ -2051,6 +1687,7 @@ function restoreForm(d){
   // exists — in that case we simply keep the default single box.
   if (d.variant && CONFIG.offers.some(o => o.id === d.variant)) selectedOfferId = d.variant;
   document.querySelectorAll('input[name="shippingMode"]').forEach(r => { r.checked = (r.value === (d.deliveryType || 'home')); });
+  safeCall('restore:checked', syncShippingChecked);
   safeCall('restore:render', syncAll);
   return restored;
 }
@@ -2271,15 +1908,22 @@ function antiSpamCheck(form, errorBox, cooldownKey, skipCooldown){
   }
   if (skipCooldown) return true;
   try {
-    const last = +lsGet(key) || 0;
-    if (Date.now() - last < CONFIG.submitCooldownMs){
-      showError(errorBox, 'تم إرسال طلب قبل قليل. يرجى الانتظار قليلاً.');
+    const last = +lsGet(key) || 0, waited = Date.now() - last;
+    // Throttle a REPEAT of the same order only. A different phone / pack /
+    // commune means she is ordering for someone else — blocking that was a
+    // silently lost sale, and the old message never said how long to wait.
+    if (waited < CONFIG.submitCooldownMs && lsGet('bd_last_sig') === orderSignature()){
+      showError(errorBox, 'طلبك تسجّل توّا ✅ إذا تحبي تعاودي نفس الطلب، استنّي '
+        + Math.ceil((CONFIG.submitCooldownMs - waited)/1000) + ' ثانية.');
       return false;
     }
   } catch(e){}
   return true;
 }
-function markSubmitted(key){ lsSet(key || 'bd_last_submit', String(Date.now())); }
+function markSubmitted(key){
+  lsSet(key || 'bd_last_submit', String(Date.now()));
+  safeCall('sig', () => lsSet('bd_last_sig', orderSignature()));
+}
 
 function recoveryMessage(type){
   if (type === E.OFFLINE)   return '📴 <b>انقطع الاتصال بالإنترنت.</b> معلوماتك محفوظة تلقائياً — أعيدي المحاولة كي يرجع الاتصال.';
@@ -2442,6 +2086,7 @@ function applyReorder(){
   set('orderFullName', last.name); set('orderPhone', last.phone);
   set('orderWilaya', last.wilaya); set('orderCommune', last.commune);
   document.querySelectorAll('input[name="shippingMode"]').forEach(r => { r.checked = (r.value === (last.deliveryType || 'home')); });
+  safeCall('reorder:checked', syncShippingChecked);
   if (last.offer && CONFIG.offers.some(o => o.id === last.offer)) selectedOfferId = last.offer;
   _userEdited = true; _completed = false;
   safeCall('reorder-render', syncAll);
@@ -2601,7 +2246,12 @@ function bindAutosave(){
     const el = document.getElementById(id); if (!el) return;
     el.addEventListener('input', () => { _completed = false; _userEdited = true; trackOnce('form_started'); hideRecovery(); save(); });
     el.addEventListener('change', save);
-    el.addEventListener('blur', () => save.flush());
+    el.addEventListener('blur', () => {
+      // Rewrite the phone into the exact form we transmit (Latin digits,
+      // 0-prefixed) so what she sees is what the courier will dial.
+      if (id === 'orderPhone' && el.value.trim() && isValidAlgerianPhone(el.value)) el.value = normalizePhone(el.value);
+      save.flush();
+    });
     // First real contact with the form = warm the backend.
     el.addEventListener('focus', () => { warmBackend(); }, {once:true});
   });
@@ -2642,19 +2292,37 @@ function bindOrderForm(){
     safeCall('wa-confirmed', () => { if (s) lsSet('bd_wa_confirmed', s.ctx.ref); });
   });
   const back = $('#doneBack');
+  // "Back" must work from the button AND from the phone's Back gesture.
   if (back) back.addEventListener('click', () => {
-    $('#orderDone').classList.remove('show');
-    $('#orderFormWrap').style.display = '';
-    _completed = false; _userEdited = true;
-    _pendingCtx = _pendingPayload = null;
-    _doneState = null;
-    ['orderFullName','orderPhone','orderWilaya','orderCommune'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-    draft = blankDraft(); saveDraft();
-    setAck('pending', 'جارٍ تأكيد تسجيل الطلب…');
-    $('#doneWa').classList.remove('urge');
-    safeCall('reset-render', syncAll);
-    $('#orderFormWrap').scrollIntoView({block:'start', behavior:'smooth'});
+    if (location.hash === '#done') history.back();   // -> popstate -> backToForm
+    else backToForm();
   });
+  window.addEventListener('popstate', () => safeCall('popstate', backToForm));
+}
+
+/* Return from the thank-you screen to a clean, empty order form.
+   Previously this lived inline on the button, so pressing the phone's Back
+   button cleared the #done hash but left the success screen up — the next
+   Back press then left the site entirely. */
+function backToForm(){
+  const done = $('#orderDone');
+  if (!done || !done.classList.contains('show')) return;
+  done.classList.remove('show');
+  $('#orderFormWrap').style.display = '';
+  _completed = false; _userEdited = true;
+  _pendingCtx = _pendingPayload = null;
+  _doneState = null;
+  ['orderFullName','orderPhone','orderWilaya','orderCommune'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  draft = blankDraft(); saveDraft();
+  setAck('pending', 'جارٍ تأكيد تسجيل الطلب…');
+  $('#doneWa').classList.remove('urge');
+  const dr = $('#doneRetry'); if (dr) dr.style.display = 'none';
+  // NOTE: bd_last_submit / bd_last_sig are deliberately NOT cleared here.
+  // The signature check in antiSpamCheck() already lets a DIFFERENT order
+  // through immediately, while still catching an identical re-submission
+  // inside the cooldown window. Clearing them would disarm that guard.
+  safeCall('reset-render', syncAll);
+  $('#orderFormWrap').scrollIntoView({block:'start', behavior:'smooth'});
 }
 
 function zllInit(){
@@ -2664,35 +2332,6 @@ function zllInit(){
   bindConnectivity();
   checkInterruptedSubmit();
   safeCall('reorder', offerReorder);
-}
-
-/* ---------------- CONTACT FORM (bottom of page, lazy) ---------------- */
-function bindContactEmail(){
-  const form = $('#infoForm'), submitBtn = $('#infoSubmit'), errorBox = $('#infoError');
-  if (!form || form.dataset.bound) return;
-  form.dataset.bound = '1';
-  let sending = false;
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (sending) return;
-    errorBox.style.display = 'none';
-    if (!antiSpamCheck(form, errorBox, 'bd_last_info')) return;
-    const name = $('#infoName').value.trim(), contact = $('#infoContact').value.trim(), msg = $('#infoMessage').value.trim();
-    if (!name || !contact || !msg) return;
-    sending = true; submitBtn.disabled = true;
-    const ot = submitBtn.textContent; submitBtn.textContent = 'جارٍ الإرسال...';
-    const res = await sendEmail('Info ' + name, 'Demande info de ' + name + ' (' + contact + '): ' + msg, name);
-    if (res && res.ok){
-      markSubmitted('bd_last_info');
-      $('#infoSuccess').style.display = 'block';
-      form.reset();
-      setTimeout(() => { $('#infoSuccess').style.display = 'none'; }, 4000);
-    } else {
-      errorBox.style.display = 'block';
-      console.error('Info send failed:', (res && res.type) || E.EMAILJS);
-    }
-    sending = false; submitBtn.disabled = false; submitBtn.textContent = ot;
-  });
 }
 
 /* ---------------- SCROLL / REVEAL / LAZY SECTIONS ---------------- */
@@ -2729,6 +2368,16 @@ function whenNear(sel, builder, margin){
   io.observe(el);
 }
 
+/* The floating "اطلبي" bar points at #order — while she is INSIDE #order it
+   is pure obstruction, and on a phone with the keyboard open it sits directly
+   over the submit button. Hide it there. */
+function bindFloatingBar(){
+  const bar = document.querySelector('.floating-bar'), order = $('#order');
+  if (!bar || !order || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(es => bar.classList.toggle('hide', es[0].isIntersecting),
+    {threshold: 0.2}).observe(order);
+}
+
 /* ---------------- INIT ---------------- */
 let _inited = false;
 function init(){
@@ -2743,6 +2392,7 @@ function init(){
   safeCall('bindShippingUI', bindShippingUI);
   safeCall('zllInit', zllInit);
   safeCall('bindScroll', bindScroll);
+  safeCall('bindFloatingBar', bindFloatingBar);
 
   /* Cheap above-the-fold decoration. */
   safeCall('renderBasic', renderBasic);
@@ -2750,12 +2400,10 @@ function init(){
 
   /* Everything else waits for an idle frame — it must not delay first input. */
   idle(() => {
-    safeCall('renderOfferCards', renderOfferCards);
     safeCall('renderBenefits', renderBenefits);
     safeCall('renderIngredients', renderIngredients);
     safeCall('renderFAQ', renderFAQ);
     safeCall('bindTabs', bindTabs);
-    safeCall('bindContactEmail', bindContactEmail);
     safeCall('observeReveals', observeReveals);
     safeCall('gallery', () => buildProductGallery(PRODUCT_IMAGES));
     safeCall('imgfallback', () => applyImgFallback(document));
